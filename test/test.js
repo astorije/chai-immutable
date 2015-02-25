@@ -18,5 +18,10 @@ describe('chai-immutable', function () {
     it('should be false when given the wrong size', function () {
       expect(list3).to.not.have.size(42);
     });
+
+    it('should also work with alias sizeOf', function () {
+      expect(list3).to.have.sizeOf(3);
+      expect(list3).to.not.have.sizeOf(42);
+    })
   });
 });

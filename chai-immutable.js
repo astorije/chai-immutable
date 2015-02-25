@@ -5,7 +5,7 @@ var Collection = require('immutable').Collection;
 module.exports = function (chai, utils) {
   var Assertion = chai.Assertion;
 
-  Assertion.addMethod('size', function (n) {
+  function assertCollectionSize(n) {
     new Assertion(this._obj).instanceof(Collection);
 
     var size = this._obj.size;
@@ -18,5 +18,8 @@ module.exports = function (chai, utils) {
       , n
       , size
     );
-  });
+  }
+
+  Assertion.addMethod('size', assertCollectionSize);
+  Assertion.addMethod('sizeOf', assertCollectionSize);
 };
