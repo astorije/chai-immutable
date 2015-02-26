@@ -1,5 +1,24 @@
 [![Build Status](https://travis-ci.org/astorije/chai-immutable.svg?branch=master)](https://travis-ci.org/astorije/chai-immutable)
 
+## Installation
+
+Install via [npm](http://npmjs.org):
+
+```bash
+npm install astorije/chai-immutable
+```
+
+*Until this plugin is published on <https://www.npmjs.com/>, the command above will retrieve the package from GitHub.*
+
+You can then use this plugin as any other Chai plugins:
+
+```js
+var chai = require('chai');
+var chaiImmutable = require('chai-immutable');
+
+chai.use(chaiImmutable);
+```
+
 ## API Reference
 
 ### .size(value)
