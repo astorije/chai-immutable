@@ -46,11 +46,11 @@ module.exports = function (chai, utils) {
     new Assertion(size).a('number');
 
     this.assert(
-        size === n
-      , "expected #{this} to have have size #{exp} but got #{act}"
-      , "expected #{this} to not have size #{act}"
-      , n
-      , size
+      size === n,
+      'expected #{this} to have size #{exp} but got #{act}',
+      'expected #{this} to not have size #{act}',
+      n,
+      size
     );
   }
 
@@ -72,15 +72,14 @@ module.exports = function (chai, utils) {
         new Assertion(size).a('number');
 
         this.assert(
-            size >= n
-          , "expected #{this} to have a size of at least #{exp} but got #{act}"
-          , "expected #{this} to not have a size of at least #{exp} but got #{act}"
-          , n
-          , size
+          size >= n,
+          'expected #{this} to have a size of at least #{exp} but got #{act}',
+          'expected #{this} to not have a size of at least #{exp} but got #{act}',
+          n,
+          size
         );
-      } else {
-        _super.apply(this, arguments);
       }
+      else _super.apply(this, arguments);
     };
   }
 
@@ -93,15 +92,14 @@ module.exports = function (chai, utils) {
         new Assertion(size).a('number');
 
         this.assert(
-            size <= n
-          , "expected #{this} to have a size of at most #{exp} but got #{act}"
-          , "expected #{this} to not have a size of at most #{exp} but got #{act}"
-          , n
-          , size
+          size <= n,
+          'expected #{this} to have a size of at most #{exp} but got #{act}',
+          'expected #{this} to not have a size of at most #{exp} but got #{act}',
+          n,
+          size
         );
-      } else {
-        _super.apply(this, arguments);
       }
+      else _super.apply(this, arguments);
     };
   }
 
@@ -114,15 +112,14 @@ module.exports = function (chai, utils) {
         new Assertion(size).a('number');
 
         this.assert(
-            size > n
-          , "expected #{this} to have a size above #{exp} but got #{act}"
-          , "expected #{this} to not have a size above #{exp} but got #{act}"
-          , n
-          , size
+          size > n,
+          'expected #{this} to have a size above #{exp} but got #{act}',
+          'expected #{this} to not have a size above #{exp} but got #{act}',
+          n,
+          size
         );
-      } else {
-        _super.apply(this, arguments);
       }
+      else _super.apply(this, arguments);
     };
   }
 
@@ -135,15 +132,14 @@ module.exports = function (chai, utils) {
         new Assertion(size).a('number');
 
         this.assert(
-            size < n
-          , "expected #{this} to have a size below #{exp} but got #{act}"
-          , "expected #{this} to not have a size below #{exp} but got #{act}"
-          , n
-          , size
+          size < n,
+          'expected #{this} to have a size below #{exp} but got #{act}',
+          'expected #{this} to not have a size below #{exp} but got #{act}',
+          n,
+          size
         );
-      } else {
-        _super.apply(this, arguments);
       }
+      else _super.apply(this, arguments);
     };
   }
 
@@ -170,15 +166,14 @@ module.exports = function (chai, utils) {
         new Assertion(size).a('number');
 
         this.assert(
-            min <= size && size <= max
-          , "expected #{this} to have a size within #{exp} but got #{act}"
-          , "expected #{this} to not have a size within #{exp} but got #{act}",
+          min <= size && size <= max,
+          'expected #{this} to have a size within #{exp} but got #{act}',
+          'expected #{this} to not have a size within #{exp} but got #{act}',
           min + ".." + max,
           size
         );
-      } else {
-        _super.apply(this, arguments);
       }
+      else _super.apply(this, arguments);
     };
   });
 };
