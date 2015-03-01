@@ -26,8 +26,8 @@
   },
   "homepage": "https://github.com/astorije/chai-immutable",
   "devDependencies": {
-    "chai": "^2.0.0",
-    "immutable": "^3.6.2",
-    "mocha": "^2.1.0"
+    "chai": "2.x.x",
+    "immutable": "3.x.x",
+    "mocha": "2.x.x"
   }
 }
