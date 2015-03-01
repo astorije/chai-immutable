@@ -1,6 +1,7 @@
 'use strict';
 
-var Collection = require('immutable').Collection;
+var Immutable = require('immutable')
+var Collection = Immutable.Collection;
 
 module.exports = function (chai, utils) {
   var Assertion = chai.Assertion;
@@ -38,6 +39,46 @@ module.exports = function (chai, utils) {
       else _super.apply(this, arguments);
     };
   });
+
+  /**
+   * ### .equal(collection)
+   *
+   * Asserts that the values of the target are equvalent to the values of
+   * `collection`. Aliases of Chai's original `equal` method are also supported.
+   *
+   * ```js
+   * var a = List.of(1, 2, 3);
+   * var b = List.of(1, 2, 3);
+   * expect(a).to.equal(b);
+   * ```
+   *
+   * @name equal
+   * @alias equals
+   * @alias eq
+   * @alias deep.equal
+   * @param {Collection} value
+   * @api public
+   */
+
+   function assertCollectionEqual(_super) {
+    return function (collection) {
+      var obj = this._obj;
+
+      if (obj && obj instanceof Collection) {
+        this.assert(
+          Immutable.is(obj, collection),
+          'expected #{this} to equal #{exp}',
+          'expected #{this} to not equal #{exp}',
+          collection
+        );
+      }
+      else _super.apply(this, arguments);
+    };
+  }
+
+  Assertion.overwriteMethod('equal', assertCollectionEqual);
+  Assertion.overwriteMethod('equals', assertCollectionEqual);
+  Assertion.overwriteMethod('eq', assertCollectionEqual);
 
   /**
    * ### .size(value)

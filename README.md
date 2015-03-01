@@ -31,6 +31,19 @@ expect(List()).to.be.empty;
 expect(List.of(1, 2, 3)).to.not.be.empty;
 ```
 
+### .equal(collection)
+
+- **@param** *{ Collection }* collection
+
+Asserts that the values of the target are equvalent to the values of
+`collection`. Aliases of Chai's original `equal` method are also supported.
+
+```js
+var a = List.of(1, 2, 3);
+var b = List.of(1, 2, 3);
+expect(a).to.equal(b);
+```
+
 ### .size(value)
 
 - **@param** *{ Number }* size

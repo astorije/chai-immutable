@@ -20,6 +20,27 @@ describe('chai-immutable', function () {
     });
   });
 
+  describe('equal method', function () {
+    it('should be true when compared structure is equal', function () {
+      expect(list3).to.equal(List.of(1, 2, 3));
+    });
+
+    it('should be true when compared structure not equal', function () {
+      expect(list3).to.not.equal(List());
+    });
+
+    it('aliases of equal should also work', function () {
+      expect(list3).to.equal(List.of(1, 2, 3));
+      expect(list3).to.not.equal(List());
+      expect(list3).to.equals(List.of(1, 2, 3));
+      expect(list3).to.not.equals(List());
+      expect(list3).to.eq(List.of(1, 2, 3));
+      expect(list3).to.not.eq(List());
+      expect(list3).to.deep.equal(List.of(1, 2, 3));
+      expect(list3).to.not.deep.equal(List());
+    });
+  });
+
   describe('size method', function () {
     it('should be true when given the right size', function () {
       expect(list3).to.have.size(3);
