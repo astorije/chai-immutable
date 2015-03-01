@@ -10,6 +10,16 @@ chai.use(chaiImmutable);
 describe('chai-immutable', function () {
   var list3 = List([1, 2, 3]);
 
+  describe('empty property', function () {
+    it('should be true when given an empty collection', function () {
+      expect(List()).to.be.empty;
+    });
+
+    it('should be false when given a non-empty collection', function () {
+      expect(list3).to.not.be.empty;
+    });
+  });
+
   describe('size method', function () {
     it('should be true when given the right size', function () {
       expect(list3).to.have.size(3);

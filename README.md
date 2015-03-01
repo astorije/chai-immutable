@@ -22,6 +22,15 @@ chai.use(chaiImmutable);
 
 ## API Reference
 
+### .empty
+
+Asserts that the immutable collection is empty.
+
+```js
+expect(List()).to.be.empty;
+expect(List.of(1, 2, 3)).to.not.be.empty;
+```
+
 ### .size(value)
 
 - **@param** *{ Number }* size

@@ -6,6 +6,40 @@ module.exports = function (chai, utils) {
   var Assertion = chai.Assertion;
 
   /**
+   * ### .empty
+   *
+   * Asserts that the immutable collection is empty.
+   *
+   * ```js
+   * expect(List()).to.be.empty;
+   * expect(List.of(1, 2, 3)).to.not.be.empty;
+   * ```
+   *
+   * @name empty
+   * @api public
+   */
+
+  Assertion.overwriteProperty('empty', function (_super) {
+    return function () {
+      var obj = this._obj;
+
+      if (obj && obj instanceof Collection) {
+        var size = obj.size;
+        new Assertion(size).a('number');
+
+        this.assert(
+          size === 0,
+          'expected #{this} to be empty but got size #{act}',
+          'expected #{this} to not be empty',
+          0,
+          size
+        );
+      }
+      else _super.apply(this, arguments);
+    };
+  });
+
+  /**
    * ### .size(value)
    *
    * Asserts that the immutable collection's `size` property has the expected
