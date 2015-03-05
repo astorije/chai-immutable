@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "mocha",
-    "coverage": "istanbul cover node_modules/mocha/bin/_mocha"
+    "coverage": "istanbul cover node_modules/mocha/bin/_mocha",
+    "coveralls": "npm run coverage && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
   "homepage": "https://github.com/astorije/chai-immutable",
   "devDependencies": {
     "chai": "2.x.x",
+    "coveralls": "2.x.x",
     "immutable": "3.x.x",
     "istanbul": "0.3.x",
     "mocha": "2.x.x"
