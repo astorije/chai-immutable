@@ -2,15 +2,17 @@
 [![Coverage Status](https://coveralls.io/repos/astorije/chai-immutable/badge.svg)](https://coveralls.io/r/astorije/chai-immutable)
 [![devDependency Status](https://david-dm.org/astorije/chai-immutable/dev-status.svg)](https://david-dm.org/astorije/chai-immutable#info=devDependencies)
 
+# Chai Immutable
+
+This provide a set of [Chai](http://chaijs.com/) assertions for [Facebook's Immutable library for JavaScript collections](http://facebook.github.io/immutable-js/).
+
 ## Installation
 
 Install via [npm](http://npmjs.org):
 
 ```bash
-npm install astorije/chai-immutable
+npm install chai-immutable
 ```
-
-*Until this plugin is published on <https://www.npmjs.com/>, the command above will retrieve the package from GitHub.*
 
 You can then use this plugin as any other Chai plugins:
 
