@@ -1,6 +1,6 @@
 'use strict';
 
-var Immutable = require('immutable')
+var Immutable = require('immutable');
 var Collection = Immutable.Collection;
 
 module.exports = function (chai, utils) {
