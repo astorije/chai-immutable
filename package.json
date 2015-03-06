@@ -1,6 +1,6 @@
 {
   "name": "chai-immutable",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Chai assertions for Immutable",
   "main": "chai-immutable.js",
   "directories": {
