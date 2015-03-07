@@ -18,6 +18,12 @@ describe('chai-immutable', function () {
     it('should be false when given a non-empty collection', function () {
       expect(list3).to.not.be.empty;
     });
+
+    it('should not affect the original assertions', function () {
+      expect([]).to.be.empty;
+      expect('').to.be.empty;
+      expect({}).to.be.empty;
+    });
   });
 
   describe('equal method', function () {
@@ -38,6 +44,14 @@ describe('chai-immutable', function () {
       expect(list3).to.not.eq(List());
       expect(list3).to.deep.equal(List.of(1, 2, 3));
       expect(list3).to.not.deep.equal(List());
+    });
+
+    it('should not affect the original assertions', function () {
+      expect('hello').to.equal('hello');
+      expect(42).to.equal(42);
+      expect(1).to.not.equal(true);
+      expect({ foo: 'bar' }).to.not.equal({ foo: 'bar' });
+      expect({ foo: 'bar' }).to.deep.equal({ foo: 'bar' });
     });
   });
 
@@ -72,6 +86,11 @@ describe('chai-immutable', function () {
       expect(list3).to.not.have.size.greaterThan(42);
     });
 
+    it('should not affect the original assertions of above', function () {
+      expect('foo').to.have.length.above(2);
+      expect([1, 2, 3]).to.have.length.above(2);
+    });
+
     it('below should be true when given a good max size', function () {
       expect(list3).to.have.size.below(42);
     });
@@ -87,12 +106,22 @@ describe('chai-immutable', function () {
       expect(list3).to.not.have.size.lessThan(1);
     });
 
+    it('should not affect the original assertions of below', function () {
+      expect('foo').to.have.length.below(4);
+      expect([1, 2, 3]).to.have.length.below(4);
+    });
+
     it('within should be true when given a good range', function () {
       expect(list3).to.have.size.within(2, 42);
     });
 
     it('within should be false when given a bad range', function () {
       expect(list3).to.not.have.size.within(10, 20);
+    });
+
+    it('should not affect the original assertions of within', function () {
+      expect('foo').to.have.length.within(2, 4);
+      expect([1, 2, 3]).to.have.length.within(2, 4);
     });
 
     it('least should be true when given a good min size', function () {
@@ -108,6 +137,11 @@ describe('chai-immutable', function () {
       expect(list3).to.not.have.size.gte(42);
     });
 
+    it('should not affect the original assertions of least', function () {
+      expect('foo').to.have.length.of.at.least(2);
+      expect([1, 2, 3]).to.have.length.of.at.least(3);
+    });
+
     it('most should be true when given a good max size', function () {
       expect(list3).to.have.size.of.at.most(42);
     });
@@ -119,6 +153,11 @@ describe('chai-immutable', function () {
     it('aliases of most should also work', function () {
       expect(list3).to.have.size.lte(42);
       expect(list3).to.not.have.size.lte(2);
+    });
+
+    it('should not affect the original assertions of most', function () {
+      expect('foo').to.have.length.of.at.most(4);
+      expect([1, 2, 3]).to.have.length.of.at.most(3);
     });
   });
 });
