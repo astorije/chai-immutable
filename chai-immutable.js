@@ -60,7 +60,7 @@ module.exports = function (chai, utils) {
    * @api public
    */
 
-   function assertCollectionEqual(_super) {
+  function assertCollectionEqual(_super) {
     return function (collection) {
       var obj = this._obj;
 
@@ -129,7 +129,7 @@ module.exports = function (chai, utils) {
     );
   }
 
-  function chainCollectionSize () {
+  function chainCollectionSize() {
     utils.flag(this, 'immutable.collection.size', true);
   }
 
@@ -138,7 +138,7 @@ module.exports = function (chai, utils) {
 
   // Numerical comparator overwrites
 
-  function assertCollectionSize_least(_super) {
+  function assertCollectionSizeLeast(_super) {
     return function (n) {
       if (utils.flag(this, 'immutable.collection.size')) {
         new Assertion(this._obj).instanceof(Collection);
@@ -158,7 +158,7 @@ module.exports = function (chai, utils) {
     };
   }
 
-  function assertCollectionSize_most(_super) {
+  function assertCollectionSizeMost(_super) {
     return function (n) {
       if (utils.flag(this, 'immutable.collection.size')) {
         new Assertion(this._obj).instanceof(Collection);
@@ -178,7 +178,7 @@ module.exports = function (chai, utils) {
     };
   }
 
-  function assertCollectionSize_above(_super) {
+  function assertCollectionSizeAbove(_super) {
     return function (n) {
       if (utils.flag(this, 'immutable.collection.size')) {
         new Assertion(this._obj).instanceof(Collection);
@@ -198,7 +198,7 @@ module.exports = function (chai, utils) {
     };
   }
 
-  function assertCollectionSize_below(_super) {
+  function assertCollectionSizeBelow(_super) {
     return function (n) {
       if (utils.flag(this, 'immutable.collection.size')) {
         new Assertion(this._obj).instanceof(Collection);
@@ -218,19 +218,19 @@ module.exports = function (chai, utils) {
     };
   }
 
-  Assertion.overwriteMethod('least', assertCollectionSize_least);
-  Assertion.overwriteMethod('gte', assertCollectionSize_least);
+  Assertion.overwriteMethod('least', assertCollectionSizeLeast);
+  Assertion.overwriteMethod('gte', assertCollectionSizeLeast);
 
-  Assertion.overwriteMethod('most', assertCollectionSize_most);
-  Assertion.overwriteMethod('lte', assertCollectionSize_most);
+  Assertion.overwriteMethod('most', assertCollectionSizeMost);
+  Assertion.overwriteMethod('lte', assertCollectionSizeMost);
 
-  Assertion.overwriteMethod('above', assertCollectionSize_above);
-  Assertion.overwriteMethod('gt', assertCollectionSize_above);
-  Assertion.overwriteMethod('greaterThan', assertCollectionSize_above);
+  Assertion.overwriteMethod('above', assertCollectionSizeAbove);
+  Assertion.overwriteMethod('gt', assertCollectionSizeAbove);
+  Assertion.overwriteMethod('greaterThan', assertCollectionSizeAbove);
 
-  Assertion.overwriteMethod('below', assertCollectionSize_below);
-  Assertion.overwriteMethod('lt', assertCollectionSize_below);
-  Assertion.overwriteMethod('lessThan', assertCollectionSize_below);
+  Assertion.overwriteMethod('below', assertCollectionSizeBelow);
+  Assertion.overwriteMethod('lt', assertCollectionSizeBelow);
+  Assertion.overwriteMethod('lessThan', assertCollectionSizeBelow);
 
   Assertion.overwriteMethod('within', function (_super) {
     return function (min, max) {
@@ -244,7 +244,7 @@ module.exports = function (chai, utils) {
           min <= size && size <= max,
           'expected #{this} to have a size within #{exp} but got #{act}',
           'expected #{this} to not have a size within #{exp} but got #{act}',
-          min + ".." + max,
+          min + '..' + max,
           size
         );
       }
