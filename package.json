@@ -8,6 +8,7 @@
   },
   "scripts": {
     "check-style": "jscs chai-immutable.js test/test.js",
+    "lint": "jshint chai-immutable.js",
     "test": "npm run check-style && mocha",
     "coverage": "istanbul cover _mocha",
     "coveralls": "npm run coverage && cat ./coverage/lcov.info | coveralls"
@@ -34,6 +35,7 @@
     "immutable": "3.x.x",
     "istanbul": "0.3.x",
     "jscs": "1.x.x",
+    "jshint": "2.x.x",
     "mocha": "2.x.x"
   }
 }

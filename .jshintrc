@@ -1,0 +1,19 @@
+{
+  "bitwise": true,
+  "eqeqeq": true,
+  "forin": true,
+  "freeze": true,
+  "funcscope": true,
+  "globalstrict": true,
+  "noarg": true,
+  "nocomma": true,
+  "nonbsp": true,
+  "nonew": true,
+  "sub": true,
+  "undef": true,
+  "unused": true,
+
+  "loopfunc": true,
+
+  "node": true
+}
