@@ -1,7 +1,15 @@
 language: node_js
 node_js:
-  - "0.12"
-  - "0.11"
-  - "0.10"
+- '0.12'
+- '0.11'
+- '0.10'
 after_script:
-  - npm run coveralls
+- npm run coveralls
+deploy:
+  provider: npm
+  email: jeremie@astori.fr
+  api_key:
+    secure: HCyRwNsb61g+X4KsUrbePbOe51GReYkuzkRNokPZR8rtYH0UafmuvBXKxGgu6rPSomBNokCvVhziAwWfPog7behIAWzkhjQlbOgZKiKD1+aA5QL3y1Rel5Qi/PJ+/A45Wx2NIOnRVvSv9+NW3V5gW3/je4Fh3/2cIGz0xr9hIaw=
+  on:
+    tags: true
+    repo: astorije/chai-immutable
