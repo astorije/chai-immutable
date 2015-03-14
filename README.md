@@ -25,7 +25,7 @@ var chaiImmutable = require('chai-immutable');
 chai.use(chaiImmutable);
 ```
 
-## API Reference
+## BDD API Reference
 
 ### .empty
 
@@ -76,4 +76,21 @@ Similarly to `length`/`lengthOf`, `sizeOf` can be used as an alias of
 
 ```js
 expect(List.of(1, 2, 3)).to.have.sizeOf(3);
+```
+
+## TDD API Reference
+
+### .equal(actual, expected)
+
+- **@param** *{Collection}* actual
+- **@param** *{Collection}* expected
+
+Asserts that the values of the target are equvalent to the values of
+`collection`. Note that `.strictEqual` and `.deepEqual` assert exactly like
+`.equal` in the context of Immutable data structures.
+
+```js
+var a = List.of(1, 2, 3);
+var b = List.of(1, 2, 3);
+assert.equal(a, b);
 ```
