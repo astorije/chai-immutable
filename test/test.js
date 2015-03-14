@@ -2,6 +2,7 @@
 
 var chai = require('chai');
 var chaiImmutable = require('../chai-immutable');
+var assert = chai.assert;
 var expect = chai.expect;
 var List = require('immutable').List;
 
@@ -158,6 +159,20 @@ describe('chai-immutable', function () {
     it('should not affect the original assertions of most', function () {
       expect('foo').to.have.length.of.at.most(4);
       expect([1, 2, 3]).to.have.length.of.at.most(3);
+    });
+  });
+
+  describe('assert interface', function () {
+    describe('unoverridden strictEqual and deepEqual assertions', function () {
+      it('should be true when compared structure is equal', function () {
+        assert.strictEqual(list3, List.of(1, 2, 3));
+        assert.deepEqual(list3, List.of(1, 2, 3));
+      });
+
+      it('should be false when compared structure not equal', function () {
+        assert.notStrictEqual(list3, new List());
+        assert.notDeepEqual(list3, new List());
+      });
     });
   });
 });
