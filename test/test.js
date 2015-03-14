@@ -31,7 +31,7 @@ describe('chai-immutable', function () {
       expect(list3).to.equal(List.of(1, 2, 3));
     });
 
-    it('should be true when compared structure not equal', function () {
+    it('should be false when compared structure not equal', function () {
       expect(list3).to.not.equal(new List());
     });
 
