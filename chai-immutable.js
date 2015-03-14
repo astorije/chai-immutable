@@ -7,6 +7,10 @@ module.exports = function (chai, utils) {
   var Assertion = chai.Assertion;
 
   /**
+   * ## BDD API Reference
+   */
+
+  /**
    * ### .empty
    *
    * Asserts that the immutable collection is empty.
@@ -251,4 +255,34 @@ module.exports = function (chai, utils) {
       else _super.apply(this, arguments);
     };
   });
+
+  /**
+   * ## TDD API Reference
+   */
+
+  /**
+   * ### .equal(actual, expected)
+   *
+   * Asserts that the values of the target are equvalent to the values of
+   * `collection`. Note that `.strictEqual` and `.deepEqual` assert exactly like
+   * `.equal` in the context of Immutable data structures.
+   *
+   * ```js
+   * var a = List.of(1, 2, 3);
+   * var b = List.of(1, 2, 3);
+   * assert.equal(a, b);
+   * ```
+   *
+   * @name equal
+   * @param {Collection} actual
+   * @param {Collection} expected
+   * @api public
+   */
+
+  chai.assert.equal = function (actual, expected) {
+    if (actual instanceof Collection) {
+      return new Assertion(actual).equal(expected);
+    }
+    else return chai.assert.equal;
+  };
 };

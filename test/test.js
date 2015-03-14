@@ -163,6 +163,23 @@ describe('chai-immutable', function () {
   });
 
   describe('assert interface', function () {
+    describe('equal assertion', function () {
+      it('should be true when compared structure is equal', function () {
+        assert.equal(list3, List.of(1, 2, 3));
+      });
+
+      it('should be false when compared structure not equal', function () {
+        assert.notEqual(list3, new List());
+      });
+
+      it('should not affect the original assertion', function () {
+        assert.equal(42, 42);
+        assert.equal(3, '3');
+        assert.notEqual('oui', 'non');
+        assert.notEqual({ foo: 'bar' }, { foo: 'bar' });
+      });
+    });
+
     describe('unoverridden strictEqual and deepEqual assertions', function () {
       it('should be true when compared structure is equal', function () {
         assert.strictEqual(list3, List.of(1, 2, 3));
