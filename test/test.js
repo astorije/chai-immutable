@@ -8,11 +8,11 @@ var List = require('immutable').List;
 chai.use(chaiImmutable);
 
 describe('chai-immutable', function () {
-  var list3 = List([1, 2, 3]);
+  var list3 = List.of(1, 2, 3);
 
   describe('empty property', function () {
     it('should be true when given an empty collection', function () {
-      expect(List()).to.be.empty;
+      expect(new List()).to.be.empty;
     });
 
     it('should be false when given a non-empty collection', function () {
@@ -32,18 +32,18 @@ describe('chai-immutable', function () {
     });
 
     it('should be true when compared structure not equal', function () {
-      expect(list3).to.not.equal(List());
+      expect(list3).to.not.equal(new List());
     });
 
     it('aliases of equal should also work', function () {
       expect(list3).to.equal(List.of(1, 2, 3));
-      expect(list3).to.not.equal(List());
+      expect(list3).to.not.equal(new List());
       expect(list3).to.equals(List.of(1, 2, 3));
-      expect(list3).to.not.equals(List());
+      expect(list3).to.not.equals(new List());
       expect(list3).to.eq(List.of(1, 2, 3));
-      expect(list3).to.not.eq(List());
+      expect(list3).to.not.eq(new List());
       expect(list3).to.deep.equal(List.of(1, 2, 3));
-      expect(list3).to.not.deep.equal(List());
+      expect(list3).to.not.deep.equal(new List());
     });
 
     it('should not affect the original assertions', function () {
