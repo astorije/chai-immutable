@@ -260,6 +260,8 @@ module.exports = function (chai, utils) {
    * ## TDD API Reference
    */
 
+  var assert = chai.assert;
+
   /**
    * ### .equal(actual, expected)
    *
@@ -279,10 +281,10 @@ module.exports = function (chai, utils) {
    * @api public
    */
 
-  chai.assert.equal = function (actual, expected) {
+  assert.equal = function (actual, expected) {
     if (actual instanceof Collection) {
       return new Assertion(actual).equal(expected);
     }
-    else return chai.assert.equal;
+    else return assert.equal;
   };
 };
