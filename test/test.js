@@ -193,5 +193,15 @@ describe('chai-immutable', function () {
         assert.notDeepEqual(list3, new List());
       });
     });
+
+    describe('sizeOf assertion', function () {
+      it('should be true when given the right size', function () {
+        assert.sizeOf(List.of(1, 2, 3), 3);
+      });
+
+      it('should work with empty collections', function () {
+        assert.sizeOf(new List(), 0);
+      });
+    });
   });
 });

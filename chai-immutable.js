@@ -287,4 +287,24 @@ module.exports = function (chai, utils) {
     }
     else return assert.equal;
   };
+
+  /**
+   * ### .sizeOf(collection, length)
+   *
+   * Asserts that the immutable collection has the expected size.
+   *
+   * ```js
+   * assert.sizeOf(List.of(1, 2, 3), 3);
+   * assert.sizeOf(new List(), 0);
+   * ```
+   *
+   * @name sizeOf
+   * @param {Collection} collection
+   * @param {Number} size
+   * @api public
+   */
+
+  assert.sizeOf = function (collection, expected) {
+    new Assertion(collection).size(expected);
+  };
 };

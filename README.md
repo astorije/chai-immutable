@@ -94,3 +94,15 @@ var a = List.of(1, 2, 3);
 var b = List.of(1, 2, 3);
 assert.equal(a, b);
 ```
+
+### .sizeOf(collection, length)
+
+- **@param** *{Collection}* collection
+- **@param** *{Number}* size
+
+Asserts that the immutable collection has the expected size.
+
+```js
+assert.sizeOf(List.of(1, 2, 3), 3);
+assert.sizeOf(new List(), 0);
+```
