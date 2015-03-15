@@ -53,8 +53,7 @@ expect(a).to.equal(b);
 
 - **@param** *{ Number }* size
 
-Asserts that the immutable collection's `size` property has the expected
-value.
+Asserts that the immutable collection has the expected size.
 
 ```js
 expect(List.of(1, 2, 3)).to.have.size(3);
@@ -71,8 +70,7 @@ expect(List.of(1, 2, 3)).to.have.size.below(4);
 expect(List.of(1, 2, 3)).to.have.size.within(2,4);
 ```
 
-Similarly to `length`/`lengthOf`, `sizeOf` can be used as an alias of
-`size`:
+Similarly to `length`/`lengthOf`, `sizeOf` is an alias of `size`:
 
 ```js
 expect(List.of(1, 2, 3)).to.have.sizeOf(3);
