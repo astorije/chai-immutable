@@ -4,7 +4,9 @@ var chai = require('chai');
 var chaiImmutable = require('../chai-immutable');
 var assert = chai.assert;
 var expect = chai.expect;
-var List = require('immutable').List;
+var Immutable = require('immutable');
+var List = Immutable.List;
+var Map = Immutable.Map;
 
 chai.use(chaiImmutable);
 
@@ -54,6 +56,12 @@ describe('chai-immutable', function () {
         expect(1).to.not.equal(true);
         expect({ foo: 'bar' }).to.not.equal({ foo: 'bar' });
         expect({ foo: 'bar' }).to.deep.equal({ foo: 'bar' });
+      });
+    });
+
+    describe('key method', function () {
+      it('should be true when given a key that exists', function () {
+        expect(new Map({ foo: 1, bar: 2 })).to.have.key('foo');
       });
     });
 

@@ -2,6 +2,7 @@
 
 var Immutable = require('immutable');
 var Collection = Immutable.Collection;
+var KeyedCollection = Immutable.Collection.Keyed;
 
 module.exports = function (chai, utils) {
   var Assertion = chai.Assertion;
@@ -83,6 +84,37 @@ module.exports = function (chai, utils) {
   Assertion.overwriteMethod('equal', assertCollectionEqual);
   Assertion.overwriteMethod('equals', assertCollectionEqual);
   Assertion.overwriteMethod('eq', assertCollectionEqual);
+
+  /**
+   * ### .key(key)
+   *
+   * Asserts that the keyed collection contains a passed-in key.
+   *
+   * ```js
+   * expect(new Map({ foo: 1, bar: 2 })).to.have.key('foo');
+   * ```
+   *
+   * @name key
+   * @param {String} key
+   * @api public
+   */
+
+  function assertKey(_super) {
+    return function (key) {
+      var obj = this._obj;
+
+      if (obj && obj instanceof KeyedCollection) {
+        this.assert(
+          obj.has(key),
+          'expected #{this} to have key \'' + key + '\'',
+          'expected #{this} to not have key \'' + key + '\''
+        );
+      }
+      else _super.apply(this, arguments);
+    };
+  }
+
+  Assertion.overwriteMethod('key', assertKey);
 
   /**
    * ### .size(value)

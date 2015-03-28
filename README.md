@@ -49,6 +49,16 @@ var b = List.of(1, 2, 3);
 expect(a).to.equal(b);
 ```
 
+### .key(key)
+
+- **@param** *{ String }* key
+
+Asserts that the keyed collection contains a passed-in key.
+
+```js
+expect(new Map({ foo: 1, bar: 2 })).to.have.key('foo');
+```
+
 ### .size(value)
 
 - **@param** *{ Number }* size
