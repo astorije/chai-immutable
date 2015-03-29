@@ -73,6 +73,10 @@ describe('chai-immutable', function () {
       it('should accept an Array of keys to check against', function () {
         expect(mapFoobar).to.have.keys(['bar', 'foo']);
       });
+
+      it('should accept an Object to check against', function () {
+        expect(mapFoobar).to.have.keys({ 'bar': 6, 'foo': 7 });
+      });
     });
 
     describe('size method', function () {

@@ -98,7 +98,7 @@ module.exports = function (chai, utils) {
    * ```
    *
    * @name keys
-   * @param {String...|Array} keyN
+   * @param {String...|Array|Object} keyN
    * @alias key
    * @api public
    */
@@ -108,7 +108,10 @@ module.exports = function (chai, utils) {
       var obj = this._obj;
 
       if (obj && obj instanceof KeyedCollection) {
-        if (utils.type(keys) !== 'array') {
+        if (utils.type(keys) === 'object') {
+          keys = Object.keys(keys);
+        }
+        else if (utils.type(keys) !== 'array') {
           keys = Array.prototype.slice.call(arguments);
         }
 
