@@ -86,35 +86,54 @@ module.exports = function (chai, utils) {
   Assertion.overwriteMethod('eq', assertCollectionEqual);
 
   /**
-   * ### .key(key)
+   * ### .keys(key1[, key2, ...[, keyN]])
    *
-   * Asserts that the keyed collection contains a passed-in key.
+   * Asserts that the keyed collection contains all of the passed-in keys.
+   *
+   * `key` is an alias to `keys`.
    *
    * ```js
    * expect(new Map({ foo: 1, bar: 2 })).to.have.key('foo');
+   * expect(new Map({ foo: 1, bar: 2 })).to.have.keys('foo', 'bar');
    * ```
    *
-   * @name key
-   * @param {String} key
+   * @name keys
+   * @param {String...} keyN
+   * @alias key
    * @api public
    */
 
-  function assertKey(_super) {
-    return function (key) {
+  function assertKeys(_super) {
+    return function () {
       var obj = this._obj;
 
       if (obj && obj instanceof KeyedCollection) {
+        var keys = Array.prototype.slice.call(arguments);
+
+        if (!keys.length) throw new Error('keys required');
+
+        var ok = keys.every(function (key) { return obj.has(key); });
+        var str;
+
+        if (keys.length > 1) {
+          keys = keys.map(utils.inspect);
+          var last = keys.pop();
+          str = 'keys ' + keys.join(', ') + ', and ' + last;
+        }
+        else str = 'key ' + utils.inspect(keys[0]);
+
         this.assert(
-          obj.has(key),
-          'expected #{this} to have key \'' + key + '\'',
-          'expected #{this} to not have key \'' + key + '\''
+          ok,
+          'expected #{this} to have ' + str,
+          'expected #{this} to not have ' + str
         );
       }
       else _super.apply(this, arguments);
     };
   }
 
-  Assertion.overwriteMethod('key', assertKey);
+  Assertion.overwriteMethod('keys', assertKeys);
+  Assertion.overwriteMethod('key', assertKeys);
 
   /**
    * ### .size(value)

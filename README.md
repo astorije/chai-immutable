@@ -49,14 +49,17 @@ var b = List.of(1, 2, 3);
 expect(a).to.equal(b);
 ```
 
-### .key(key)
+### .keys(key1[, key2, ...[, keyN]])
 
-- **@param** *{ String }* key
+- **@param** *{ String... }* key*N*
 
-Asserts that the keyed collection contains a passed-in key.
+Asserts that the keyed collection contains all of the passed-in keys.
+
+`key` is an alias to `keys`.
 
 ```js
 expect(new Map({ foo: 1, bar: 2 })).to.have.key('foo');
+expect(new Map({ foo: 1, bar: 2 })).to.have.keys('foo', 'bar');
 ```
 
 ### .size(value)

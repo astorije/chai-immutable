@@ -59,9 +59,13 @@ describe('chai-immutable', function () {
       });
     });
 
-    describe('key method', function () {
+    describe('keys method', function () {
       it('should be true when given a key that exists', function () {
         expect(new Map({ foo: 1, bar: 2 })).to.have.key('foo');
+      });
+
+      it('should be true when given a key that exists', function () {
+        expect(new Map({ foo: 1, bar: 2 })).to.have.keys('foo', 'bar');
       });
     });
 
