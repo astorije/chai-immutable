@@ -98,17 +98,19 @@ module.exports = function (chai, utils) {
    * ```
    *
    * @name keys
-   * @param {String...} keyN
+   * @param {String...|Array} keyN
    * @alias key
    * @api public
    */
 
   function assertKeys(_super) {
-    return function () {
+    return function (keys) {
       var obj = this._obj;
 
       if (obj && obj instanceof KeyedCollection) {
-        var keys = Array.prototype.slice.call(arguments);
+        if (utils.type(keys) !== 'array') {
+          keys = Array.prototype.slice.call(arguments);
+        }
 
         if (!keys.length) throw new Error('keys required');
 

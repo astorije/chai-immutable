@@ -51,7 +51,7 @@ expect(a).to.equal(b);
 
 ### .keys(key1[, key2, ...[, keyN]])
 
-- **@param** *{ String... }* key*N*
+- **@param** *{ String... | Array }* key*N*
 
 Asserts that the keyed collection contains all of the passed-in keys.
 
