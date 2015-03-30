@@ -66,7 +66,7 @@ describe('chai-immutable', function () {
         expect(mapFoobar).to.have.key('foo');
       });
 
-      it('should be true when given a key that exists', function () {
+      it('should be true when given multiple keys that exist', function () {
         expect(mapFoobar).to.have.keys('foo', 'bar');
       });
 
