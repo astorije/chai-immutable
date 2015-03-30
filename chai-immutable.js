@@ -110,11 +110,18 @@ module.exports = function (chai, utils) {
       var obj = this._obj;
 
       if (obj && obj instanceof KeyedCollection) {
-        if (utils.type(keys) === 'object') {
-          keys = Object.keys(keys);
-        }
-        else if (utils.type(keys) !== 'array') {
-          keys = Array.prototype.slice.call(arguments);
+        switch (utils.type(keys)) {
+          case 'object':
+            keys = Object.keys(keys);
+          case 'array':
+            if (arguments.length > 1) throw new Error(
+              'keys must be given single argument of Array|Object|String, ' +
+              'or multiple String arguments'
+            );
+            break;
+          default:
+            keys = Array.prototype.slice.call(arguments);
+            break;
         }
 
         if (!keys.length) throw new Error('keys required');
