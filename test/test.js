@@ -62,12 +62,20 @@ describe('chai-immutable', function () {
     describe('keys method', function () {
       var mapFoobar = new Map({ foo: 1, bar: 2 });
 
-      it('should be true when given a key that exists', function () {
+      it('should be true when given an existing key', function () {
         expect(mapFoobar).to.have.key('foo');
       });
 
-      it('should be true when given multiple keys that exist', function () {
+      it('should be false when given a non existing key', function () {
+        expect(mapFoobar).to.not.have.key('notfoo');
+      });
+
+      it('should be true when given multiple existing keys', function () {
         expect(mapFoobar).to.have.keys('foo', 'bar');
+      });
+
+      it('should be false when given multiple non existing keys', function () {
+        expect(mapFoobar).to.not.have.keys('not-foo', 'not-bar');
       });
 
       it('should accept an Array of keys to check against', function () {
