@@ -88,7 +88,12 @@ module.exports = function (chai, utils) {
   /**
    * ### .keys(key1[, key2, ...[, keyN]])
    *
-   * Asserts that the keyed collection contains all of the passed-in keys.
+   * Asserts that the keyed collection contains any or all of the passed-in
+   * keys. Use in combination with `any` or `all` will affect what will pass.
+
+   * When used in conjunction with `any`, at least one key that is passed in
+   * must exist in the target object. Note, either `any` or `all` should be used
+   * in the assertion. If neither are used, the assertion is defaulted to `all`.
    *
    * `key` is an alias to `keys`.
    *
@@ -97,6 +102,7 @@ module.exports = function (chai, utils) {
    * expect(new Map({ foo: 1, bar: 2 })).to.have.keys('foo', 'bar');
    * expect(new Map({ foo: 1, bar: 2 })).to.have.keys(['bar', 'foo']);
    * expect(new Map({ foo: 1, bar: 2 })).to.have.keys({ 'bar': 6, 'foo': 7 });
+   * expect(new Map({ foo: 1, bar: 2 })).to.have.any.keys('foo', 'not-foo');
    * ```
    *
    * @name keys
@@ -107,6 +113,8 @@ module.exports = function (chai, utils) {
 
   function assertKeys(_super) {
     return function (keys) {
+      function has(key) { return obj.has(key); }
+
       var obj = this._obj;
 
       if (obj && obj instanceof KeyedCollection) {
@@ -126,13 +134,15 @@ module.exports = function (chai, utils) {
 
         if (!keys.length) throw new Error('keys required');
 
-        var ok = keys.every(function (key) { return obj.has(key); });
+        var any = utils.flag(this, 'any');
+        var ok = any ? keys.some(has) : keys.every(has);
         var str;
 
         if (keys.length > 1) {
           keys = keys.map(utils.inspect);
           var last = keys.pop();
-          str = 'keys ' + keys.join(', ') + ', and ' + last;
+          var conjunction = any ? 'or' : 'and';
+          str = 'keys ' + keys.join(', ') + ', ' + conjunction + ' ' + last;
         }
         else str = 'key ' + utils.inspect(keys[0]);
 

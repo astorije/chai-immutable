@@ -53,7 +53,12 @@ expect(a).to.equal(b);
 
 - **@param** *{ String... | Array | Object }* key*N*
 
-Asserts that the keyed collection contains all of the passed-in keys.
+Asserts that the keyed collection contains any or all of the passed-in
+keys. Use in combination with `any` or `all` will affect what will pass.
+
+When used in conjunction with `any`, at least one key that is passed in
+must exist in the target object. Note, either `any` or `all` should be used
+in the assertion. If neither are used, the assertion is defaulted to `all`.
 
 `key` is an alias to `keys`.
 
