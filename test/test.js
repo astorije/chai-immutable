@@ -93,6 +93,14 @@ describe('chai-immutable', function () {
       it('should be false when used with any and inexisting keys', function () {
         expect(mapFoobar).to.not.have.any.keys('not-foo', 'not-bar');
       });
+
+      it('should be true when used with all and existing keys', function () {
+        expect(mapFoobar).to.have.all.keys('foo', 'bar');
+      });
+
+      it('should be false when used with all and inexisting keys', function () {
+        expect(mapFoobar).to.not.have.all.keys('not-foo', 'bar');
+      });
     });
 
     describe('size method', function () {

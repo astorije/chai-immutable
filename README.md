@@ -68,6 +68,7 @@ expect(new Map({ foo: 1, bar: 2 })).to.have.keys('foo', 'bar');
 expect(new Map({ foo: 1, bar: 2 })).to.have.keys(['bar', 'foo']);
 expect(new Map({ foo: 1, bar: 2 })).to.have.keys({ 'bar': 6, 'foo': 7 });
 expect(new Map({ foo: 1, bar: 2 })).to.have.any.keys('foo', 'not-foo');
+expect(new Map({ foo: 1, bar: 2 })).to.have.all.keys('foo', 'bar');
 ```
 
 ### .size(value)
