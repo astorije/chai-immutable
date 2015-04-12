@@ -112,6 +112,18 @@ describe('chai-immutable', function () {
         expect(mapFoobar).to.not.have.all.keys('not-foo', 'bar');
         expect(objectFoobar).to.not.have.all.keys('not-foo', 'bar');
       });
+
+      it('should not affect the original assertions', function () {
+        expect({ foo: 1, bar: 2 }).to.have.any.keys('foo', 'baz');
+        expect({ foo: 1, bar: 2 }).to.have.any.keys('foo');
+        expect({ foo: 1, bar: 2 }).to.contain.any.keys('bar', 'baz');
+        expect({ foo: 1, bar: 2 }).to.contain.any.keys(['foo']);
+        expect({ foo: 1, bar: 2 }).to.contain.any.keys({ 'foo': 6 });
+        expect({ foo: 1, bar: 2 }).to.have.all.keys(['bar', 'foo']);
+        expect({ foo: 1, bar: 2 }).to.have.all.keys({ 'bar': 6, 'foo': 7 });
+        expect({ foo: 1, bar: 2, baz: 3 }).to.contain.all.keys(['bar', 'foo']);
+        expect({ foo: 1, bar: 2, baz: 3 }).to.contain.all.keys({ 'bar': 6 });
+      });
     });
 
     describe('size method', function () {
