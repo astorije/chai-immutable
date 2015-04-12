@@ -140,7 +140,7 @@ module.exports = function (chai, utils) {
         var str;
 
         if (any) ok = keys.some(has);
-        else ok = keys.every(has) && keys.length === Object.keys(obj.toJS()).length;
+        else ok = keys.every(has) && keys.length === obj.count();
 
         if (keys.length > 1) {
           keys = keys.map(utils.inspect);
