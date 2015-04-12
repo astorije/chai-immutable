@@ -98,7 +98,7 @@ module.exports = function (chai, utils) {
    * `key` is an alias to `keys`.
    *
    * ```js
-   * expect(new Map({ foo: 1, bar: 2 })).to.have.key('foo');
+   * expect(new Map({ foo: 1 })).to.have.key('foo');
    * expect(new Map({ foo: 1, bar: 2 })).to.have.keys('foo', 'bar');
    * expect(new Map({ foo: 1, bar: 2 })).to.have.keys(['bar', 'foo']);
    * expect(new Map({ foo: 1, bar: 2 })).to.have.keys({ 'bar': 6, 'foo': 7 });
