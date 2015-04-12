@@ -136,8 +136,11 @@ module.exports = function (chai, utils) {
         if (!keys.length) throw new Error('keys required');
 
         var any = utils.flag(this, 'any');
-        var ok = any ? keys.some(has) : keys.every(has);
+        var ok;
         var str;
+
+        if (any) ok = keys.some(has);
+        else ok = keys.every(has) && keys.length === Object.keys(obj.toJS()).length;
 
         if (keys.length > 1) {
           keys = keys.map(utils.inspect);

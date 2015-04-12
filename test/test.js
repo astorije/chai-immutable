@@ -63,7 +63,7 @@ describe('chai-immutable', function () {
       var mapFoobar = new Map({ foo: 1, bar: 2 });
 
       it('should be true when given an existing key', function () {
-        expect(mapFoobar).to.have.key('foo');
+        expect(new Map({ foo: 1 })).to.have.key('foo');
       });
 
       it('should be false when given a non existing key', function () {
