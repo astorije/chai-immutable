@@ -61,45 +61,56 @@ describe('chai-immutable', function () {
 
     describe('keys method', function () {
       var mapFoobar = new Map({ foo: 1, bar: 2 });
+      var objectFoobar = { foo: 1, bar: 2 };
 
       it('should be true when given an existing key', function () {
         expect(new Map({ foo: 1 })).to.have.key('foo');
+        expect({ foo: 1 }).to.have.key('foo');
       });
 
       it('should be false when given a non existing key', function () {
         expect(mapFoobar).to.not.have.key('notfoo');
+        expect(objectFoobar).to.not.have.key('notfoo');
       });
 
       it('should be true when given multiple existing keys', function () {
         expect(mapFoobar).to.have.keys('foo', 'bar');
+        expect(objectFoobar).to.have.keys('foo', 'bar');
       });
 
       it('should be false when given multiple non existing keys', function () {
         expect(mapFoobar).to.not.have.keys('not-foo', 'not-bar');
+        expect(objectFoobar).to.not.have.keys('not-foo', 'not-bar');
       });
 
       it('should accept an Array of keys to check against', function () {
         expect(mapFoobar).to.have.keys(['bar', 'foo']);
+        expect(objectFoobar).to.have.keys(['bar', 'foo']);
       });
 
       it('should accept an Object to check against', function () {
         expect(mapFoobar).to.have.keys({ 'bar': 6, 'foo': 7 });
+        expect(objectFoobar).to.have.keys({ 'bar': 6, 'foo': 7 });
       });
 
       it('should be true when used with any and an existing key', function () {
         expect(mapFoobar).to.have.any.keys('foo', 'not-foo');
+        expect(objectFoobar).to.have.any.keys('foo', 'not-foo');
       });
 
       it('should be false when used with any and inexisting keys', function () {
         expect(mapFoobar).to.not.have.any.keys('not-foo', 'not-bar');
+        expect(objectFoobar).to.not.have.any.keys('not-foo', 'not-bar');
       });
 
       it('should be true when used with all and existing keys', function () {
         expect(mapFoobar).to.have.all.keys('foo', 'bar');
+        expect(objectFoobar).to.have.all.keys('foo', 'bar');
       });
 
       it('should be false when used with all and inexisting keys', function () {
         expect(mapFoobar).to.not.have.all.keys('not-foo', 'bar');
+        expect(objectFoobar).to.not.have.all.keys('not-foo', 'bar');
       });
     });
 
