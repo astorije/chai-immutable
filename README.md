@@ -54,11 +54,22 @@ expect(a).to.equal(b);
 - **@param** *{ String... | Array | Object }* key*N*
 
 Asserts that the keyed collection contains any or all of the passed-in
-keys. Use in combination with `any` or `all` will affect what will pass.
+keys. Use in combination with `any`, `all`, `contains`, or `have` will
+affect what will pass.
 
 When used in conjunction with `any`, at least one key that is passed in
-must exist in the target object. Note, either `any` or `all` should be used
-in the assertion. If neither are used, the assertion is defaulted to `all`.
+must exist in the target object. This is regardless whether or not
+the `have` or `contain` qualifiers are used. Note, either `any` or `all`
+should be used in the assertion. If neither are used, the assertion is
+defaulted to `all`.
+
+When both `all` and `contain` are used, the target object must have at
+least all of the passed-in keys but may have more keys not listed.
+
+When both `all` and `have` are used, the target object must both contain
+all of the passed-in keys AND the number of keys in the target object must
+match the number of keys passed in (in other words, a target object must
+have all and only all of the passed-in keys).
 
 `key` is an alias to `keys`.
 
@@ -69,6 +80,7 @@ expect(new Map({ foo: 1, bar: 2 })).to.have.keys(['bar', 'foo']);
 expect(new Map({ foo: 1, bar: 2 })).to.have.keys({ 'bar': 6, 'foo': 7 });
 expect(new Map({ foo: 1, bar: 2 })).to.have.any.keys('foo', 'not-foo');
 expect(new Map({ foo: 1, bar: 2 })).to.have.all.keys('foo', 'bar');
+expect(new Map({ foo: 1, bar: 2 })).to.contain.key('foo');
 ```
 
 ### .size(value)

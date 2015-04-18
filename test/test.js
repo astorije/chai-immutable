@@ -113,6 +113,11 @@ describe('chai-immutable', function () {
         expect(objectFoobar).to.not.have.all.keys('not-foo', 'bar');
       });
 
+      it('should be true when used with contain and an existing key', function () {
+        expect(mapFoobar).to.contain.key('foo');
+        expect(objectFoobar).to.contain.key('foo');
+      });
+
       it('should not affect the original assertions', function () {
         expect({ foo: 1, bar: 2 }).to.have.any.keys('foo', 'baz');
         expect({ foo: 1, bar: 2 }).to.have.any.keys('foo');

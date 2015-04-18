@@ -89,11 +89,22 @@ module.exports = function (chai, utils) {
    * ### .keys(key1[, key2, ...[, keyN]])
    *
    * Asserts that the keyed collection contains any or all of the passed-in
-   * keys. Use in combination with `any` or `all` will affect what will pass.
-
+   * keys. Use in combination with `any`, `all`, `contains`, or `have` will
+   * affect what will pass.
+   *
    * When used in conjunction with `any`, at least one key that is passed in
-   * must exist in the target object. Note, either `any` or `all` should be used
-   * in the assertion. If neither are used, the assertion is defaulted to `all`.
+   * must exist in the target object. This is regardless whether or not
+   * the `have` or `contain` qualifiers are used. Note, either `any` or `all`
+   * should be used in the assertion. If neither are used, the assertion is
+   * defaulted to `all`.
+   *
+   * When both `all` and `contain` are used, the target object must have at
+   * least all of the passed-in keys but may have more keys not listed.
+   *
+   * When both `all` and `have` are used, the target object must both contain
+   * all of the passed-in keys AND the number of keys in the target object must
+   * match the number of keys passed in (in other words, a target object must
+   * have all and only all of the passed-in keys).
    *
    * `key` is an alias to `keys`.
    *
@@ -104,6 +115,7 @@ module.exports = function (chai, utils) {
    * expect(new Map({ foo: 1, bar: 2 })).to.have.keys({ 'bar': 6, 'foo': 7 });
    * expect(new Map({ foo: 1, bar: 2 })).to.have.any.keys('foo', 'not-foo');
    * expect(new Map({ foo: 1, bar: 2 })).to.have.all.keys('foo', 'bar');
+   * expect(new Map({ foo: 1, bar: 2 })).to.contain.key('foo');
    * ```
    *
    * @name keys
@@ -136,24 +148,28 @@ module.exports = function (chai, utils) {
         if (!keys.length) throw new Error('keys required');
 
         var any = utils.flag(this, 'any');
+        var contains = utils.flag(this, 'contains');
         var ok;
-        var str;
+        var str = (contains ? 'contain' : 'have') + ' ';
 
         if (any) ok = keys.some(has);
-        else ok = keys.every(has) && keys.length === obj.count();
+        else {
+          ok = keys.every(has);
+          if (!contains) ok = ok && keys.length === obj.count();
+        }
 
         if (keys.length > 1) {
           keys = keys.map(utils.inspect);
           var last = keys.pop();
           var conjunction = any ? 'or' : 'and';
-          str = 'keys ' + keys.join(', ') + ', ' + conjunction + ' ' + last;
+          str += 'keys ' + keys.join(', ') + ', ' + conjunction + ' ' + last;
         }
-        else str = 'key ' + utils.inspect(keys[0]);
+        else str += 'key ' + utils.inspect(keys[0]);
 
         this.assert(
           ok,
-          'expected #{this} to have ' + str,
-          'expected #{this} to not have ' + str
+          'expected #{this} to ' + str,
+          'expected #{this} to not ' + str
         );
       }
       else _super.apply(this, arguments);
