@@ -143,7 +143,7 @@ describe('chai-immutable', function () {
       it('should also work with alias sizeOf', function () {
         expect(list3).to.have.sizeOf(3);
         expect(list3).to.not.have.sizeOf(42);
-      })
+      });
     });
 
     describe('size property', function () {
