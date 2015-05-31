@@ -51,7 +51,7 @@ expect(a).to.equal(b);
 
 ### .keys(key1[, key2, ...[, keyN]])
 
-- **@param** *{ String... | Array | Object }* key*N*
+- **@param** *{ String... | Array | Object | Collection }* key*N*
 
 Asserts that the keyed collection contains any or all of the passed-in
 keys. Use in combination with `any`, `all`, `contains`, or `have` will
@@ -76,8 +76,12 @@ have all and only all of the passed-in keys).
 ```js
 expect(new Map({ foo: 1 })).to.have.key('foo');
 expect(new Map({ foo: 1, bar: 2 })).to.have.keys('foo', 'bar');
+expect(new Map({ foo: 1, bar: 2 })).to.have.keys(new List(['bar', 'foo']));
+expect(new Map({ foo: 1, bar: 2 })).to.have.keys(new Set(['bar', 'foo']));
+expect(new Map({ foo: 1, bar: 2 })).to.have.keys(new Stack(['bar', 'foo']));
 expect(new Map({ foo: 1, bar: 2 })).to.have.keys(['bar', 'foo']);
 expect(new Map({ foo: 1, bar: 2 })).to.have.keys({ 'bar': 6, 'foo': 7 });
+expect(new Map({ foo: 1, bar: 2 })).to.have.keys(new Map({ 'bar': 6, 'foo': 7 }));
 expect(new Map({ foo: 1, bar: 2 })).to.have.any.keys('foo', 'not-foo');
 expect(new Map({ foo: 1, bar: 2 })).to.have.all.keys('foo', 'bar');
 expect(new Map({ foo: 1, bar: 2 })).to.contain.key('foo');

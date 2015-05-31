@@ -2,7 +2,9 @@
 
 var Immutable = require('immutable');
 var Collection = Immutable.Collection;
+var IndexedCollection = Immutable.Collection.Indexed;
 var KeyedCollection = Immutable.Collection.Keyed;
+var SetCollection = Immutable.Collection.Set;
 
 module.exports = function (chai, utils) {
   var Assertion = chai.Assertion;
@@ -111,15 +113,19 @@ module.exports = function (chai, utils) {
    * ```js
    * expect(new Map({ foo: 1 })).to.have.key('foo');
    * expect(new Map({ foo: 1, bar: 2 })).to.have.keys('foo', 'bar');
+   * expect(new Map({ foo: 1, bar: 2 })).to.have.keys(new List(['bar', 'foo']));
+   * expect(new Map({ foo: 1, bar: 2 })).to.have.keys(new Set(['bar', 'foo']));
+   * expect(new Map({ foo: 1, bar: 2 })).to.have.keys(new Stack(['bar', 'foo']));
    * expect(new Map({ foo: 1, bar: 2 })).to.have.keys(['bar', 'foo']);
    * expect(new Map({ foo: 1, bar: 2 })).to.have.keys({ 'bar': 6, 'foo': 7 });
+   * expect(new Map({ foo: 1, bar: 2 })).to.have.keys(new Map({ 'bar': 6, 'foo': 7 }));
    * expect(new Map({ foo: 1, bar: 2 })).to.have.any.keys('foo', 'not-foo');
    * expect(new Map({ foo: 1, bar: 2 })).to.have.all.keys('foo', 'bar');
    * expect(new Map({ foo: 1, bar: 2 })).to.contain.key('foo');
    * ```
    *
    * @name keys
-   * @param {String...|Array|Object} keyN
+   * @param {String...|Array|Object|Collection} keyN
    * @alias key
    * @api public
    */
@@ -133,10 +139,15 @@ module.exports = function (chai, utils) {
       if (obj && obj instanceof KeyedCollection) {
         switch (utils.type(keys)) {
           case 'object':
-            keys = Object.keys(keys);
+            if (keys instanceof IndexedCollection || keys instanceof SetCollection) {
+              keys = keys.toJS();
+            }
+            else if (keys instanceof KeyedCollection) keys = keys.keySeq().toJS();
+            else keys = Object.keys(keys);
           case 'array':
             if (arguments.length > 1) throw new Error(
-              'keys must be given single argument of Array|Object|String, ' +
+              'keys must be given single argument of ' +
+              'Array|Object|String|Collection, ' +
               'or multiple String arguments'
             );
             break;

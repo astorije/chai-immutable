@@ -7,6 +7,8 @@ var expect = chai.expect;
 var Immutable = require('immutable');
 var List = Immutable.List;
 var Map = Immutable.Map;
+var Set = Immutable.Set;
+var Stack = Immutable.Stack;
 
 chai.use(chaiImmutable);
 
@@ -88,9 +90,25 @@ describe('chai-immutable', function () {
         expect(objectFoobar).to.have.keys(['bar', 'foo']);
       });
 
+      it('should accept an List of keys to check against', function () {
+        expect(mapFoobar).to.have.keys(new List(['bar', 'foo']));
+      });
+
+      it('should accept an Set of keys to check against', function () {
+        expect(mapFoobar).to.have.keys(new Set(['bar', 'foo']));
+      });
+
+      it('should accept an Stack of keys to check against', function () {
+        expect(mapFoobar).to.have.keys(new Stack(['bar', 'foo']));
+      });
+
       it('should accept an Object to check against', function () {
         expect(mapFoobar).to.have.keys({ 'bar': 6, 'foo': 7 });
         expect(objectFoobar).to.have.keys({ 'bar': 6, 'foo': 7 });
+      });
+
+      it('should accept a Map to check against', function () {
+        expect(mapFoobar).to.have.keys(new Map({ 'bar': 6, 'foo': 7 }));
       });
 
       it('should be true when used with any and an existing key', function () {
