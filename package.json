@@ -29,11 +29,11 @@
   },
   "homepage": "https://github.com/astorije/chai-immutable",
   "devDependencies": {
-    "chai": "2.x.x",
-    "coveralls": "2.x.x",
-    "immutable": "3.x.x",
-    "istanbul": "0.3.x",
+    "chai": "^2.3.0",
+    "coveralls": "^2.11.2",
+    "immutable": "^3.7.3",
+    "istanbul": "^0.3.14",
     "jscs": "^1.13.1",
-    "mocha": "2.x.x"
+    "mocha": "^2.2.5"
   }
 }
