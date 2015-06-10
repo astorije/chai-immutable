@@ -61,6 +61,45 @@ describe('chai-immutable', function () {
       });
     });
 
+    describe('include method', function () {
+      it('should be true with an existing value', function () {
+        expect(new List([1, 2, 3])).to.include(2);
+      });
+
+      it('should be false with an inexisting value', function () {
+        expect(new List([1, 2, 3])).to.not.include(42);
+      });
+
+      it('should chain and be true with existing keys', function () {
+        expect(new Map({
+          foo: 'bar',
+          hello: 'universe'
+        })).to.include.keys('foo');
+      });
+
+      it('should chain and be false with inexisting keys', function () {
+        expect(new Map({
+          foo: 'bar',
+          hello: 'universe'
+        })).to.not.include.keys('not-foo');
+      });
+
+      it('aliases of include should also work', function () {
+        expect(new List([1, 2, 3])).contain(2);
+        expect(new List([1, 2, 3])).not.contain(42);
+        expect(new List([1, 2, 3])).contains(2);
+        expect(new List([1, 2, 3])).not.contains(42);
+        expect(new List([1, 2, 3])).includes(2);
+        expect(new List([1, 2, 3])).not.includes(42);
+      });
+
+      it('should not affect the original assertions', function () {
+        expect([1, 2, 3]).to.include(2);
+        expect('foobar').to.contain('foo');
+        expect({ foo: 'bar', hello: 'universe' }).to.include.keys('foo');
+      });
+    });
+
     describe('keys method', function () {
       var mapFoobar = new Map({ foo: 1, bar: 2 });
       var objectFoobar = { foo: 1, bar: 2 };

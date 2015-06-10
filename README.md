@@ -49,6 +49,20 @@ var b = List.of(1, 2, 3);
 expect(a).to.equal(b);
 ```
 
+### .include(value)
+
+- **@param** *{ Mixed }* val
+
+The `include` and `contain` assertions can be used as either property
+based language chains or as methods to assert the inclusion of a value
+in an immutable collection. When used as language chains, they toggle the
+`contains` flag for the `keys` assertion.
+
+```js
+expect(new List([1, 2, 3])).to.include(2);
+expect(new Map({ foo: 'bar', hello: 'universe' })).to.include.keys('foo');
+```
+
 ### .keys(key1[, key2, ...[, keyN]])
 
 - **@param** *{ String... | Array | Object | Collection }* key*N*

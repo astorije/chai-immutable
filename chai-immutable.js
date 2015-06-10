@@ -88,6 +88,57 @@ module.exports = function (chai, utils) {
   Assertion.overwriteMethod('eq', assertCollectionEqual);
 
   /**
+   * ### .include(value)
+   *
+   * The `include` and `contain` assertions can be used as either property
+   * based language chains or as methods to assert the inclusion of a value
+   * in an immutable collection. When used as language chains, they toggle the
+   * `contains` flag for the `keys` assertion.
+   *
+   * ```js
+   * expect(new List([1, 2, 3])).to.include(2);
+   * expect(new Map({ foo: 'bar', hello: 'universe' })).to.include.keys('foo');
+   * ```
+   *
+   * @name include
+   * @alias contain
+   * @alias includes
+   * @alias contains
+   * @param {Mixed} val
+   * @api public
+   */
+
+  function assertCollectionInclude(_super) {
+    return function (val) {
+      var obj = this._obj;
+
+      if (obj && obj instanceof Collection) {
+        this.assert(
+          obj.includes(val),
+          'expected #{this} to include #{exp}',
+          'expected #{this} to not include #{exp}',
+          val
+        );
+      }
+      else _super.apply(this, arguments);
+    };
+  }
+
+  function chainCollectionInclude(_super) {
+    return function (val) {
+      _super.apply(this, arguments);
+    };
+  };
+
+  ['include', 'contain', 'contains', 'includes'].forEach(function (keyword) {
+    Assertion.overwriteChainableMethod(
+      keyword,
+      assertCollectionInclude,
+      chainCollectionInclude
+    );
+  });
+
+  /**
    * ### .keys(key1[, key2, ...[, keyN]])
    *
    * Asserts that the keyed collection contains any or all of the passed-in
