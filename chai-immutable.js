@@ -181,7 +181,7 @@ module.exports = function (chai, utils) {
    * @api public
    */
 
-  function assertKeys(_super) {
+  function assertKeyedCollectionKeys(_super) {
     return function (keys) {
       function has(key) { return obj.has(key); }
 
@@ -238,8 +238,8 @@ module.exports = function (chai, utils) {
     };
   }
 
-  Assertion.overwriteMethod('keys', assertKeys);
-  Assertion.overwriteMethod('key', assertKeys);
+  Assertion.overwriteMethod('keys', assertKeyedCollectionKeys);
+  Assertion.overwriteMethod('key', assertKeyedCollectionKeys);
 
   /**
    * ### .size(value)
