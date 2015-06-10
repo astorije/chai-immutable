@@ -33,6 +33,13 @@ describe('chai-immutable', function () {
     });
 
     describe('equal method', function () {
+      it(
+        'fails when only the "expected" value is an Immutable collection',
+        function () {
+          assert.throws(expect([]).to.equal.bind(null, List()));
+        }
+      );
+
       it('should be true when compared structure is equal', function () {
         expect(list3).to.equal(List.of(1, 2, 3));
       });
@@ -297,6 +304,13 @@ describe('chai-immutable', function () {
 
   describe('TDD interface', function () {
     describe('equal assertion', function () {
+      it(
+        'fails when only the "expected" value is an Immutable collection',
+        function () {
+          assert.throws(assert.equal.bind(null, [], List()));
+        }
+      );
+
       it('should be true when compared structure is equal', function () {
         assert.equal(list3, List.of(1, 2, 3));
       });
