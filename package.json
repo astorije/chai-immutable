@@ -22,7 +22,10 @@
     "assertions",
     "immutable"
   ],
-  "author": "Jérémie Astori",
+  "author": {
+    "name": "Jérémie Astori",
+    "url": "https://jeremie.astori.fr"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/astorije/chai-immutable/issues"
