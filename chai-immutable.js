@@ -71,7 +71,7 @@ module.exports = function (chai, utils) {
     return function (collection) {
       var obj = this._obj;
 
-      if (obj && obj instanceof Collection) {
+      if (obj && obj instanceof Collection || collection instanceof Collection) {
         this.assert(
           Immutable.is(obj, collection),
           'expected #{this} to equal #{exp}',
@@ -437,7 +437,7 @@ module.exports = function (chai, utils) {
    */
 
   assert.equal = function (actual, expected) {
-    if (actual instanceof Collection) {
+    if (actual instanceof Collection || expected instanceof Collection) {
       return new Assertion(actual).equal(expected);
     }
     else return assert.equal;
