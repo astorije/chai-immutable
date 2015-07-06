@@ -36,7 +36,8 @@ describe('chai-immutable', function () {
       it(
         'fails when only the "expected" value is an Immutable collection',
         function () {
-          assert.throws(expect([]).to.equal.bind(null, List()));
+          var fn = function () { expect([]).to.equal(List()); };
+          expect(fn).to.throw(Error);
         }
       );
 
@@ -307,7 +308,8 @@ describe('chai-immutable', function () {
       it(
         'fails when only the "expected" value is an Immutable collection',
         function () {
-          assert.throws(assert.equal.bind(null, [], List()));
+          var fn = function () { assert.equal([], List()); };
+          expect(fn).to.throw(Error);
         }
       );
 
