@@ -438,11 +438,9 @@ module.exports = function (chai, utils) {
    */
 
   assert.equal = function (actual, expected) {
-    /*
-     * It seems like we shouldn't actually need this check, however,
-     * `assert.equal` actually behaves differently than its BDD counterpart!
-     * Namely, the BDD version is strict while the "assert" one isn't.
-     */
+    // It seems like we shouldn't actually need this check, however,
+    // `assert.equal` actually behaves differently than its BDD counterpart!
+    // Namely, the BDD version is strict while the "assert" one isn't.
     if (actual instanceof Collection) {
       return new Assertion(actual).equal(expected);
     }

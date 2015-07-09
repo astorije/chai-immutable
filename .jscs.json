@@ -35,7 +35,6 @@
   "requireOperatorBeforeLineBreak": true,
   "requirePaddingNewLinesAfterUseStrict": true,
   "requirePaddingNewLinesBeforeExport": true,
-  "requirePaddingNewLinesBeforeLineComments": true,
   "requireParenthesesAroundIIFE": true,
   "requireSemicolons": true,
   "requireSpaceAfterBinaryOperators": true,
