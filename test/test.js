@@ -34,7 +34,7 @@ describe('chai-immutable', function () {
 
     describe('equal method', function () {
       it(
-        'fails when only the "expected" value is an Immutable collection',
+        'should fail when only the "expected" value is an Immutable collection',
         function () {
           var fn = function () { expect([]).to.equal(List()); };
           expect(fn).to.throw(Error);
@@ -306,10 +306,10 @@ describe('chai-immutable', function () {
   describe('TDD interface', function () {
     describe('equal assertion', function () {
       it(
-        'fails when only the "expected" value is an Immutable collection',
+        'should fail when only the "expected" value is an Immutable collection',
         function () {
           var fn = function () { assert.equal([], List()); };
-          expect(fn).to.throw(Error);
+          assert.throw(fn);
         }
       );
 
