@@ -1,6 +1,6 @@
 {
   "name": "chai-immutable",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Chai assertions for Facebook's Immutable library for JavaScript collections",
   "main": "chai-immutable.js",
   "directories": {
