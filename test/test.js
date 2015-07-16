@@ -69,6 +69,19 @@ describe('chai-immutable', function () {
       });
     });
 
+    describe('frozen property', function () {
+      it('should be true when given a frozen object', function () {
+        var obj = { foo: 'bar' };
+        Object.freeze(obj);
+        expect(obj).to.be.frozen;
+      });
+
+      it('should be false when given a non-frozen object', function () {
+        var obj = { foo: 'bar' };
+        expect(obj).to.not.be.frozen;
+      });
+    });
+
     describe('include method', function () {
       it('should be true with an existing value', function () {
         expect(new List([1, 2, 3])).to.include(2);

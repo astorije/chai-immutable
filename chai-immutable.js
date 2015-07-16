@@ -88,6 +88,29 @@ module.exports = function (chai, utils) {
   Assertion.overwriteMethod('eq', assertCollectionEqual);
 
   /**
+   * ### .frozen
+   *
+   * Asserts that any object is frozen.
+   *
+   * ```js
+   * var obj = { foo: 'bar' };
+   * Object.freeze(obj);
+   * expect(obj).to.be.frozen;
+   * ```
+   *
+   * @name frozen
+   * @api public
+   */
+
+  Assertion.addProperty('frozen', function () {
+    this.assert(
+      Object.isFrozen(this._obj),
+      'expected #{this} to be frozen',
+      'expected #{this} to not be frozen'
+    );
+  });
+
+  /**
    * ### .include(value)
    *
    * The `include` and `contain` assertions can be used as either property
