@@ -49,16 +49,6 @@ var b = List.of(1, 2, 3);
 expect(a).to.equal(b);
 ```
 
-### .frozen
-
-Asserts that any object is frozen.
-
-```js
-var obj = { foo: 'bar' };
-Object.freeze(obj);
-expect(obj).to.be.frozen;
-```
-
 ### .include(value)
 
 - **@param** *{ Mixed }* val
@@ -153,29 +143,6 @@ Asserts that the values of the target are equvalent to the values of
 var a = List.of(1, 2, 3);
 var b = List.of(1, 2, 3);
 assert.equal(a, b);
-```
-
-### .isFrozen(object)
-
-- **@param** *{ Object }* object
-
-Asserts that any object is frozen.
-
-```js
-var obj = { foo: 'bar' };
-Object.freeze(obj);
-assert.isFrozen(obj);
-```
-
-### .isNotFrozen(object)
-
-- **@param** *{ Object }* object
-
-Asserts that any object is not frozen.
-
-```js
-var obj = { foo: 'bar' };
-assert.isNotFrozen(obj);
 ```
 
 ### .sizeOf(collection, length)
