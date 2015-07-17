@@ -155,6 +155,29 @@ var b = List.of(1, 2, 3);
 assert.equal(a, b);
 ```
 
+### .isFrozen(object)
+
+- **@param** *{ Object }* object
+
+Asserts that any object is frozen.
+
+```js
+var obj = { foo: 'bar' };
+Object.freeze(obj);
+assert.isFrozen(obj);
+```
+
+### .isNotFrozen(object)
+
+- **@param** *{ Object }* object
+
+Asserts that any object is not frozen.
+
+```js
+var obj = { foo: 'bar' };
+assert.isNotFrozen(obj);
+```
+
 ### .sizeOf(collection, length)
 
 - **@param** *{Collection}* collection

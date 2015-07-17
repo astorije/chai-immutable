@@ -471,6 +471,45 @@ module.exports = function (chai, utils) {
   };
 
   /**
+   * ### .isFrozen(object)
+   *
+   * Asserts that any object is frozen.
+   *
+   * ```js
+   * var obj = { foo: 'bar' };
+   * Object.freeze(obj);
+   * assert.isFrozen(obj);
+   * ```
+   *
+   * @name isFrozen
+   * @param {Object} object
+   * @api public
+   */
+
+  assert.isFrozen = function (object) {
+    new Assertion(object).frozen;
+  };
+
+  /**
+   * ### .isNotFrozen(object)
+   *
+   * Asserts that any object is not frozen.
+   *
+   * ```js
+   * var obj = { foo: 'bar' };
+   * assert.isNotFrozen(obj);
+   * ```
+   *
+   * @name isNotFrozen
+   * @param {Object} object
+   * @api public
+   */
+
+  assert.isNotFrozen = function (object) {
+    new Assertion(object).not.frozen;
+  };
+
+  /**
    * ### .sizeOf(collection, length)
    *
    * Asserts that the immutable collection has the expected size.

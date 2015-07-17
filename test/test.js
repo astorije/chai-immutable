@@ -354,6 +354,21 @@ describe('chai-immutable', function () {
       });
     });
 
+    describe('isFrozen assertion', function () {
+      it('should be true when given a frozen object', function () {
+        var obj = { foo: 'bar' };
+        Object.freeze(obj);
+        assert.isFrozen(obj);
+      });
+    });
+
+    describe('isNotFrozen assertion', function () {
+      it('should be false when given a non-frozen object', function () {
+        var obj = { foo: 'bar' };
+        assert.isNotFrozen(obj);
+      });
+    });
+
     describe('sizeOf assertion', function () {
       it('should be true when given the right size', function () {
         assert.sizeOf(List.of(1, 2, 3), 3);
