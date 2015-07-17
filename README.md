@@ -142,8 +142,8 @@ expect(List.of(1, 2, 3)).to.have.sizeOf(3);
 
 ### .equal(actual, expected)
 
-- **@param** *{Collection}* actual
-- **@param** *{Collection}* expected
+- **@param** *{ Collection }* actual
+- **@param** *{ Collection }* expected
 
 Asserts that the values of the target are equvalent to the values of
 `collection`. Note that `.strictEqual` and `.deepEqual` assert exactly like
@@ -180,8 +180,8 @@ assert.isNotFrozen(obj);
 
 ### .sizeOf(collection, length)
 
-- **@param** *{Collection}* collection
-- **@param** *{Number}* size
+- **@param** *{ Collection }* collection
+- **@param** *{ Number }* size
 
 Asserts that the immutable collection has the expected size.
 
