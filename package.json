@@ -31,6 +31,9 @@
     "url": "https://github.com/astorije/chai-immutable/issues"
   },
   "homepage": "https://github.com/astorije/chai-immutable",
+  "peerDependencies": {
+    "chai": ">= 2.0.0 < 4"
+  },
   "devDependencies": {
     "chai": "^2.3.0",
     "coveralls": "^2.11.2",
