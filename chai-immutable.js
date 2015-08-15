@@ -9,7 +9,7 @@
   }
   else if (typeof define === 'function' && define.amd) {
     // AMD
-    define(function () { return chaiImmutable; });
+    throw new Error('chai-immutable is not compatible with an AMD loader yet.');
   }
   else {
     // Other environments (usually <script> tag)
