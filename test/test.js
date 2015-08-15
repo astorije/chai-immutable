@@ -1,16 +1,19 @@
 'use strict';
 
-var chai = require('chai');
-var chaiImmutable = require('../chai-immutable');
+if (!chai) {
+  var chai = require('chai');
+  var chaiImmutable = require('../chai-immutable');
+  var Immutable = require('immutable');
+
+  chai.use(chaiImmutable);
+};
+
 var assert = chai.assert;
 var expect = chai.expect;
-var Immutable = require('immutable');
 var List = Immutable.List;
 var Map = Immutable.Map;
 var Set = Immutable.Set;
 var Stack = Immutable.Stack;
-
-chai.use(chaiImmutable);
 
 describe('chai-immutable', function () {
   var list3 = List.of(1, 2, 3);
