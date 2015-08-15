@@ -1,6 +1,6 @@
-(function () {
-  'use strict';
+'use strict';
 
+(function () {
   if (typeof require === 'function' &&
       typeof exports === 'object' &&
       typeof module === 'object') {
