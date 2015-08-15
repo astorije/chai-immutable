@@ -11,6 +11,8 @@ This provide a set of [Chai](http://chaijs.com/) assertions for [Facebook's Immu
 
 ## Installation
 
+### Node.js
+
 Install via [npm](http://npmjs.org):
 
 ```bash
@@ -24,6 +26,15 @@ var chai = require('chai');
 var chaiImmutable = require('chai-immutable');
 
 chai.use(chaiImmutable);
+```
+
+### In the browser
+
+Include this plugin after including Chai and Immutable. It will automatically
+plug in to Chai and be ready for use:
+
+```html
+<script src="chai-immutable.js"></script>
 ```
 
 ## BDD API Reference
