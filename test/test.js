@@ -1,12 +1,15 @@
 'use strict';
 
+var typeEnv;
 if (!chai) {
   var chai = require('chai');
   var chaiImmutable = require('../chai-immutable');
   var Immutable = require('immutable');
 
   chai.use(chaiImmutable);
-};
+  typeEnv = 'Node.js';
+}
+else typeEnv = 'PhantomJS';
 
 var assert = chai.assert;
 var expect = chai.expect;
@@ -15,7 +18,7 @@ var Map = Immutable.Map;
 var Set = Immutable.Set;
 var Stack = Immutable.Stack;
 
-describe('chai-immutable', function () {
+describe('chai-immutable (' + typeEnv + ')', function () {
   var list3 = List.of(1, 2, 3);
 
   describe('BDD interface', function () {
