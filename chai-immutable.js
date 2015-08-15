@@ -1,11 +1,11 @@
 'use strict';
 
-(function () {
+(function (context, factory) {
   if (typeof require === 'function' &&
       typeof exports === 'object' &&
       typeof module === 'object') {
     // Node.js®
-    module.exports = chaiImmutable;
+    module.exports = factory(require('immutable'));
   }
   else if (typeof define === 'function' && define.amd) {
     // AMD
@@ -13,16 +13,15 @@
   }
   else {
     // Other environments (usually <script> tag)
-    chai.use(chaiImmutable);
+    context.chai.use(factory(context.Immutable));
   }
+}(this, function (Immutable) {
+  return function (chai, utils) {
+    var Collection = Immutable.Collection;
+    var IndexedCollection = Immutable.Collection.Indexed;
+    var KeyedCollection = Immutable.Collection.Keyed;
+    var SetCollection = Immutable.Collection.Set;
 
-  var Immutable = require('immutable');
-  var Collection = Immutable.Collection;
-  var IndexedCollection = Immutable.Collection.Indexed;
-  var KeyedCollection = Immutable.Collection.Keyed;
-  var SetCollection = Immutable.Collection.Set;
-
-  function chaiImmutable(chai, utils) {
     var Assertion = chai.Assertion;
 
     /**
@@ -484,4 +483,4 @@
       new Assertion(collection).size(expected);
     };
   };
-}());
+}));
