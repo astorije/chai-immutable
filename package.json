@@ -36,7 +36,7 @@
     "chai": ">= 2.0.0 < 4"
   },
   "devDependencies": {
-    "chai": "^2.3.0",
+    "chai": "^3.2.0",
     "coveralls": "^2.11.2",
     "immutable": "^3.7.3",
     "istanbul": "^0.3.14",
