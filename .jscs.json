@@ -14,7 +14,9 @@
   "disallowPaddingNewlinesInBlocks": true,
   "disallowSpaceAfterObjectKeys": true,
   "disallowSpaceAfterPrefixUnaryOperators": true,
+  "disallowSpaceBeforeComma": true,
   "disallowSpaceBeforePostfixUnaryOperators": true,
+  "disallowSpaceBeforeSemicolon": true,
   "disallowSpacesInCallExpression": true,
   "disallowSpacesInFunctionDeclaration": { "beforeOpeningRoundBrace": true },
   "disallowSpacesInNamedFunctionExpression": { "beforeOpeningRoundBrace": true },
@@ -32,6 +34,7 @@
   "requireKeywordsOnNewLine": ["catch", "else"],
   "requireLineBreakAfterVariableAssignment": true,
   "requireLineFeedAtFileEnd": true,
+  "requireMatchingFunctionName": true,
   "requireOperatorBeforeLineBreak": true,
   "requirePaddingNewLinesAfterUseStrict": true,
   "requirePaddingNewLinesBeforeExport": true,
@@ -58,6 +61,7 @@
   "validateAlignedFunctionParameters": true,
   "validateIndentation": 2,
   "validateLineBreaks": "LF",
+  "validateOrderInObjectKeys": "asc",
   "validateParameterSeparator": ", ",
   "validateQuoteMarks": "'"
 }
