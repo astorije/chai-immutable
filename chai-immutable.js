@@ -4,7 +4,7 @@
   if (typeof require === 'function' &&
       typeof exports === 'object' &&
       typeof module === 'object') {
-    // Node.js®
+    // Node.js
     module.exports = factory(require('immutable'));
   }
   else if (typeof define === 'function' && define.amd) {
