@@ -20,6 +20,10 @@ var Stack = Immutable.Stack;
 
 describe('chai-immutable (' + typeEnv + ')', function () {
   var list3 = List.of(1, 2, 3);
+  var deepMap = new Map({
+    foo: 'bar',
+    list: List.of(1, 2, 3)
+  });
 
   describe('BDD interface', function () {
     describe('empty property', function () {
@@ -74,6 +78,32 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect(1).to.not.equal(true);
         expect({ foo: 'bar' }).to.not.equal({ foo: 'bar' });
         expect({ foo: 'bar' }).to.deep.equal({ foo: 'bar' });
+      });
+
+      it('should work on deep structures that are equal', function () {
+        var sameDeepMap = new Map({
+          foo: 'bar',
+          list: List.of(1, 2, 3)
+        });
+
+        expect(deepMap).to.equal(sameDeepMap);
+        expect(deepMap).to.equals(sameDeepMap);
+        expect(deepMap).to.eq(sameDeepMap);
+        expect(deepMap).to.eql(sameDeepMap);
+        expect(deepMap).to.deep.equal(sameDeepMap);
+      });
+
+      it('should work on deep structures that are not equal', function () {
+        var differentDeepMap = new Map({
+          foo: 'bar',
+          list: List.of(42)
+        });
+
+        expect(deepMap).to.not.equal(differentDeepMap);
+        expect(deepMap).to.not.equals(differentDeepMap);
+        expect(deepMap).to.not.eq(differentDeepMap);
+        expect(deepMap).to.not.eql(differentDeepMap);
+        expect(deepMap).to.not.deep.equal(differentDeepMap);
       });
     });
 
@@ -347,6 +377,28 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         assert.notStrictEqual(list3, new List());
         assert.notDeepEqual(list3, new List());
       });
+    });
+
+    it('should work on deep structures that are equal', function () {
+      var sameDeepMap = new Map({
+        foo: 'bar',
+        list: List.of(1, 2, 3)
+      });
+
+      assert.equal(deepMap, sameDeepMap);
+      assert.strictEqual(deepMap, sameDeepMap);
+      assert.deepEqual(deepMap, sameDeepMap);
+    });
+
+    it('should work on deep structures that are not equal', function () {
+      var differentDeepMap = new Map({
+        foo: 'bar',
+        list: List.of(42)
+      });
+
+      assert.notEqual(deepMap, differentDeepMap);
+      assert.notStrictEqual(deepMap, differentDeepMap);
+      assert.notDeepEqual(deepMap, differentDeepMap);
     });
 
     describe('sizeOf assertion', function () {
