@@ -83,6 +83,7 @@
      * @name equal
      * @alias equals
      * @alias eq
+     * @alias eql
      * @alias deep.equal
      * @param {Collection} value
      * @api public
@@ -107,6 +108,7 @@
     Assertion.overwriteMethod('equal', assertCollectionEqual);
     Assertion.overwriteMethod('equals', assertCollectionEqual);
     Assertion.overwriteMethod('eq', assertCollectionEqual);
+    Assertion.overwriteMethod('eql', assertCollectionEqual);
 
     /**
      * ### .include(value)

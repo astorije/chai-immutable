@@ -62,6 +62,8 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect(list3).to.not.equals(new List());
         expect(list3).to.eq(List.of(1, 2, 3));
         expect(list3).to.not.eq(new List());
+        expect(list3).to.eql(List.of(1, 2, 3));
+        expect(list3).to.not.eql(new List());
         expect(list3).to.deep.equal(List.of(1, 2, 3));
         expect(list3).to.not.deep.equal(new List());
       });
