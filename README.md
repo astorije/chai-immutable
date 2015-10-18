@@ -62,6 +62,12 @@ var b = List.of(1, 2, 3);
 expect(a).to.equal(b);
 ```
 
+Immutable data structures should only contain other immutable data
+structures (unlike `Array`s and `Object`s) to be considered immutable and
+properly work against `.equal()`. See
+[this issue](https://github.com/astorije/chai-immutable/issues/24) for
+more information.
+
 ### .include(value)
 
 - **@param** *{ Mixed }* val
@@ -149,14 +155,20 @@ expect(List.of(1, 2, 3)).to.have.sizeOf(3);
 - **@param** *{ Collection }* expected
 
 Asserts that the values of the target are equvalent to the values of
-`collection`. Note that `.strictEqual` and `.deepEqual` assert exactly like
-`.equal` in the context of Immutable data structures.
+`collection`. Note that `.strictEqual()` and `.deepEqual()` assert
+exactly like `.equal()` in the context of Immutable data structures.
 
 ```js
 var a = List.of(1, 2, 3);
 var b = List.of(1, 2, 3);
 assert.equal(a, b);
 ```
+
+Immutable data structures should only contain other immutable data
+structures (unlike `Array`s and `Object`s) to be considered immutable and
+properly work against `.equal()`, `.strictEqual()` or `.deepEqual()`. See
+[this issue](https://github.com/astorije/chai-immutable/issues/24) for
+more information.
 
 ### .sizeOf(collection, length)
 
