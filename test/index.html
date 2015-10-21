@@ -15,11 +15,8 @@
     <script>mocha.setup('bdd')</script>
     <script src="./test.js"></script>
     <script>
-      if (window.mochaPhantomJS) mochaPhantomJS.run();
-      else {
-        mocha.checkLeaks();
-        mocha.run();
-      }
+      mocha.checkLeaks();
+      mocha.run();
     </script>
   </body>
 </html>
