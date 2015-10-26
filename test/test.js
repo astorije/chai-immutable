@@ -349,15 +349,28 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         assert.equal(list3, List.of(1, 2, 3));
       });
 
+      it('should not affect the original assertion', function () {
+        assert.equal(42, 42);
+        assert.equal(3, '3');
+      });
+    });
+
+    describe('notEqual assertion', function () {
       it('should pass given different values', function () {
         assert.notEqual(list3, new List());
       });
 
       it('should not affect the original assertion', function () {
-        assert.equal(42, 42);
-        assert.equal(3, '3');
         assert.notEqual('oui', 'non');
         assert.notEqual({ foo: 'bar' }, { foo: 'bar' });
+      });
+
+      it.skip('should pass given non-Immutable value', function () {
+        assert.notEqual([], List());
+      });
+
+      it('should pass given equal values', function () {
+        assert.notEqual(list3, List.of(1, 2, 3));
       });
     });
 
@@ -366,7 +379,9 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         assert.strictEqual(list3, List.of(1, 2, 3));
         assert.deepEqual(list3, List.of(1, 2, 3));
       });
+    });
 
+    describe('unoverridden notStrictEqual and notDeepEqual assertions', function () {
       it('should pass given different values', function () {
         assert.notStrictEqual(list3, new List());
         assert.notDeepEqual(list3, new List());
