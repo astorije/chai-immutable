@@ -18,11 +18,30 @@ var Map = Immutable.Map;
 var Set = Immutable.Set;
 var Stack = Immutable.Stack;
 
+/*!
+ * Test helper to check that a given function (wrapping the assertion) will
+ * fail.
+ */
+function fail(fn) {
+  expect(fn).to.throw(chai.AssertionError);
+}
+
 describe('chai-immutable (' + typeEnv + ')', function () {
   var list3 = List.of(1, 2, 3);
+
   var deepMap = new Map({
     foo: 'bar',
     list: List.of(1, 2, 3)
+  });
+
+  var sameDeepMap = new Map({
+    foo: 'bar',
+    list: List.of(1, 2, 3)
+  });
+
+  var differentDeepMap = new Map({
+    foo: 'bar',
+    list: List.of(42)
   });
 
   describe('BDD interface', function () {
@@ -40,14 +59,17 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect('').to.be.empty;
         expect({}).to.be.empty;
       });
+
+      it('should fail given a non-empty collection', function () {
+        fail(function () { expect(list3).to.be.empty; });
+      });
+
+      it('should fail using `not` given an empty collection', function () {
+        fail(function () { expect(new List()).to.not.be.empty; });
+      });
     });
 
     describe('equal method', function () {
-      it('should fail given a non-Immutable value', function () {
-        var fn = function () { expect([]).to.equal(List()); };
-        expect(fn).to.throw(Error);
-      });
-
       it('should pass given equal values', function () {
         expect(list3).to.equal(List.of(1, 2, 3));
       });
@@ -77,12 +99,7 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect({ foo: 'bar' }).to.deep.equal({ foo: 'bar' });
       });
 
-      it('should work on deep structures that are equal', function () {
-        var sameDeepMap = new Map({
-          foo: 'bar',
-          list: List.of(1, 2, 3)
-        });
-
+      it('should pass given deeply equal values', function () {
         expect(deepMap).to.equal(sameDeepMap);
         expect(deepMap).to.equals(sameDeepMap);
         expect(deepMap).to.eq(sameDeepMap);
@@ -90,17 +107,44 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect(deepMap).to.deep.equal(sameDeepMap);
       });
 
-      it('should work on deep structures that are not equal', function () {
-        var differentDeepMap = new Map({
-          foo: 'bar',
-          list: List.of(42)
-        });
-
+      it('should pass using `not` given deeply different values', function () {
         expect(deepMap).to.not.equal(differentDeepMap);
         expect(deepMap).to.not.equals(differentDeepMap);
         expect(deepMap).to.not.eq(differentDeepMap);
         expect(deepMap).to.not.eql(differentDeepMap);
         expect(deepMap).to.not.deep.equal(differentDeepMap);
+      });
+
+      it('should pass using `not` given a non-Immutable value', function () {
+        expect([]).to.not.equal(List());
+      });
+
+      it('should fail given a non-Immutable value', function () {
+        fail(function () { expect([]).to.equal(List()); });
+      });
+
+      it('should fail given different values', function () {
+        fail(function () { expect(list3).to.equal(new List()); });
+      });
+
+      it('should fail using `not` given equal values', function () {
+        fail(function () { expect(list3).to.not.equal(List.of(1, 2, 3)); });
+      });
+
+      it('should fail given deeply different values', function () {
+        fail(function () { expect(deepMap).to.equal(differentDeepMap); });
+        fail(function () { expect(deepMap).to.equals(differentDeepMap); });
+        fail(function () { expect(deepMap).to.eq(differentDeepMap); });
+        fail(function () { expect(deepMap).to.eql(differentDeepMap); });
+        fail(function () { expect(deepMap).to.deep.equal(differentDeepMap); });
+      });
+
+      it('should fail using `not` given deeply equal values', function () {
+        fail(function () { expect(deepMap).to.not.equal(sameDeepMap); });
+        fail(function () { expect(deepMap).to.not.equals(sameDeepMap); });
+        fail(function () { expect(deepMap).to.not.eq(sameDeepMap); });
+        fail(function () { expect(deepMap).to.not.eql(sameDeepMap); });
+        fail(function () { expect(deepMap).to.not.deep.equal(sameDeepMap); });
       });
     });
 
@@ -140,6 +184,32 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect([1, 2, 3]).to.include(2);
         expect('foobar').to.contain('foo');
         expect({ foo: 'bar', hello: 'universe' }).to.include.keys('foo');
+      });
+
+      it('should fail given an inexisting value', function () {
+        fail(function () { expect(new List([1, 2, 3])).to.include(42); });
+      });
+
+      it('should fail using `not` given an existing value', function () {
+        fail(function () { expect(new List([1, 2, 3])).not.to.include(2); });
+      });
+
+      it('should chain and fail given an inexisting key', function () {
+        fail(function () {
+          expect(new Map({
+            foo: 'bar',
+            hello: 'universe'
+          })).to.include.keys('not-foo');
+        });
+      });
+
+      it('should chain and fail using `not` given an existing key', function () {
+        fail(function () {
+          expect(new Map({
+            foo: 'bar',
+            hello: 'universe'
+          })).to.not.include.keys('foo');
+        });
       });
     });
 
@@ -229,6 +299,51 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect({ x: 1, y: 2, z: 3 }).to.contain.all.keys(['x', 'y']);
         expect({ x: 1, y: 2, z: 3 }).to.contain.all.keys({ 'x': 6 });
       });
+
+      it('should fail given an inexisting key', function () {
+        fail(function () { expect(new Map({ x: 1 })).to.have.key('z'); });
+        fail(function () { expect({ x: 1 }).to.have.key('z'); });
+      });
+
+      it('should fail using `not` given an inexisting key', function () {
+        fail(function () { expect(map).to.not.have.key('x'); });
+        fail(function () { expect(obj).to.not.have.key('x'); });
+      });
+
+      it('should fail given multiple inexisting keys', function () {
+        fail(function () { expect(map).to.have.keys('z1', 'z2'); });
+        fail(function () { expect(obj).to.have.keys('z1', 'z2'); });
+      });
+
+      it('should fail using `not` given multiple existing keys', function () {
+        fail(function () { expect(map).to.not.have.keys('x', 'y'); });
+        fail(function () { expect(obj).to.not.have.keys('x', 'y'); });
+      });
+
+      it('should fail using `any` given inexisting keys', function () {
+        fail(function () { expect(map).to.have.any.keys('z1', 'z2'); });
+        fail(function () { expect(obj).to.have.any.keys('z1', 'z2'); });
+      });
+
+      it('should fail using `not` and `any` given an existing key', function () {
+        fail(function () { expect(map).to.not.have.any.keys('x', 'z'); });
+        fail(function () { expect(obj).to.not.have.any.keys('x', 'z'); });
+      });
+
+      it('should fail using `all` given an inexisting key', function () {
+        fail(function () { expect(map).to.have.all.keys('z1', 'y'); });
+        fail(function () { expect(obj).to.have.all.keys('z1', 'y'); });
+      });
+
+      it('should fail using `not` and `all` given existing keys', function () {
+        fail(function () { expect(map).to.not.have.all.keys('x', 'y'); });
+        fail(function () { expect(obj).to.not.have.all.keys('x', 'y'); });
+      });
+
+      it('should fail using `contain` given an inexisting key', function () {
+        fail(function () { expect(map).to.contain.key('z'); });
+        fail(function () { expect(obj).to.contain.key('z'); });
+      });
     });
 
     describe('size method', function () {
@@ -243,6 +358,14 @@ describe('chai-immutable (' + typeEnv + ')', function () {
       it('should also work with alias sizeOf', function () {
         expect(list3).to.have.sizeOf(3);
         expect(list3).to.not.have.sizeOf(42);
+      });
+
+      it('should fail given the wrong size', function () {
+        fail(function () { expect(list3).to.have.size(42); });
+      });
+
+      it('should fail using `not` given the right size', function () {
+        fail(function () { expect(list3).to.not.have.size(3); });
       });
     });
 
@@ -267,6 +390,14 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect([1, 2, 3]).to.have.length.above(2);
       });
 
+      it('above should fail given a bad min size', function () {
+        fail(function () { expect(list3).to.have.size.above(42); });
+      });
+
+      it('above should fail using `not` given a good min size', function () {
+        fail(function () { expect(list3).to.not.have.size.above(2); });
+      });
+
       it('below should pass given a good max size', function () {
         expect(list3).to.have.size.below(42);
       });
@@ -287,6 +418,14 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect([1, 2, 3]).to.have.length.below(4);
       });
 
+      it('below should fail given a bad max size', function () {
+        fail(function () { expect(list3).to.have.size.below(1); });
+      });
+
+      it('below should fail using `not` given a good max size', function () {
+        fail(function () { expect(list3).to.not.have.size.below(42); });
+      });
+
       it('within should pass given a good range', function () {
         expect(list3).to.have.size.within(2, 42);
       });
@@ -298,6 +437,14 @@ describe('chai-immutable (' + typeEnv + ')', function () {
       it('should not affect the original assertions of within', function () {
         expect('foo').to.have.length.within(2, 4);
         expect([1, 2, 3]).to.have.length.within(2, 4);
+      });
+
+      it('within should fail given a bad range', function () {
+        fail(function () { expect(list3).to.have.size.within(10, 20); });
+      });
+
+      it('within should fail using `not` given a good range', function () {
+        fail(function () { expect(list3).to.not.have.size.within(2, 42); });
       });
 
       it('least should pass given a good min size', function () {
@@ -318,6 +465,14 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect([1, 2, 3]).to.have.length.of.at.least(3);
       });
 
+      it('least should fail given a bad min size', function () {
+        fail(function () { expect(list3).to.have.size.of.at.least(42); });
+      });
+
+      it('least should fail using `not` given a good min size', function () {
+        fail(function () { expect(list3).to.not.have.size.of.at.least(2); });
+      });
+
       it('most should pass given a good max size', function () {
         expect(list3).to.have.size.of.at.most(42);
       });
@@ -335,23 +490,42 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect('foo').to.have.length.of.at.most(4);
         expect([1, 2, 3]).to.have.length.of.at.most(3);
       });
+
+      it('most should fail given a good max size', function () {
+        fail(function () { expect(list3).to.have.size.of.at.most(2); });
+      });
+
+      it('most should fail using `not` given a bad max size', function () {
+        fail(function () { expect(list3).to.not.have.size.of.at.most(42); });
+      });
     });
   });
 
   describe('TDD interface', function () {
     describe('equal assertion', function () {
-      it('should fail given a non-Immutable value', function () {
-        var fn = function () { assert.equal([], List()); };
-        assert.throw(fn);
-      });
-
       it('should pass given equal values', function () {
         assert.equal(list3, List.of(1, 2, 3));
+      });
+
+      it('should pass given deeply equal values', function () {
+        assert.equal(deepMap, sameDeepMap);
       });
 
       it('should not affect the original assertion', function () {
         assert.equal(42, 42);
         assert.equal(3, '3');
+      });
+
+      it('should fail given a non-Immutable value', function () {
+        fail(function () { assert.equal([], List()); });
+      });
+
+      it('should fail given different values', function () {
+        fail(function () { assert.equal(list3, new List()); });
+      });
+
+      it('should fail given deeply different values', function () {
+        fail(function () { assert.equal(deepMap, differentDeepMap); });
       });
     });
 
@@ -360,17 +534,25 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         assert.notEqual(list3, new List());
       });
 
+      it('should pass given deeply different values', function () {
+        assert.notEqual(deepMap, differentDeepMap);
+      });
+
       it('should not affect the original assertion', function () {
         assert.notEqual('oui', 'non');
         assert.notEqual({ foo: 'bar' }, { foo: 'bar' });
       });
 
-      it.skip('should pass given non-Immutable value', function () {
+      it('should pass given a non-Immutable value', function () {
         assert.notEqual([], List());
       });
 
-      it('should pass given equal values', function () {
-        assert.notEqual(list3, List.of(1, 2, 3));
+      it('should fail given equal values', function () {
+        fail(function () { assert.notEqual(list3, List.of(1, 2, 3)); });
+      });
+
+      it('should fail given deeply equal values', function () {
+        fail(function () { assert.notEqual(deepMap, sameDeepMap); });
       });
     });
 
@@ -379,6 +561,21 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         assert.strictEqual(list3, List.of(1, 2, 3));
         assert.deepEqual(list3, List.of(1, 2, 3));
       });
+
+      it('should pass given deeply equal values', function () {
+        assert.strictEqual(deepMap, sameDeepMap);
+        assert.deepEqual(deepMap, sameDeepMap);
+      });
+
+      it('should fail given different values', function () {
+        fail(function () { assert.strictEqual(list3, new List()); });
+        fail(function () { assert.deepEqual(list3, new List()); });
+      });
+
+      it('should fail given deeply different values', function () {
+        fail(function () { assert.strictEqual(deepMap, differentDeepMap); });
+        fail(function () { assert.deepEqual(deepMap, differentDeepMap); });
+      });
     });
 
     describe('unoverridden notStrictEqual and notDeepEqual assertions', function () {
@@ -386,28 +583,21 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         assert.notStrictEqual(list3, new List());
         assert.notDeepEqual(list3, new List());
       });
-    });
 
-    it('should work on deep structures that are equal', function () {
-      var sameDeepMap = new Map({
-        foo: 'bar',
-        list: List.of(1, 2, 3)
+      it('should pass given deeply different values', function () {
+        assert.notStrictEqual(deepMap, differentDeepMap);
+        assert.notDeepEqual(deepMap, differentDeepMap);
       });
 
-      assert.equal(deepMap, sameDeepMap);
-      assert.strictEqual(deepMap, sameDeepMap);
-      assert.deepEqual(deepMap, sameDeepMap);
-    });
-
-    it('should work on deep structures that are not equal', function () {
-      var differentDeepMap = new Map({
-        foo: 'bar',
-        list: List.of(42)
+      it('should fail given equal values', function () {
+        fail(function () { assert.notStrictEqual(list3, List.of(1, 2, 3)); });
+        fail(function () { assert.notDeepEqual(list3, List.of(1, 2, 3)); });
       });
 
-      assert.notEqual(deepMap, differentDeepMap);
-      assert.notStrictEqual(deepMap, differentDeepMap);
-      assert.notDeepEqual(deepMap, differentDeepMap);
+      it('should fail given deeply equal values', function () {
+        fail(function () { assert.notStrictEqual(deepMap, sameDeepMap); });
+        fail(function () { assert.notDeepEqual(deepMap, sameDeepMap); });
+      });
     });
 
     describe('sizeOf assertion', function () {
@@ -417,6 +607,10 @@ describe('chai-immutable (' + typeEnv + ')', function () {
 
       it('should work with empty collections', function () {
         assert.sizeOf(new List(), 0);
+      });
+
+      it('should fail given the wrong size', function () {
+        fail(function () { assert.sizeOf(list3, 42); });
       });
     });
   });
