@@ -170,6 +170,21 @@ properly work against `.equal()`, `.strictEqual()` or `.deepEqual()`. See
 [this issue](https://github.com/astorije/chai-immutable/issues/24) for
 more information.
 
+### .notEqual(actual, expected)
+
+- **@param** *{ Collection }* actual
+- **@param** *{ Collection }* expected
+
+Asserts that the values of the target are not equvalent to the values of
+`collection`. Note that `.notStrictEqual()` and `.notDeepEqual()` assert
+exactly like `.notEqual()` in the context of Immutable data structures.
+
+```js
+var a = List.of(1, 2, 3);
+var b = List.of(4, 5, 6);
+assert.notEqual(a, b);
+```
+
 ### .sizeOf(collection, length)
 
 - **@param** *{ Collection }* collection

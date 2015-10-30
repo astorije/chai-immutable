@@ -441,6 +441,7 @@
 
     var assert = chai.assert;
     var originalEqual = assert.equal;
+    var originalNotEqual = assert.notEqual;
 
     /**
      * ### .equal(actual, expected)
@@ -475,6 +476,32 @@
         return new Assertion(actual).equal(expected);
       }
       else return originalEqual(actual, expected);
+    };
+
+    /**
+     * ### .notEqual(actual, expected)
+     *
+     * Asserts that the values of the target are not equvalent to the values of
+     * `collection`. Note that `.notStrictEqual()` and `.notDeepEqual()` assert
+     * exactly like `.notEqual()` in the context of Immutable data structures.
+     *
+     * ```js
+     * var a = List.of(1, 2, 3);
+     * var b = List.of(4, 5, 6);
+     * assert.notEqual(a, b);
+     * ```
+     *
+     * @name notEqual
+     * @param {Collection} actual
+     * @param {Collection} expected
+     * @api public
+     */
+
+    assert.notEqual = function (actual, expected) {
+      if (actual instanceof Collection) {
+        return new Assertion(actual).not.equal(expected);
+      }
+      else return originalNotEqual(actual, expected);
     };
 
     /**
