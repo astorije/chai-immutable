@@ -446,8 +446,8 @@
     /**
      * ### .equal(actual, expected)
      *
-     * Asserts that the values of the target are equvalent to the values of
-     * `collection`. Note that `.strictEqual()` and `.deepEqual()` assert
+     * Asserts that the values of `actual` are equivalent to the values of
+     * `expected`. Note that `.strictEqual()` and `.deepEqual()` assert
      * exactly like `.equal()` in the context of Immutable data structures.
      *
      * ```js
@@ -481,8 +481,8 @@
     /**
      * ### .notEqual(actual, expected)
      *
-     * Asserts that the values of the target are not equvalent to the values of
-     * `collection`. Note that `.notStrictEqual()` and `.notDeepEqual()` assert
+     * Asserts that the values of `actual` are not equivalent to the values of
+     * `expected`. Note that `.notStrictEqual()` and `.notDeepEqual()` assert
      * exactly like `.notEqual()` in the context of Immutable data structures.
      *
      * ```js
