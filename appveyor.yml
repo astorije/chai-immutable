@@ -1,0 +1,38 @@
+---
+# http://www.appveyor.com/docs/appveyor-yml
+
+# Build version format
+version: "{build}"
+
+# Fix line endings on Windows
+init:
+- git config --global core.autocrlf true
+
+# Do not build on tags (GitHub only)
+skip_tags: true
+
+environment:
+  matrix:
+  - nodejs_version: '4.2'
+  - nodejs_version: '4.1'
+  - nodejs_version: '4.0'
+  - nodejs_version: '0.12'
+  - nodejs_version: '0.10'
+
+platform:
+  - x86
+  - x64
+
+install:
+  - ps: Install-Product node $env:nodejs_version $env:platform
+  - npm install
+
+test_script:
+  - node --version
+  - npm --version
+  - npm run test-mocha
+  - npm run test-phantomjs
+  - npm run check-style
+
+# Don't actually build
+build: off
