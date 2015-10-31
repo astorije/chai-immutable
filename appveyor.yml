@@ -4,10 +4,6 @@
 # Build version format
 version: "{build}"
 
-# Fix line endings on Windows
-init:
-- git config --global core.autocrlf true
-
 # Do not build on tags (GitHub only)
 skip_tags: true
 
