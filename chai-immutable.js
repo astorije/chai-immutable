@@ -241,7 +241,9 @@
           if (any) ok = keys.some(has);
           else {
             ok = keys.every(has);
-            if (!contains) ok = ok && keys.length === obj.count();
+            if (!contains && !utils.flag(this, 'negate')) {
+              ok = ok && keys.length === obj.count();
+            }
           }
 
           if (keys.length > 1) {
