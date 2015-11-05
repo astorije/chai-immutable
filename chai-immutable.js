@@ -80,10 +80,15 @@
      * [this issue](https://github.com/astorije/chai-immutable/issues/24) for
      * more information.
      *
+     * Also, note that `deep.equal` and `eql` are synonyms of `equal` when
+     * tested against immutable data structures, therefore they are aliases to
+     * `equal`.
+     *
      * @name equal
      * @alias equals
      * @alias eq
      * @alias eql
+     * @alias eqls
      * @alias deep.equal
      * @param {Collection} value
      * @api public
@@ -109,6 +114,7 @@
     Assertion.overwriteMethod('equals', assertCollectionEqual);
     Assertion.overwriteMethod('eq', assertCollectionEqual);
     Assertion.overwriteMethod('eql', assertCollectionEqual);
+    Assertion.overwriteMethod('eqls', assertCollectionEqual);
 
     /**
      * ### .include(value)

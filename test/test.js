@@ -86,7 +86,9 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect(list3).to.eq(List.of(1, 2, 3));
         expect(list3).to.not.eq(new List());
         expect(list3).to.eql(List.of(1, 2, 3));
+        expect(list3).to.eqls(List.of(1, 2, 3));
         expect(list3).to.not.eql(new List());
+        expect(list3).to.not.eqls(new List());
         expect(list3).to.deep.equal(List.of(1, 2, 3));
         expect(list3).to.not.deep.equal(new List());
       });
@@ -104,6 +106,7 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect(deepMap).to.equals(sameDeepMap);
         expect(deepMap).to.eq(sameDeepMap);
         expect(deepMap).to.eql(sameDeepMap);
+        expect(deepMap).to.eqls(sameDeepMap);
         expect(deepMap).to.deep.equal(sameDeepMap);
       });
 
@@ -112,6 +115,7 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect(deepMap).to.not.equals(differentDeepMap);
         expect(deepMap).to.not.eq(differentDeepMap);
         expect(deepMap).to.not.eql(differentDeepMap);
+        expect(deepMap).to.not.eqls(differentDeepMap);
         expect(deepMap).to.not.deep.equal(differentDeepMap);
       });
 
@@ -136,6 +140,7 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         fail(function () { expect(deepMap).to.equals(differentDeepMap); });
         fail(function () { expect(deepMap).to.eq(differentDeepMap); });
         fail(function () { expect(deepMap).to.eql(differentDeepMap); });
+        fail(function () { expect(deepMap).to.eqls(differentDeepMap); });
         fail(function () { expect(deepMap).to.deep.equal(differentDeepMap); });
       });
 
@@ -144,6 +149,7 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         fail(function () { expect(deepMap).to.not.equals(sameDeepMap); });
         fail(function () { expect(deepMap).to.not.eq(sameDeepMap); });
         fail(function () { expect(deepMap).to.not.eql(sameDeepMap); });
+        fail(function () { expect(deepMap).to.not.eqls(sameDeepMap); });
         fail(function () { expect(deepMap).to.not.deep.equal(sameDeepMap); });
       });
     });

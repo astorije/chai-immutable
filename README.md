@@ -69,6 +69,10 @@ properly work against `.equal()`. See
 [this issue](https://github.com/astorije/chai-immutable/issues/24) for
 more information.
 
+Also, note that `deep.equal` and `eql` are synonyms of `equal` when
+tested against immutable data structures, therefore they are aliases to
+`equal`.
+
 ### .include(value)
 
 - **@param** *{ Mixed }* val
