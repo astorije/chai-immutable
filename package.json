@@ -37,12 +37,12 @@
     "chai": ">= 2.0.0 < 4"
   },
   "devDependencies": {
-    "chai": "^3.2.0",
-    "coveralls": "^2.11.2",
-    "immutable": "^3.7.3",
+    "chai": "^3.4.0",
+    "coveralls": "^2.11.4",
+    "immutable": "^3.7.5",
     "istanbul": "^0.4.0",
     "jscs": "^2.1.1",
-    "mocha": "^2.2.5",
+    "mocha": "^2.3.3",
     "mocha-phantomjs": "^4.0.1"
   }
 }
