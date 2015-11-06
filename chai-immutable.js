@@ -154,7 +154,7 @@
     }
 
     function chainCollectionInclude(_super) {
-      return function (val) {
+      return function () {
         _super.apply(this, arguments);
       };
     };

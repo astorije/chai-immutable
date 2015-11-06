@@ -41,7 +41,7 @@
     "coveralls": "^2.11.4",
     "immutable": "^3.7.5",
     "istanbul": "^0.4.0",
-    "jscs": "^2.1.1",
+    "jscs": "^2.5.0",
     "mocha": "^2.3.3",
     "mocha-phantomjs": "^4.0.1"
   }
