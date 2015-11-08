@@ -20,6 +20,7 @@
   },
   "keywords": [
     "chai",
+    "chai-plugin",
     "test",
     "assertions",
     "immutable"
