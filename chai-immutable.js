@@ -101,9 +101,10 @@
         if (obj && obj instanceof Collection) {
           this.assert(
             Immutable.is(obj, collection),
-            'expected #{this} to equal #{exp}',
-            'expected #{this} to not equal #{exp}',
-            collection
+            'expected #{act} to equal #{exp}',
+            'expected #{act} to not equal #{exp}',
+            collection.toString(),
+            obj.toString()
           );
         }
         else _super.apply(this, arguments);

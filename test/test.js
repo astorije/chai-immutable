@@ -22,8 +22,9 @@ var Stack = Immutable.Stack;
  * Test helper to check that a given function (wrapping the assertion) will
  * fail.
  */
-function fail(fn) {
-  expect(fn).to.throw(chai.AssertionError);
+function fail(fn, msg) {
+  if (msg !== undefined) expect(fn).to.throw(chai.AssertionError, msg);
+  else expect(fn).to.throw(chai.AssertionError);
 }
 
 describe('chai-immutable (' + typeEnv + ')', function () {
@@ -121,6 +122,15 @@ describe('chai-immutable (' + typeEnv + ')', function () {
 
       it('should pass using `not` given a non-Immutable value', function () {
         expect([]).to.not.equal(List());
+      });
+
+      // See https://github.com/astorije/chai-immutable/issues/7
+      it('should display a helpful failure output on big objects', function () {
+        var actual = new Map({ foo: 'foo foo foo foo foo foo foo foo' });
+        var expected = new Map({ bar: 'bar bar bar bar bar bar bar bar' });
+        fail(function () {
+          expect(actual).to.equal(expected);
+        }, /(foo ?){8}.+(bar ?){8}/);
       });
 
       it('should fail given a non-Immutable value', function () {
@@ -520,6 +530,15 @@ describe('chai-immutable (' + typeEnv + ')', function () {
       it('should not affect the original assertion', function () {
         assert.equal(42, 42);
         assert.equal(3, '3');
+      });
+
+      // See https://github.com/astorije/chai-immutable/issues/7
+      it('should display a helpful failure output on big objects', function () {
+        var actual = new Map({ foo: 'foo foo foo foo foo foo foo foo' });
+        var expected = new Map({ bar: 'bar bar bar bar bar bar bar bar' });
+        fail(function () {
+          assert.equal(actual, expected);
+        }, /(foo ?){8}.+(bar ?){8}/);
       });
 
       it('should fail given a non-Immutable value', function () {
