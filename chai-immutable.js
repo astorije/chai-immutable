@@ -102,7 +102,8 @@
             'expected #{act} to equal #{exp}',
             'expected #{act} to not equal #{exp}',
             collection.toString(),
-            obj.toString()
+            obj.toString(),
+            true
           );
         }
         else _super.apply(this, arguments);
