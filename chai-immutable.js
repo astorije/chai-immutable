@@ -53,9 +53,7 @@
           this.assert(
             size === 0,
             'expected #{this} to be empty but got size #{act}',
-            'expected #{this} to not be empty',
-            0,
-            size
+            'expected #{this} to not be empty'
           );
         }
         else _super.apply(this, arguments);
