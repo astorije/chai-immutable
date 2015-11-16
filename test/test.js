@@ -202,6 +202,14 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect({ foo: 'bar', hello: 'universe' }).to.include.keys('foo');
       });
 
+      // See https://github.com/astorije/chai-immutable/issues/7
+      it('should display a helpful failure output on big objects', function () {
+        var lengthyMap = new Map({ foo: 'foo foo foo foo foo foo foo foo ' });
+        fail(function () {
+          expect(lengthyMap).to.include('not-foo');
+        }, /(foo ){8}/);
+      });
+
       it('should fail given an inexisting value', function () {
         fail(function () { expect(new List([1, 2, 3])).to.include(42); });
       });
@@ -314,6 +322,14 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect({ x: 1, y: 2 }).to.have.all.keys({ 'x': 6, 'y': 7 });
         expect({ x: 1, y: 2, z: 3 }).to.contain.all.keys(['x', 'y']);
         expect({ x: 1, y: 2, z: 3 }).to.contain.all.keys({ 'x': 6 });
+      });
+
+      // See https://github.com/astorije/chai-immutable/issues/7
+      it('should display a helpful failure output on big objects', function () {
+        var lengthyMap = new Map({ foo: 'foo foo foo foo foo foo foo foo ' });
+        fail(function () {
+          expect(lengthyMap).to.have.keys('not-foo');
+        }, /(foo ){8}/);
       });
 
       it('should fail given an inexisting key', function () {
@@ -534,11 +550,11 @@ describe('chai-immutable (' + typeEnv + ')', function () {
 
       // See https://github.com/astorije/chai-immutable/issues/7
       it('should display a helpful failure output on big objects', function () {
-        var actual = new Map({ foo: 'foo foo foo foo foo foo foo foo' });
-        var expected = new Map({ bar: 'bar bar bar bar bar bar bar bar' });
+        var actual = new Map({ foo: 'foo foo foo foo foo foo foo foo ' });
+        var expected = new Map({ bar: 'bar bar bar bar bar bar bar bar ' });
         fail(function () {
           assert.equal(actual, expected);
-        }, /(foo ?){8}.+(bar ?){8}/);
+        }, /(foo ){8}.+(bar ){8}/);
       });
 
       it('should fail given a non-Immutable value', function () {

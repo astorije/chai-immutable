@@ -143,9 +143,10 @@
         if (obj && obj instanceof Collection) {
           this.assert(
             obj.includes(val),
-            'expected #{this} to include #{exp}',
-            'expected #{this} to not include #{exp}',
-            val
+            'expected #{act} to include #{exp}',
+            'expected #{act} to not include #{exp}',
+            val,
+            obj.toString()
           );
         }
         else _super.apply(this, arguments);
@@ -261,8 +262,10 @@
 
           this.assert(
             ok,
-            'expected #{this} to ' + str,
-            'expected #{this} to not ' + str
+            'expected #{act} to ' + str,
+            'expected #{act} to not ' + str,
+            keys,
+            obj.toString()
           );
         }
         else _super.apply(this, arguments);
