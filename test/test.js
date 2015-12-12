@@ -1,5 +1,15 @@
 'use strict';
 
+// From http://stackoverflow.com/a/728694
+function clone(obj) {
+  if (null === obj || 'object' !== typeof obj) return obj;
+  var copy = obj.constructor();
+  for (var attr in obj) {
+    if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+  }
+  return copy;
+}
+
 var typeEnv;
 if (!chai) {
   var chai = require('chai');
@@ -10,6 +20,8 @@ if (!chai) {
   typeEnv = 'Node.js';
 }
 else typeEnv = 'PhantomJS';
+
+var clonedImmutable = clone(Immutable);
 
 var assert = chai.assert;
 var expect = chai.expect;
@@ -45,6 +57,8 @@ describe('chai-immutable (' + typeEnv + ')', function () {
     list: List.of(42)
   });
 
+  var clonedImmutableList = clonedImmutable.List.of(1, 2, 3);
+
   describe('BDD interface', function () {
     describe('empty property', function () {
       it('should pass given an empty collection', function () {
@@ -67,6 +81,10 @@ describe('chai-immutable (' + typeEnv + ')', function () {
 
       it('should fail using `not` given an empty collection', function () {
         fail(function () { expect(new List()).to.not.be.empty; });
+      });
+
+      it('should work if using different copies of Immutable', function () {
+        expect(clonedImmutable.List()).to.be.empty;
       });
     });
 
@@ -161,6 +179,10 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         fail(function () { expect(deepMap).to.not.eql(sameDeepMap); });
         fail(function () { expect(deepMap).to.not.eqls(sameDeepMap); });
         fail(function () { expect(deepMap).to.not.deep.equal(sameDeepMap); });
+      });
+
+      it('should work if using different copies of Immutable', function () {
+        expect(clonedImmutableList).to.equal(List.of(1, 2, 3));
       });
     });
 
@@ -376,6 +398,10 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         fail(function () { expect(map).to.contain.key('z'); });
         fail(function () { expect(obj).to.contain.key('z'); });
       });
+
+      it('should work if using different copies of Immutable', function () {
+        expect(clonedImmutable.Map({ x: 1 })).to.have.key('x');
+      });
     });
 
     describe('size method', function () {
@@ -398,6 +424,10 @@ describe('chai-immutable (' + typeEnv + ')', function () {
 
       it('should fail using `not` given the right size', function () {
         fail(function () { expect(list3).to.not.have.size(3); });
+      });
+
+      it('should work if using different copies of Immutable', function () {
+        expect(clonedImmutableList).to.have.size(3);
       });
     });
 
@@ -530,6 +560,10 @@ describe('chai-immutable (' + typeEnv + ')', function () {
       it('most should fail using `not` given a bad max size', function () {
         fail(function () { expect(list3).to.not.have.size.of.at.most(42); });
       });
+
+      it('should work if using different copies of Immutable', function () {
+        expect(clonedImmutableList).to.have.size.above(2);
+      });
     });
   });
 
@@ -568,6 +602,10 @@ describe('chai-immutable (' + typeEnv + ')', function () {
       it('should fail given deeply different values', function () {
         fail(function () { assert.equal(deepMap, differentDeepMap); });
       });
+
+      it('should work if using different copies of Immutable', function () {
+        assert.equal(clonedImmutableList, List.of(1, 2, 3));
+      });
     });
 
     describe('notEqual assertion', function () {
@@ -595,6 +633,10 @@ describe('chai-immutable (' + typeEnv + ')', function () {
       it('should fail given deeply equal values', function () {
         fail(function () { assert.notEqual(deepMap, sameDeepMap); });
       });
+
+      it('should work if using different copies of Immutable', function () {
+        assert.notEqual(clonedImmutableList, List.of());
+      });
     });
 
     describe('unoverridden strictEqual and deepEqual assertions', function () {
@@ -616,6 +658,11 @@ describe('chai-immutable (' + typeEnv + ')', function () {
       it('should fail given deeply different values', function () {
         fail(function () { assert.strictEqual(deepMap, differentDeepMap); });
         fail(function () { assert.deepEqual(deepMap, differentDeepMap); });
+      });
+
+      it('should work if using different copies of Immutable', function () {
+        assert.strictEqual(clonedImmutableList, List.of(1, 2, 3));
+        assert.deepEqual(clonedImmutableList, List.of(1, 2, 3));
       });
     });
 
@@ -639,6 +686,11 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         fail(function () { assert.notStrictEqual(deepMap, sameDeepMap); });
         fail(function () { assert.notDeepEqual(deepMap, sameDeepMap); });
       });
+
+      it('should work if using different copies of Immutable', function () {
+        assert.notStrictEqual(clonedImmutableList, List());
+        assert.notDeepEqual(clonedImmutableList, List());
+      });
     });
 
     describe('sizeOf assertion', function () {
@@ -652,6 +704,10 @@ describe('chai-immutable (' + typeEnv + ')', function () {
 
       it('should fail given the wrong size', function () {
         fail(function () { assert.sizeOf(list3, 42); });
+      });
+
+      it('should work if using different copies of Immutable', function () {
+        assert.sizeOf(clonedImmutableList, 3);
       });
     });
   });
