@@ -39,6 +39,27 @@ plug in to Chai and be ready for use:
 <script src="chai-immutable.js"></script>
 ```
 
+### Using `chai-immutable` with `chai-as-promised`
+
+This plugin works fine in conjunction with
+[`chai-as-promised`](https://github.com/domenic/chai-as-promised/) but note that
+`chai-immutable` must be loaded **before** `chai-as-promised`. For example:
+
+```js
+var chai = require('chai');
+var chaiImmutable = require('chai-immutable');
+var expect = chai.expect;
+var chaiAsPromised = require('chai-as-promised');
+
+chai.use(chaiImmutable);
+chai.use(chaiAsPromised);
+
+var List = require('immutable').List;
+
+/* ... */
+return expect(List.of(1, 2, 3)).to.eventually.have.size(3);
+```
+
 ## BDD API Reference
 
 ### .empty
