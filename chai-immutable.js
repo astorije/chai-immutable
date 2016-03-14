@@ -24,6 +24,13 @@
 
     var Assertion = chai.Assertion;
 
+    function assertIsIterable(obj) {
+      new Assertion(obj).assert(
+        Immutable.Iterable.isIterable(obj),
+        'expected #{this} to be an Iterable'
+      );
+    }
+
     /**
      * ## BDD API Reference
      */
@@ -46,7 +53,7 @@
       return function () {
         var obj = this._obj;
 
-        if (obj && obj instanceof Collection) {
+        if (Immutable.Iterable.isIterable(obj)) {
           var size = obj.size;
           new Assertion(size).a('number');
 
@@ -96,7 +103,7 @@
       return function (collection) {
         var obj = this._obj;
 
-        if (obj && obj instanceof Collection) {
+        if (Immutable.Iterable.isIterable(obj)) {
           this.assert(
             Immutable.is(obj, collection),
             'expected #{act} to equal #{exp}',
@@ -141,7 +148,7 @@
       return function (val) {
         var obj = this._obj;
 
-        if (obj && obj instanceof Collection) {
+        if (Immutable.Iterable.isIterable(obj)) {
           this.assert(
             obj.includes(val),
             'expected #{act} to include #{exp}',
@@ -217,14 +224,13 @@
 
         var obj = this._obj;
 
-        if (obj && obj instanceof KeyedCollection) {
+        if (Immutable.Iterable.isKeyed(obj)) {
           switch (utils.type(keys)) {
             case 'object':
-              if (keys instanceof IndexedCollection ||
-                  keys instanceof SetCollection) {
+              if (Immutable.Iterable.isIndexed(keys))
                 keys = keys.toJS();
-              }
-              else if (keys instanceof KeyedCollection) keys = keys.keySeq().toJS();
+              else if (Immutable.Iterable.isIterable(keys))
+                keys = keys.keySeq().toJS();
               else keys = Object.keys(keys);
             case 'array':
               if (arguments.length > 1) throw new Error(
@@ -309,7 +315,7 @@
      */
 
     function assertCollectionSize(n) {
-      new Assertion(this._obj).instanceof(Collection);
+      assertIsIterable(this._obj);
 
       var size = this._obj.size;
       new Assertion(size).a('number');
@@ -335,7 +341,7 @@
     function assertCollectionSizeLeast(_super) {
       return function (n) {
         if (utils.flag(this, 'immutable.collection.size')) {
-          new Assertion(this._obj).instanceof(Collection);
+          assertIsIterable(this._obj);
 
           var size = this._obj.size;
           new Assertion(size).a('number');
@@ -355,7 +361,7 @@
     function assertCollectionSizeMost(_super) {
       return function (n) {
         if (utils.flag(this, 'immutable.collection.size')) {
-          new Assertion(this._obj).instanceof(Collection);
+          assertIsIterable(this._obj);
 
           var size = this._obj.size;
           new Assertion(size).a('number');
@@ -375,7 +381,7 @@
     function assertCollectionSizeAbove(_super) {
       return function (n) {
         if (utils.flag(this, 'immutable.collection.size')) {
-          new Assertion(this._obj).instanceof(Collection);
+          assertIsIterable(this._obj);
 
           var size = this._obj.size;
           new Assertion(size).a('number');
@@ -395,7 +401,7 @@
     function assertCollectionSizeBelow(_super) {
       return function (n) {
         if (utils.flag(this, 'immutable.collection.size')) {
-          new Assertion(this._obj).instanceof(Collection);
+          assertIsIterable(this._obj);
 
           var size = this._obj.size;
           new Assertion(size).a('number');
@@ -429,7 +435,7 @@
     Assertion.overwriteMethod('within', function (_super) {
       return function (min, max) {
         if (utils.flag(this, 'immutable.collection.size')) {
-          new Assertion(this._obj).instanceof(Collection);
+          assertIsIterable(this._obj);
 
           var size = this._obj.size;
           new Assertion(size).a('number');
@@ -483,7 +489,7 @@
       // It seems like we shouldn't actually need this check, however,
       // `assert.equal` actually behaves differently than its BDD counterpart!
       // Namely, the BDD version is strict while the "assert" one isn't.
-      if (actual instanceof Collection) {
+      if (Immutable.Iterable.isIterable(actual)) {
         return new Assertion(actual).equal(expected);
       }
       else return originalEqual(actual, expected);
@@ -509,7 +515,7 @@
      */
 
     assert.notEqual = function (actual, expected) {
-      if (actual instanceof Collection) {
+      if (Immutable.Iterable.isIterable(actual)) {
         return new Assertion(actual).not.equal(expected);
       }
       else return originalNotEqual(actual, expected);
