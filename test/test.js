@@ -404,6 +404,128 @@ describe('chai-immutable (' + typeEnv + ')', function () {
       });
     });
 
+    describe('property property', function () {
+      it('falls back to normal property if non-immutable', function () {
+        expect({ x: 1 }).to.have.property('x', 1);
+      });
+
+      it('falls back to normal deep property if non-immutable', function () {
+        expect({ x: 1, y: { x: 2, y: 3 } }).to.have.deep.property('y.x', 2);
+      });
+
+      it('should fail for missing property', function () {
+        var obj = Immutable.fromJS({ x: 1 });
+        fail(function () { expect(obj).to.have.property('z'); });
+      });
+
+      it('should fail for missing deep property', function () {
+        var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
+        fail(function () { expect(obj).to.have.deep.property(['y', 'z']); });
+      });
+
+      it('not - should succeed for missing property', function () {
+        var obj = Immutable.fromJS({ x: 1 });
+        expect(obj).not.to.have.property('z');
+      });
+
+      it('not - should succeed for missing deep property', function () {
+        var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
+        expect(obj).not.to.have.deep.property(['y', 'z']);
+      });
+
+      it('should succeed for existing property', function () {
+        var obj = Immutable.fromJS({ x: 1 });
+        expect(obj).to.have.property('x');
+      });
+
+      it('should succeed for existing deep property', function () {
+        var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
+        expect(obj).to.have.deep.property(['y', 'x']);
+      });
+
+      it('should succeed for index', function () {
+        var obj = Immutable.fromJS({
+          items: ['a', 'b', 'c']
+        });
+        expect(obj).to.have.deep.property(['items', 2], 'c');
+      });
+
+      it('should succeed for string-based deep property', function () {
+        var obj = Immutable.fromJS({
+          items: [{
+            name: 'Jane'
+          }, {
+            name: 'John'
+          }, {
+            name: 'Jim'
+          }]
+        });
+        expect(obj).to.have.deep.property('items[2].name', 'Jim');
+      });
+
+      it('not - should fail for existing property', function () {
+        var obj = Immutable.fromJS({ x: 1 });
+        fail(function () { expect(obj).not.to.have.property('x'); });
+      });
+
+      it('not - should fail for existing deep property', function () {
+        var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
+        fail(function () { expect(obj).not.to.have.deep.property(['y', 'x']); });
+      });
+
+      it('should fail for unequal property', function () {
+        var obj = Immutable.fromJS({ x: 1 });
+        fail(function () { expect(obj).to.have.property('x', 'different'); });
+      });
+
+      it('should fail for unequal deep property', function () {
+        var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
+        fail(function () { expect(obj).to.have.property(['y', 'x'], 'different'); });
+      });
+
+      it('should succeed for equal property', function () {
+        var obj = Immutable.fromJS({ x: 1 });
+        expect(obj).to.have.property('x', 1);
+      });
+
+      it('should succeed for equal deep property', function () {
+        var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
+        expect(obj).to.have.deep.property(['y', 'x'], 2);
+      });
+
+      it('not - should fail for missing deep property', function () {
+        var obj = Immutable.fromJS({ x: 1 });
+        fail(function () {
+          expect(obj).not.to.have.deep.property(['y', 'x'], 'different', 'message');
+        });
+      });
+
+      it('not - should fail for deep property, no message', function () {
+        var obj = Immutable.fromJS({ x: 1 });
+        fail(function () {
+          expect(obj).not.to.have.deep.property(['y', 'x'], 'different');
+        });
+      });
+
+      it('not - should fail for equal deep property value', function () {
+        var obj = Immutable.fromJS({ x: 1, y: { x: 2 } });
+        fail(function () {
+          expect(obj).not.to.have.deep.property(['y', 'x'], 2, 'message');
+        });
+      });
+
+      it('not - should succeed for unequal deep property value', function () {
+        var obj = Immutable.fromJS({ x: 1, y: { x: 2 } });
+        expect(obj).not.to.have.deep.property(['y', 'x'], 'different');
+      });
+
+      it('should allow access to property via .that', function () {
+        var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
+        var sub = obj.get('y');
+        expect(obj).to.have.property('y').that.equal(sub);
+      });
+    });
+
     describe('size method', function () {
       it('should pass given the right size', function () {
         expect(list3).to.have.size(3);
@@ -690,6 +812,23 @@ describe('chai-immutable (' + typeEnv + ')', function () {
       it('should work if using different copies of Immutable', function () {
         assert.notStrictEqual(clonedImmutableList, List());
         assert.notDeepEqual(clonedImmutableList, List());
+      });
+    });
+
+    describe('property assertions', function () {
+      it('should fail for missing property', function () {
+        var obj = Immutable.fromJS({ x: 1 });
+        fail(function () { assert.property(obj, 'z'); });
+      });
+
+      it('should succeed for equal deep property', function () {
+        var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
+        assert.deepProperty(obj, ['y', 'x']);
+      });
+
+      it('should fail for unequal deep property', function () {
+        var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
+        fail(function () { assert.deepPropertyVal(obj, ['y', 'x'], 'different'); });
       });
     });
 
