@@ -14,12 +14,8 @@ environment:
   - nodejs_version: '0.12'
   - nodejs_version: '0.10'
 
-platform:
-  - x86
-  - x64
-
 install:
-  - ps: Install-Product node $env:nodejs_version $env:platform
+  - ps: Install-Product node $env:nodejs_version
   - npm install
 
 test_script:
