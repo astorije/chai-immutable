@@ -9,7 +9,7 @@
 
 # Chai Immutable
 
-This provide a set of [Chai](http://chaijs.com/) assertions for [Facebook's Immutable library for JavaScript collections](http://facebook.github.io/immutable-js/).
+This plugin provides a set of [Chai](http://chaijs.com/) assertions for [Facebook's Immutable library for JavaScript collections](http://facebook.github.io/immutable-js/).
 
 ## Installation
 
