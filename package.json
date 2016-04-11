@@ -40,9 +40,9 @@
   },
   "devDependencies": {
     "chai": "^3.4.0",
-    "coveralls": "^2.11.8",
+    "coveralls": "^2.11.9",
     "immutable": "^3.7.5",
-    "istanbul": "^0.4.2",
+    "istanbul": "^0.4.3",
     "jscs": "^2.5.0",
     "mocha": "^2.4.5",
     "mocha-phantomjs": "^4.0.2"
