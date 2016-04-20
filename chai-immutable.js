@@ -283,6 +283,95 @@
     Assertion.overwriteMethod('key', assertKeyedCollectionKeys);
 
     /**
+     * ### .property(path, value)
+     *
+     * Asserts that property specified exists, and if a value specified, is equal
+     * to the given value.
+     *
+     * ```js
+     * var obj = Immutable.fromJS({
+     *   left: 1,
+     *   right: {
+     *     left: 2
+     *     right: 3
+     *   }
+     * });
+     *
+     * assert.property(obj, 'left');
+     * assert.propertyVal(obj, 'left', 1);
+     *
+     * assert.deepProperty(obj, ['right', 'right']);
+     * assert.deepPropertyVal(obj, ['right', 'right'], 3);
+     * ```
+     *
+     * @name property
+     * @param {path} either the single propery name or array used for `getIn()`
+     * @param {value} expected value found at that location
+     * @api public
+     */
+    function assertProperty(_super) {
+      return function (path, val) {
+        var obj = this._obj;
+
+        if (Immutable.Iterable.isIterable(this._obj)) {
+          var isDeep = Boolean(utils.flag(this, 'deep'));
+          var negate = Boolean(utils.flag(this, 'negate'));
+
+          var descriptor;
+          var hasProperty;
+          var value;
+
+          if (isDeep) {
+            descriptor = 'deep property ';
+            if (typeof path === 'string') {
+              path = path.split(/[\.\[\]]+/);
+            }
+            value = obj.getIn(path);
+            hasProperty = obj.hasIn(path);
+          }
+          else {
+            descriptor = 'property ';
+            value = obj.get(path);
+            hasProperty = obj.has(path);
+          }
+
+          // In the negate case, we only throw if property is missing so we can
+          // check the value later.
+          if (negate && arguments.length > 1) {
+            if (!hasProperty) {
+              throw new chai.AssertionError('expected ' + utils.inspect(obj) +
+                ' to have a ' + descriptor + utils.inspect(path));
+            }
+          }
+          else {
+            this.assert(
+              hasProperty,
+              'expected #{this} to have a ' + descriptor + utils.inspect(path),
+              'expected #{this} not to have ' + descriptor + utils.inspect(path)
+            );
+          }
+
+          if (arguments.length > 1) {
+            this.assert(
+              val === value,
+              'expected #{this} to have a ' + descriptor + utils.inspect(path) +
+                ' of #{exp}, but got #{act}',
+              'expected #{this} not to have a ' + descriptor + utils.inspect(path) +
+                ' of #{act}',
+              val,
+              value
+            );
+          }
+
+          utils.flag(this, 'object', value);
+        }
+        else return _super.apply(this, arguments);
+      };
+    }
+
+    Assertion.overwriteMethod('property', assertProperty);
+
+    /**
      * ### .size(value)
      *
      * Asserts that the immutable collection has the expected size.
