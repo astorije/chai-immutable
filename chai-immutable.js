@@ -396,8 +396,16 @@
           }
 
           if (arguments.length > 1) {
+            var isEqual;
+            if (Immutable.Iterable.isIterable(val)) {
+              isEqual = Immutable.is(val, value);
+            }
+            else {
+              isEqual = val === value;
+            }
+
             this.assert(
-              val === value,
+              isEqual,
               'expected #{this} to have a ' + descriptor + utils.inspect(path) +
                 ' of #{exp}, but got #{act}',
               'expected #{this} not to have a ' + descriptor + utils.inspect(path) +
