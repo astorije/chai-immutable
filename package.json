@@ -8,7 +8,7 @@
   },
   "scripts": {
     "check-style": "jscs chai-immutable.js test/test.js",
-    "test": "npm run test-mocha; npm run test-phantomjs; npm run check-style",
+    "test": "npm run test-mocha; npm run check-style",
     "test-mocha": "mocha",
     "test-phantomjs": "mocha-phantomjs test/index.html",
     "coverage": "istanbul cover _mocha",
@@ -44,7 +44,6 @@
     "immutable": "^3.7.5",
     "istanbul": "^0.4.3",
     "jscs": "^2.5.0",
-    "mocha": "^2.4.5",
-    "mocha-phantomjs": "^4.0.2"
+    "mocha": "^2.4.5"
   }
 }
