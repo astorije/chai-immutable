@@ -8,9 +8,9 @@
   },
   "scripts": {
     "check-style": "jscs chai-immutable.js test/test.js",
-    "test": "npm run test-mocha; npm run check-style",
+    "test": "npm run test-mocha; npm run test-phantomjs; npm run check-style",
     "test-mocha": "mocha",
-    "test-phantomjs": "mocha-phantomjs test/index.html",
+    "test-phantomjs": "echo 'mocha-phantomjs is temporarily disabled.' # mocha-phantomjs test/index.html",
     "coverage": "istanbul cover _mocha",
     "coveralls": "npm run coverage && cat ./coverage/lcov.info | coveralls"
   },
