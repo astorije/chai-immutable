@@ -44,17 +44,17 @@ describe('chai-immutable (' + typeEnv + ')', function () {
 
   var deepMap = new Map({
     foo: 'bar',
-    list: List.of(1, 2, 3)
+    list: List.of(1, 2, 3),
   });
 
   var sameDeepMap = new Map({
     foo: 'bar',
-    list: List.of(1, 2, 3)
+    list: List.of(1, 2, 3),
   });
 
   var differentDeepMap = new Map({
     foo: 'bar',
-    list: List.of(42)
+    list: List.of(42),
   });
 
   var clonedImmutableList = clonedImmutable.List.of(1, 2, 3);
@@ -198,14 +198,14 @@ describe('chai-immutable (' + typeEnv + ')', function () {
       it('should chain and pass given an existing key', function () {
         expect(new Map({
           foo: 'bar',
-          hello: 'universe'
+          hello: 'universe',
         })).to.include.keys('foo');
       });
 
       it('should chain and pass using `not` given an inexisting key', function () {
         expect(new Map({
           foo: 'bar',
-          hello: 'universe'
+          hello: 'universe',
         })).to.not.include.keys('not-foo');
       });
 
@@ -244,7 +244,7 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         fail(function () {
           expect(new Map({
             foo: 'bar',
-            hello: 'universe'
+            hello: 'universe',
           })).to.include.keys('not-foo');
         });
       });
@@ -253,7 +253,7 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         fail(function () {
           expect(new Map({
             foo: 'bar',
-            hello: 'universe'
+            hello: 'universe',
           })).to.not.include.keys('foo');
         });
       });
@@ -445,20 +445,18 @@ describe('chai-immutable (' + typeEnv + ')', function () {
 
       it('should succeed for index', function () {
         var obj = Immutable.fromJS({
-          items: ['a', 'b', 'c']
+          items: ['a', 'b', 'c'],
         });
         expect(obj).to.have.deep.property(['items', 2], 'c');
       });
 
       it('should succeed for string-based deep property', function () {
         var obj = Immutable.fromJS({
-          items: [{
-            name: 'Jane'
-          }, {
-            name: 'John'
-          }, {
-            name: 'Jim'
-          }]
+          items: [
+            { name: 'Jane' },
+            { name: 'John' },
+            { name: 'Jim' },
+          ],
         });
         expect(obj).to.have.deep.property('items[2].name', 'Jim');
       });
