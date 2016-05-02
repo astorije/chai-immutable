@@ -450,17 +450,6 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect(obj).to.have.deep.property(['items', 2], 'c');
       });
 
-      it('should succeed for string-based deep property', function () {
-        var obj = Immutable.fromJS({
-          items: [
-            { name: 'Jane' },
-            { name: 'John' },
-            { name: 'Jim' },
-          ],
-        });
-        expect(obj).to.have.deep.property('items[2].name', 'Jim');
-      });
-
       it('not - should fail for existing property', function () {
         var obj = Immutable.fromJS({ x: 1 });
         fail(function () { expect(obj).not.to.have.property('x'); });
@@ -521,6 +510,53 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
         var sub = obj.get('y');
         expect(obj).to.have.property('y').that.equal(sub);
+      });
+
+      describe('given a string-based path', function () {
+        var obj = Immutable.fromJS({
+          items: [
+            { name: 'Jane' },
+            { name: 'John' },
+            { name: 'Jim' },
+          ],
+        });
+
+        it('should pass using `deep` given a single index', function () {
+          expect(obj.get('items')).to.have.deep.property('[1]')
+            .that.equals(new Map({ name: 'John' }));
+        });
+
+        it('should pass using `deep` given a single key', function () {
+          expect(obj).to.have.deep.property('items')
+            .that.equals(new List([
+              new Map({ name: 'Jane' }),
+              new Map({ name: 'John' }),
+              new Map({ name: 'Jim' }),
+            ]));
+        });
+
+        it('should pass using `deep` starting with an index', function () {
+          expect(obj.get('items')).to.have.deep.property('[0].name', 'Jane');
+        });
+
+        it('should pass using `deep` ending with an index', function () {
+          expect(obj).to.have.deep.property('items[1]')
+            .that.equals(new Map({ name: 'John' }));
+        });
+
+        it('should pass using `deep` given a mix of keys and indices', function () {
+          expect(obj).to.have.deep.property('items[2].name', 'Jim');
+        });
+
+        it('should expect unescaped path strings', function () {
+          var css = new Map({ '.link[target]': 42 });
+          expect(css).to.have.property('.link[target]', 42);
+        });
+
+        it('should expect escaped path strings using `deep`', function () {
+          var deepCss = new Map({ '.link': new Map({ '[target]': 42 }) });
+          expect(deepCss).to.have.deep.property('\\.link.\\[target\\]', 42);
+        });
       });
     });
 

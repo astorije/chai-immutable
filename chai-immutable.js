@@ -282,6 +282,50 @@
     Assertion.overwriteMethod('keys', assertKeyedCollectionKeys);
     Assertion.overwriteMethod('key', assertKeyedCollectionKeys);
 
+    /*!
+     * ## parsePath(path)
+     *
+     * Helper function used to parse string paths into arrays of keys and
+     * indices.
+     *
+     * ```js
+     * var parsed = parsePath('myobject.key.subkey');
+     * ```
+     *
+     * ### Paths:
+     *
+     * - Can be as near infinitely deep and nested
+     * - Arrays are also valid using the formal `myobject.document[3].key`.
+     * - Literal dots and brackets (not delimiter) must be backslash-escaped.
+     *
+     * This function is inspired from Chai's original `parsePath` function:
+     * https://github.com/chaijs/chai/blob/d664ef4/lib/chai/utils/getPathInfo.js#L46-L74
+     *
+     * @param {String} path
+     * @returns {Array} parsed
+     * @api private
+     */
+    function parsePath(path) { // Given the following path: 'a.b[1]'
+      // Separates keys followed by indices with a dot: 'a.b.[1]'
+      var str = path.replace(/([^\\])\[/g, '$1.[');
+      // Extracts all indices and keys into an array: ['a', 'b', '[1]']
+      var parts = str.match(/(\\\.|[^.]+?)+/g);
+
+      // Removes brackets and escaping backslashes, and extracts digits from
+      // each value in the array: ['a', 'b', 1]
+      return parts.map(function (value) {
+        // Extracts indices wrapped in brackets
+        var re = /^\[(\d+)\]$/;
+        // Builds ['[<index>]', '<index>'] if value is a digit, null otherwise
+        var mArr = re.exec(value);
+
+        // If the value was of form '[<index>]', returns <index>
+        // Otherwise, returns the key without the escaping backslashes
+        if (mArr) return parseFloat(mArr[1]);
+        else return value.replace(/\\([.\[\]])/g, '$1');
+      });
+    }
+
     /**
      * ### .property(path, value)
      *
@@ -324,7 +368,7 @@
           if (isDeep) {
             descriptor = 'deep property ';
             if (typeof path === 'string') {
-              path = path.split(/[\.\[\]]+/);
+              path = parsePath(path);
             }
             value = obj.getIn(path);
             hasProperty = obj.hasIn(path);
