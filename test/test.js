@@ -506,6 +506,16 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect(obj).not.to.have.deep.property(['y', 'x'], 'different');
       });
 
+      it('should pass given an immutable value', function () {
+        var obj = Immutable.fromJS({ foo: { bar: 42 } });
+        expect(obj).to.have.property('foo', new Map({ bar: 42 }));
+      });
+
+      it('should pass using `deep` given an immutable value', function () {
+        var obj = Immutable.fromJS({ foo: [{ bar: 42 }] });
+        expect(obj).to.have.deep.property('foo[0]', new Map({ bar: 42 }));
+      });
+
       it('should allow access to property via .that', function () {
         var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
         var sub = obj.get('y');
