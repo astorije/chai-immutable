@@ -46,6 +46,7 @@
      * ```
      *
      * @name empty
+     * @namespace BDD
      * @api public
      */
 
@@ -96,6 +97,7 @@
      * @alias eqls
      * @alias deep.equal
      * @param {Collection} value
+     * @namespace BDD
      * @api public
      */
 
@@ -141,6 +143,7 @@
      * @alias includes
      * @alias contains
      * @param {Mixed} val
+     * @namespace BDD
      * @api public
      */
 
@@ -215,6 +218,7 @@
      * @name keys
      * @param {String...|Array|Object|Collection} keyN
      * @alias key
+     * @namespace BDD
      * @api public
      */
 
@@ -351,6 +355,7 @@
      * @name property
      * @param {path} either the single propery name or array used for `getIn()`
      * @param {value} expected value found at that location
+     * @namespace BDD
      * @api public
      */
     function assertProperty(_super) {
@@ -452,6 +457,7 @@
      * @name size
      * @alias sizeOf
      * @param {Number} size
+     * @namespace BDD
      * @api public
      */
 
@@ -623,6 +629,7 @@
      * @name equal
      * @param {Collection} actual
      * @param {Collection} expected
+     * @namespace Assert
      * @api public
      */
 
@@ -652,6 +659,7 @@
      * @name notEqual
      * @param {Collection} actual
      * @param {Collection} expected
+     * @namespace Assert
      * @api public
      */
 
@@ -675,6 +683,7 @@
      * @name sizeOf
      * @param {Collection} collection
      * @param {Number} size
+     * @namespace Assert
      * @api public
      */
 
