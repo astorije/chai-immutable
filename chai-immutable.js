@@ -71,7 +71,7 @@
     /**
      * ### .equal(collection)
      *
-     * Asserts that the values of the target are equvalent to the values of
+     * Asserts that the values of the target are equivalent to the values of
      * `collection`. Aliases of Chai's original `equal` method are also supported.
      *
      * ```js
