@@ -163,7 +163,7 @@
       return function () {
         _super.apply(this, arguments);
       };
-    };
+    }
 
     ['include', 'contain', 'contains', 'includes'].forEach(function (keyword) {
       Assertion.overwriteChainableMethod(
