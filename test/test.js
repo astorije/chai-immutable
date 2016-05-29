@@ -480,14 +480,7 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect(obj).to.have.deep.property(['y', 'x'], 2);
       });
 
-      it('not - should fail for missing deep property', function () {
-        var obj = Immutable.fromJS({ x: 1 });
-        fail(function () {
-          expect(obj).not.to.have.deep.property(['y', 'x'], 'different', 'message');
-        });
-      });
-
-      it('not - should fail for deep property, no message', function () {
+      it('should fail using `not` and `deep` given an inexisting property', function () {
         var obj = Immutable.fromJS({ x: 1 });
         fail(function () {
           expect(obj).not.to.have.deep.property(['y', 'x'], 'different');
@@ -497,7 +490,7 @@ describe('chai-immutable (' + typeEnv + ')', function () {
       it('not - should fail for equal deep property value', function () {
         var obj = Immutable.fromJS({ x: 1, y: { x: 2 } });
         fail(function () {
-          expect(obj).not.to.have.deep.property(['y', 'x'], 2, 'message');
+          expect(obj).not.to.have.deep.property(['y', 'x'], 2);
         });
       });
 
