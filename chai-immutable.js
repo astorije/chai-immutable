@@ -17,11 +17,6 @@
   }
 }(this, function (Immutable) {
   return function (chai, utils) {
-    var Collection = Immutable.Collection;
-    var IndexedCollection = Immutable.Collection.Indexed;
-    var KeyedCollection = Immutable.Collection.Keyed;
-    var SetCollection = Immutable.Collection.Set;
-
     var Assertion = chai.Assertion;
 
     function assertIsIterable(obj) {
