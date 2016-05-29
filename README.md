@@ -150,6 +150,91 @@ expect(new Map({ foo: 1, bar: 2 })).to.have.all.keys('foo', 'bar');
 expect(new Map({ foo: 1, bar: 2 })).to.contain.key('foo');
 ```
 
+### .property(name, [value])
+
+- **@param** *{ String | Array | Iterable }* name
+- **@param** *{ Mixed }* value (optional)
+
+Asserts that the target has a property `name`, optionally asserting that
+the value of that property is equal to `value`. `value` can be an
+Immutable object.
+If the `deep` flag is set, you can use dot- and bracket-notation for deep
+references into objects and arrays.
+
+```js
+// Simple referencing
+var map = new Map({ foo: 'bar' });
+expect(map).to.have.property('foo');
+expect(map).to.have.property('foo', 'bar');
+
+// Deep referencing
+var deepMap = new Map({
+    green: new Map({ tea: 'matcha' }),
+    teas: new List(['chai', 'matcha', new Map({ tea: 'konacha' })])
+});
+
+expect(deepMap).to.have.deep.property('green.tea', 'matcha');
+expect(deepMap).to.have.deep.property(['green', 'tea'], 'matcha');
+expect(deepMap).to.have.deep.property(new List(['green', 'tea']), 'matcha');
+expect(deepMap).to.have.deep.property('teas[1]', 'matcha');
+expect(deepMap).to.have.deep.property(['teas', 1], 'matcha');
+expect(deepMap).to.have.deep.property(new List(['teas', 1]), 'matcha');
+expect(deepMap).to.have.deep.property('teas[2].tea', 'konacha');
+expect(deepMap).to.have.deep.property(['teas', 2, 'tea'], 'konacha');
+expect(deepMap).to.have.deep.property(new List(['teas', 2, 'tea']), 'konacha');
+```
+
+You can also use a `List` as the starting point of a `deep.property`
+assertion, or traverse nested `List`s.
+
+```js
+var list = new List([
+  new List(['chai', 'matcha', 'konacha']),
+  new List([
+    new Map({ tea: 'chai' }),
+    new Map({ tea: 'matcha' }),
+    new Map({ tea: 'konacha' })
+  ])
+]);
+
+expect(list).to.have.deep.property('[0][1]', 'matcha');
+expect(list).to.have.deep.property([0, 1], 'matcha');
+expect(list).to.have.deep.property(new List([0, 1]), 'matcha');
+expect(list).to.have.deep.property('[1][2].tea', 'konacha');
+expect(list).to.have.deep.property([1, 2, 'tea'], 'konacha');
+expect(list).to.have.deep.property(new List([1, 2, 'tea']), 'konacha');
+```
+
+Furthermore, `property` changes the subject of the assertion
+to be the value of that property from the original object. This
+permits for further chainable assertions on that property.
+
+```js
+expect(map).to.have.property('foo')
+  .that.is.a('string');
+expect(deepMap).to.have.property('green')
+  .that.is.an.instanceof(Map)
+  .that.equals(new Map({ tea: 'matcha' }));
+expect(deepMap).to.have.property('teas')
+  .that.is.an.instanceof(List)
+  .with.deep.property([2])
+    .that.equals(new Map({ tea: 'konacha' }));
+```
+
+Note that dots and brackets in `name` must be backslash-escaped when
+the `deep` flag is set, while they must NOT be escaped when the `deep`
+flag is not set.
+
+```js
+// Simple referencing
+var css = new Map({ '.link[target]': 42 });
+expect(css).to.have.property('.link[target]', 42);
+
+// Deep referencing
+var deepCss = new Map({ '.link': new Map({ '[target]': 42 }) });
+expect(deepCss).to.have.deep.property('\\.link.\\[target\\]', 42);
+```
+
 ### .size(value)
 
 - **@param** *{ Number }* size
