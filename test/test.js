@@ -409,18 +409,9 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect({ x: 1 }).to.have.property('x', 1);
       });
 
-      it('should not affect the original assertion using `deep`', function () {
-        expect({ x: 1, y: { x: 2, y: 3 } }).to.have.deep.property('y.x', 2);
-      });
-
       it('should fail given an inexisting property', function () {
         var obj = Immutable.fromJS({ x: 1 });
         fail(function () { expect(obj).to.have.property('z'); });
-      });
-
-      it('should fail using `deep` given an inexisting property', function () {
-        var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-        fail(function () { expect(obj).to.have.deep.property(['y', 'z']); });
       });
 
       it('should pass using `not` given an inexisting property', function () {
@@ -428,26 +419,9 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect(obj).not.to.have.property('z');
       });
 
-      it('should pass using `not` and `deep` given an inexisting property', function () {
-        var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-        expect(obj).not.to.have.deep.property(['y', 'z']);
-      });
-
       it('should pass given an existing property', function () {
         var obj = Immutable.fromJS({ x: 1 });
         expect(obj).to.have.property('x');
-      });
-
-      it('should pass using `deep` given an existing property', function () {
-        var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-        expect(obj).to.have.deep.property(['y', 'x']);
-      });
-
-      it('should pass using `deep` given an index', function () {
-        var obj = Immutable.fromJS({
-          items: ['a', 'b', 'c'],
-        });
-        expect(obj).to.have.deep.property(['items', 2], 'c');
       });
 
       it('should fail using `not` given an existing property', function () {
@@ -455,19 +429,9 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         fail(function () { expect(obj).not.to.have.property('x'); });
       });
 
-      it('should fail using `not` and `deep` given an existing property', function () {
-        var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-        fail(function () { expect(obj).not.to.have.deep.property(['y', 'x']); });
-      });
-
       it('should fail given a property with a bad value', function () {
         var obj = Immutable.fromJS({ x: 1 });
         fail(function () { expect(obj).to.have.property('x', 'different'); });
-      });
-
-      it('should fail using `deep` given a property with a bad value', function () {
-        var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-        fail(function () { expect(obj).to.have.property(['y', 'x'], 'different'); });
       });
 
       it('should pass given a property with the good value', function () {
@@ -475,44 +439,84 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect(obj).to.have.property('x', 1);
       });
 
-      it('should pass using `deep` given a property with the good value', function () {
-        var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-        expect(obj).to.have.deep.property(['y', 'x'], 2);
-      });
-
-      it('should fail using `not` and `deep` given an inexisting property', function () {
-        var obj = Immutable.fromJS({ x: 1 });
-        fail(function () {
-          expect(obj).not.to.have.deep.property(['y', 'x'], 'different');
-        });
-      });
-
-      it('should fail using `not` and `deep` given a property with the good value', function () {
-        var obj = Immutable.fromJS({ x: 1, y: { x: 2 } });
-        fail(function () {
-          expect(obj).not.to.have.deep.property(['y', 'x'], 2);
-        });
-      });
-
-      it('should pass using `not` and `deep` given a property with a bad value', function () {
-        var obj = Immutable.fromJS({ x: 1, y: { x: 2 } });
-        expect(obj).not.to.have.deep.property(['y', 'x'], 'different');
-      });
-
       it('should pass given an immutable value', function () {
         var obj = Immutable.fromJS({ foo: { bar: 42 } });
         expect(obj).to.have.property('foo', new Map({ bar: 42 }));
       });
 
-      it('should pass using `deep` given an immutable value', function () {
-        var obj = Immutable.fromJS({ foo: [{ bar: 42 }] });
-        expect(obj).to.have.deep.property('foo[0]', new Map({ bar: 42 }));
-      });
-
-      it('should change the subject of the assertion to the value of that property', function () {
+      it('should change the subject to the value of that property', function () {
         var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
         var sub = obj.get('y');
         expect(obj).to.have.property('y').that.equal(sub);
+      });
+
+      describe('using the `deep` flag', function () {
+        it('should not affect the original assertion', function () {
+          expect({ x: 1, y: { x: 2, y: 3 } }).to.have.deep.property('y.x', 2);
+        });
+
+        it('should fail given an inexisting property', function () {
+          var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
+          fail(function () { expect(obj).to.have.deep.property(['y', 'z']); });
+        });
+
+        it('should pass using `not` given an inexisting property', function () {
+          var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
+          expect(obj).not.to.have.deep.property(['y', 'z']);
+        });
+
+        it('should pass given an existing property', function () {
+          var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
+          expect(obj).to.have.deep.property(['y', 'x']);
+        });
+
+        it('should pass given an index', function () {
+          var obj = Immutable.fromJS({
+            items: ['a', 'b', 'c'],
+          });
+          expect(obj).to.have.deep.property(['items', 2], 'c');
+        });
+
+        it('should fail using `not` given an existing property', function () {
+          var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
+          fail(function () { expect(obj).not.to.have.deep.property(['y', 'x']); });
+        });
+
+        it('should fail given a property with a bad value', function () {
+          var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
+          fail(function () {
+            expect(obj).to.have.property(['y', 'x'], 'different');
+          });
+        });
+
+        it('should pass given a property with the good value', function () {
+          var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
+          expect(obj).to.have.deep.property(['y', 'x'], 2);
+        });
+
+        it('should fail using `not` given an inexisting property', function () {
+          var obj = Immutable.fromJS({ x: 1 });
+          fail(function () {
+            expect(obj).not.to.have.deep.property(['y', 'x'], 'different');
+          });
+        });
+
+        it('should fail using `not` given a property with good value', function () {
+          var obj = Immutable.fromJS({ x: 1, y: { x: 2 } });
+          fail(function () {
+            expect(obj).not.to.have.deep.property(['y', 'x'], 2);
+          });
+        });
+
+        it('should pass using `not` given a property with a bad value', function () {
+          var obj = Immutable.fromJS({ x: 1, y: { x: 2 } });
+          expect(obj).not.to.have.deep.property(['y', 'x'], 'different');
+        });
+
+        it('should pass given an immutable value', function () {
+          var obj = Immutable.fromJS({ foo: [{ bar: 42 }] });
+          expect(obj).to.have.deep.property('foo[0]', new Map({ bar: 42 }));
+        });
       });
 
       describe('given a string-based path', function () {
