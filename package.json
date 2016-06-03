@@ -6,13 +6,18 @@
   "directories": {
     "test": "test"
   },
+  "typings": "chai-immutable.d.ts",
   "scripts": {
     "check-style": "jscs chai-immutable.js test/test.js",
     "test": "npm run test-mocha; npm run test-phantomjs; npm run check-style",
     "test-mocha": "mocha",
     "test-phantomjs": "echo 'mocha-phantomjs is temporarily disabled.' # mocha-phantomjs test/index.html",
     "coverage": "istanbul cover _mocha",
-    "coveralls": "npm run coverage && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "npm run coverage && cat ./coverage/lcov.info | coveralls",
+    "build-typings": "tsc -p .",
+    "test-typings": "npm run build-typings && npm run check-style-typings && mocha typing/build/*.specs.js",
+    "check-style-typings": "tslint typing/lib/**/*.ts typing/test/**/*.ts",
+    "prepublish": "typings install"
   },
   "repository": {
     "type": "git",
@@ -30,6 +35,12 @@
     "name": "Jérémie Astori",
     "url": "https://jeremie.astori.fr"
   },
+  "contributors": [
+    {
+      "name": "Ivan Zlatev",
+      "url": "http://ivanz.com"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/astorije/chai-immutable/issues"
@@ -44,6 +55,10 @@
     "immutable": "^3.7.5",
     "istanbul": "^0.4.3",
     "jscs": "^2.5.0",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "typescript": "^1.8.10",
+    "typings": "^1.0.4",
+    "tslint": "*",
+    "tslint-config-typings": "^0.2.0"
   }
 }

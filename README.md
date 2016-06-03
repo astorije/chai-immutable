@@ -311,3 +311,10 @@ Asserts that the immutable collection has the expected size.
 assert.sizeOf(List.of(1, 2, 3), 3);
 assert.sizeOf(new List(), 0);
 ```
+
+
+## TypeScript type definitions
+
+The `chai-immutable` module contains TypeScript type definitions, which should automatically be picked up by TypeScript.
+
+*Note:* The type definitions extend some of the `chai` type definitions, so double-check that you have them installed if you have any issues.

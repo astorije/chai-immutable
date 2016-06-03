@@ -12,6 +12,7 @@ script:
 - npm run test-mocha
 - npm run test-phantomjs
 - npm run check-style
+- npm run test-typings
 
 after_script:
 - npm run coveralls

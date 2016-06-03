@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "chai": "registry:npm/chai#3.5.0+20160415060238",
+    "immutable": "registry:npm/immutable#3.7.6+20160411060006"
+  },
+  "globalDevDependencies": {
+    "mocha": "registry:env/mocha#2.2.5+20160321223601"
+  }
+}

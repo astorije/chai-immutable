@@ -24,6 +24,7 @@ test_script:
   - npm run test-mocha
   - npm run test-phantomjs
   - npm run check-style
+  - npm run test-typings
 
 # Don't actually build
 build: off

@@ -1,3 +1,10 @@
+.vscode
+
+# TypeScript and Type Definitions
+
+typings
+typing/build
+
 # Logs
 logs
 *.log
