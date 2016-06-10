@@ -1,7 +1,6 @@
 {
   "extends": "tslint-config-typings",
   "rules": {
-    "no-trailing-whitespace": false,
-    "eofline": false
+    "eofline": true
   }
 }
