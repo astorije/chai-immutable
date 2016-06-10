@@ -3,7 +3,6 @@
 [![Build Status](https://travis-ci.org/astorije/chai-immutable.svg?branch=master)](https://travis-ci.org/astorije/chai-immutable)
 [![Build Status](https://ci.appveyor.com/api/projects/status/407ts84pq7wd4kt9/branch/master?svg=true)](https://ci.appveyor.com/project/astorije/chai-immutable/branch/master)
 [![Coverage Status](https://coveralls.io/repos/astorije/chai-immutable/badge.svg)](https://coveralls.io/r/astorije/chai-immutable)
-[![Code Climate](https://codeclimate.com/github/astorije/chai-immutable/badges/gpa.svg)](https://codeclimate.com/github/astorije/chai-immutable)
 [![devDependency Status](https://david-dm.org/astorije/chai-immutable/dev-status.svg)](https://david-dm.org/astorije/chai-immutable#info=devDependencies)
 [![peerDependency Status](https://david-dm.org/astorije/chai-immutable/peer-status.svg)](https://david-dm.org/astorije/chai-immutable#info=peerDependencies)
 
