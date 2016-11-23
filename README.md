@@ -10,6 +10,20 @@
 
 This plugin provides a set of [Chai](http://chaijs.com/) assertions for [Facebook's Immutable library for JavaScript collections](http://facebook.github.io/immutable-js/).
 
+<!-- fulky:globals
+var chai = require('chai');
+var assert = chai.assert;
+var expect = chai.expect;
+
+var Immutable = require('immutable');
+var List = Immutable.List;
+var Map = Immutable.Map;
+var Set = Immutable.Set;
+var Stack = Immutable.Stack;
+
+chai.use(require('./chai-immutable'));
+-->
+
 ## Installation
 
 ### Node.js
@@ -22,6 +36,7 @@ npm install chai-immutable
 
 You can then use this plugin as any other Chai plugins:
 
+<!-- fulky:skip-test -->
 ```js
 var chai = require('chai');
 var chaiImmutable = require('chai-immutable');
@@ -45,6 +60,7 @@ If you are using this plugin with
 [`dirty-chai`](https://github.com/prodatakey/dirty-chai), note that
 `chai-immutable` must be loaded **before** any of them. For example:
 
+<!-- fulky:skip-test -->
 ```js
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
@@ -160,6 +176,7 @@ Immutable object.
 If the `deep` flag is set, you can use dot- and bracket-notation for deep
 references into objects and arrays.
 
+<!-- fulky:define maps -->
 ```js
 // Simple referencing
 var map = new Map({ foo: 'bar' });
@@ -168,8 +185,8 @@ expect(map).to.have.property('foo', 'bar');
 
 // Deep referencing
 var deepMap = new Map({
-    green: new Map({ tea: 'matcha' }),
-    teas: new List(['chai', 'matcha', new Map({ tea: 'konacha' })])
+  green: new Map({ tea: 'matcha' }),
+  teas: new List(['chai', 'matcha', new Map({ tea: 'konacha' })])
 });
 
 expect(deepMap).to.have.deep.property('green.tea', 'matcha');
@@ -208,6 +225,7 @@ Furthermore, `property` changes the subject of the assertion
 to be the value of that property from the original object. This
 permits for further chainable assertions on that property.
 
+<!-- fulky:use maps -->
 ```js
 expect(map).to.have.property('foo')
   .that.is.a('string');

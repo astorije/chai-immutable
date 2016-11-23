@@ -25,6 +25,7 @@ test_script:
   - npm --version
   - npm run test-mocha
   - npm run test-phantomjs
+  - if not "%nodejs_version:~0,3%" == "0.1" npm run test-readme
   - npm run check-style
 
 # Don't actually build

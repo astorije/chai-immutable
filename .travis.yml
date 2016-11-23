@@ -13,6 +13,7 @@ node_js:
 script:
 - npm run test-mocha
 - npm run test-phantomjs
+- if [[ "$TRAVIS_NODE_VERSION" != "0.1"* ]]; then npm run test-readme; fi
 - npm run check-style
 
 after_script:
