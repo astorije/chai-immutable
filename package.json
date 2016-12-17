@@ -37,10 +37,10 @@
   },
   "homepage": "https://github.com/astorije/chai-immutable",
   "peerDependencies": {
-    "chai": ">= 2.0.0 < 4"
+    "chai": "^4.0.0"
   },
   "devDependencies": {
-    "chai": "^3.4.0",
+    "chai": "^4.0.0",
     "coveralls": "^2.11.9",
     "fulky": "^0.1.0",
     "immutable": "^3.7.5",
