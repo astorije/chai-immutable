@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "noImplicitAny": true,
+    "declaration": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "typing/build"
+  },
+  "compileOnSave": true,
+  "files": [
+    "typings/index.d.ts",
+    "typing/test/Assertation.specs.ts",
+    "typing/test/chai-immutable.specs.ts"
+  ]
+}
