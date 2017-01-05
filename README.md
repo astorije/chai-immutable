@@ -23,8 +23,8 @@ npm install chai-immutable
 You can then use this plugin as any other Chai plugins:
 
 ```js
-var chai = require('chai');
-var chaiImmutable = require('chai-immutable');
+const chai = require('chai');
+const chaiImmutable = require('chai-immutable');
 
 chai.use(chaiImmutable);
 ```
@@ -46,17 +46,17 @@ If you are using this plugin with
 `chai-immutable` must be loaded **before** any of them. For example:
 
 ```js
-var chai = require('chai');
-var chaiAsPromised = require('chai-as-promised');
-var chaiImmutable = require('chai-immutable');
-var dirtyChai = require('dirty-chai');
-var expect = chai.expect;
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+const chaiImmutable = require('chai-immutable');
+const dirtyChai = require('dirty-chai');
+const expect = chai.expect;
 
 chai.use(chaiImmutable);
 chai.use(dirtyChai);
 chai.use(chaiAsPromised);
 
-var List = require('immutable').List;
+const { List } = require('immutable');
 
 /* ... */
 return expect(List.of(1, 2, 3)).to.eventually.have.size(3);
@@ -82,8 +82,8 @@ Asserts that the values of the target are equivalent to the values of
 `collection`. Aliases of Chai's original `equal` method are also supported.
 
 ```js
-var a = List.of(1, 2, 3);
-var b = List.of(1, 2, 3);
+const a = List.of(1, 2, 3);
+const b = List.of(1, 2, 3);
 expect(a).to.equal(b);
 ```
 
@@ -162,12 +162,12 @@ references into objects and arrays.
 
 ```js
 // Simple referencing
-var map = new Map({ foo: 'bar' });
+const map = new Map({ foo: 'bar' });
 expect(map).to.have.property('foo');
 expect(map).to.have.property('foo', 'bar');
 
 // Deep referencing
-var deepMap = new Map({
+const deepMap = new Map({
     green: new Map({ tea: 'matcha' }),
     teas: new List(['chai', 'matcha', new Map({ tea: 'konacha' })])
 });
@@ -187,7 +187,7 @@ You can also use a `List` as the starting point of a `deep.property`
 assertion, or traverse nested `List`s.
 
 ```js
-var list = new List([
+const list = new List([
   new List(['chai', 'matcha', 'konacha']),
   new List([
     new Map({ tea: 'chai' }),
@@ -226,11 +226,11 @@ flag is not set.
 
 ```js
 // Simple referencing
-var css = new Map({ '.link[target]': 42 });
+const css = new Map({ '.link[target]': 42 });
 expect(css).to.have.property('.link[target]', 42);
 
 // Deep referencing
-var deepCss = new Map({ '.link': new Map({ '[target]': 42 }) });
+const deepCss = new Map({ '.link': new Map({ '[target]': 42 }) });
 expect(deepCss).to.have.deep.property('\\.link.\\[target\\]', 42);
 ```
 
@@ -273,8 +273,8 @@ Asserts that the values of `actual` are equivalent to the values of
 exactly like `.equal()` in the context of Immutable data structures.
 
 ```js
-var a = List.of(1, 2, 3);
-var b = List.of(1, 2, 3);
+const a = List.of(1, 2, 3);
+const b = List.of(1, 2, 3);
 assert.equal(a, b);
 ```
 
@@ -294,8 +294,8 @@ Asserts that the values of `actual` are not equivalent to the values of
 exactly like `.notEqual()` in the context of Immutable data structures.
 
 ```js
-var a = List.of(1, 2, 3);
-var b = List.of(4, 5, 6);
+const a = List.of(1, 2, 3);
+const b = List.of(4, 5, 6);
 assert.notEqual(a, b);
 ```
 
