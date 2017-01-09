@@ -146,9 +146,16 @@ describe('chai-immutable (' + typeEnv + ')', function () {
       it('should display a helpful failure output on big objects', function () {
         var actual = new Map({ foo: 'foo foo foo foo foo foo foo foo' });
         var expected = new Map({ bar: 'bar bar bar bar bar bar bar bar' });
+        // AssertionError: expected { Object (foo) } to equal { Object (bar) }
+        // + expected - actual
+        //
+        //  {
+        // -  "foo": "foo foo foo foo foo foo foo foo"
+        // +  "bar": "bar bar bar bar bar bar bar bar"
+        //  }
         fail(function () {
           expect(actual).to.equal(expected);
-        }, /(foo ?){8}.+(bar ?){8}/);
+        }, 'AssertionError: expected { Object (foo) } to equal { Object (bar) }');
       });
 
       it('should fail given a non-Immutable value', function () {
@@ -749,9 +756,16 @@ describe('chai-immutable (' + typeEnv + ')', function () {
       it('should display a helpful failure output on big objects', function () {
         var actual = new Map({ foo: 'foo foo foo foo foo foo foo foo ' });
         var expected = new Map({ bar: 'bar bar bar bar bar bar bar bar ' });
+        // AssertionError: expected { Object (foo) } to equal { Object (bar) }
+        // + expected - actual
+        //
+        //  {
+        // -  "foo": "foo foo foo foo foo foo foo foo"
+        // +  "bar": "bar bar bar bar bar bar bar bar"
+        //  }
         fail(function () {
           assert.equal(actual, expected);
-        }, /(foo ){8}.+(bar ){8}/);
+        }, 'AssertionError: expected { Object (foo) } to equal { Object (bar) }');
       });
 
       it('should fail given a non-Immutable value', function () {
