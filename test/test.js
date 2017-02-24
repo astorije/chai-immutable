@@ -79,6 +79,19 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         fail(function () { expect(list3).to.be.empty; });
       });
 
+      it('should display helpful output', function () {
+        fail(function () { expect(list3).to.be.empty; }, list3.inspect());
+        fail(function () { expect(list3).to.be.empty; }, 'size 3');
+      });
+
+      it('should display a helpful failure output on big objects', function () {
+        var lengthyMap = new Map({ foo: 'foo foo foo foo foo foo foo foo' });
+        fail(
+          function () { expect(lengthyMap).to.be.empty; },
+          lengthyMap.inspect()
+        );
+      });
+
       it('should fail using `not` given an empty collection', function () {
         fail(function () { expect(new List()).to.not.be.empty; });
       });
@@ -230,6 +243,13 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         fail(function () {
           expect(lengthyMap).to.include('not-foo');
         }, /(foo ){8}/);
+      });
+
+      it('should display a helpful failure on the value too', function () {
+        var lengthyMap = new Map({ foo: 'foo foo foo foo foo foo foo foo ' });
+        fail(function () {
+          expect(Set.of()).to.include(lengthyMap);
+        }, lengthyMap.inspect());
       });
 
       it('should fail given an inexisting value', function () {
@@ -412,6 +432,21 @@ describe('chai-immutable (' + typeEnv + ')', function () {
       it('should fail given an inexisting property', function () {
         var obj = Immutable.fromJS({ x: 1 });
         fail(function () { expect(obj).to.have.property('z'); });
+      });
+
+      it('should have a helpful message for inexisting property', function () {
+        var lengthyMap = new Map({ foo: 'foo foo foo foo foo foo foo foo ' });
+        fail(
+          function () { expect(lengthyMap).to.have.property('not-foo'); },
+          lengthyMap.inspect()
+        );
+      });
+
+      it('should have a helpful message including the path', function () {
+        var lengthyMap = new Map({ foo: 'foo foo foo foo foo foo foo foo ' });
+        fail(function () {
+          expect(lengthyMap).to.have.property(['bar', 'baz', 'bar', 'baz']);
+        }, /bar.*baz.*bar.*baz/);
       });
 
       it('should pass using `not` given an inexisting property', function () {

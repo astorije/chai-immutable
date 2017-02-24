@@ -22,8 +22,17 @@
     function assertIsIterable(obj) {
       new Assertion(obj).assert(
         Immutable.Iterable.isIterable(obj),
-        'expected #{this} to be an Iterable'
+        'expected #{act} to be an Iterable',
+        null,
+        friendlyString(obj)
       );
+    }
+
+    function friendlyString(obj) {
+      if (Immutable.Iterable.isIterable(obj)) {
+        return obj.inspect();
+      }
+      return obj;
     }
 
     /**
@@ -55,8 +64,10 @@
 
           this.assert(
             size === 0,
-            'expected #{this} to be empty but got size #{act}',
-            'expected #{this} to not be empty'
+            'expected #{act} to be empty but got size ' + size,
+            'expected #{act} to not be empty',
+            0,
+            friendlyString(obj)
           );
         }
         else _super.apply(this, arguments);
@@ -105,8 +116,8 @@
             Immutable.is(obj, collection),
             'expected #{act} to equal #{exp}',
             'expected #{act} to not equal #{exp}',
-            collection.toString(),
-            obj.toString(),
+            friendlyString(collection),
+            friendlyString(obj),
             true
           );
         }
@@ -151,8 +162,8 @@
             obj.includes(val),
             'expected #{act} to include #{exp}',
             'expected #{act} to not include #{exp}',
-            val,
-            obj.toString()
+            friendlyString(val),
+            friendlyString(obj)
           );
         }
         else _super.apply(this, arguments);
@@ -271,7 +282,7 @@
             'expected #{act} to ' + str,
             'expected #{act} to not ' + str,
             keys,
-            obj.toString()
+            friendlyString(obj)
           );
         }
         else _super.apply(this, arguments);
@@ -451,8 +462,10 @@
           else {
             this.assert(
               hasProperty,
-              'expected #{this} to have a ' + descriptor + utils.inspect(path),
-              'expected #{this} not to have ' + descriptor + utils.inspect(path)
+              'expected #{act} to have a ' + descriptor + '#{exp}',
+              'expected #{act} not to have ' + descriptor + '#{exp}',
+              path,
+              friendlyString(obj)
             );
           }
 
@@ -471,8 +484,8 @@
                 ' of #{exp}, but got #{act}',
               'expected #{this} not to have a ' + descriptor + utils.inspect(path) +
                 ' of #{act}',
-              val,
-              value
+              friendlyString(val),
+              friendlyString(value)
             );
           }
 
