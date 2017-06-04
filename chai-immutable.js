@@ -16,6 +16,13 @@
     context.chai.use(factory(context.Immutable));
   }
 }(this, function (Immutable) {
+  function isImmutable(value) {
+    if (Immutable.isImmutable !== undefined) {
+      return Immutable.isImmutable(value);
+    }
+    else return Immutable.Iterable.isIterable(value);
+  }
+
   return function (chai, utils) {
     var Assertion = chai.Assertion;
 
@@ -49,7 +56,7 @@
       return function () {
         var obj = this._obj;
 
-        if (Immutable.Iterable.isIterable(obj)) {
+        if (isImmutable(obj)) {
           var size = obj.size;
           new Assertion(size).a('number');
 
@@ -100,7 +107,7 @@
       return function (collection) {
         var obj = this._obj;
 
-        if (Immutable.Iterable.isIterable(obj)) {
+        if (isImmutable(obj)) {
           this.assert(
             Immutable.is(obj, collection),
             'expected #{act} to equal #{exp}',
@@ -146,7 +153,7 @@
       return function (val) {
         var obj = this._obj;
 
-        if (Immutable.Iterable.isIterable(obj)) {
+        if (isImmutable(obj)) {
           this.assert(
             obj.includes(val),
             'expected #{act} to include #{exp}',
@@ -228,7 +235,7 @@
             case 'object':
               if (Immutable.Iterable.isIndexed(keys))
                 keys = keys.toJS();
-              else if (Immutable.Iterable.isIterable(keys))
+              else if (isImmutable(keys))
                 keys = keys.keySeq().toJS();
               else keys = Object.keys(keys);
             case 'array':
@@ -418,7 +425,7 @@
       return function (path, val) {
         var obj = this._obj;
 
-        if (Immutable.Iterable.isIterable(this._obj)) {
+        if (isImmutable(this._obj)) {
           var isDeep = Boolean(utils.flag(this, 'deep'));
           var negate = Boolean(utils.flag(this, 'negate'));
 
@@ -458,7 +465,7 @@
 
           if (arguments.length > 1) {
             var isEqual;
-            if (Immutable.Iterable.isIterable(val)) {
+            if (isImmutable(val)) {
               isEqual = Immutable.is(val, value);
             }
             else {
@@ -693,7 +700,7 @@
       // It seems like we shouldn't actually need this check, however,
       // `assert.equal` actually behaves differently than its BDD counterpart!
       // Namely, the BDD version is strict while the "assert" one isn't.
-      if (Immutable.Iterable.isIterable(actual)) {
+      if (isImmutable(actual)) {
         return new Assertion(actual).equal(expected);
       }
       else return originalEqual(actual, expected);
@@ -720,7 +727,7 @@
      */
 
     assert.notEqual = function (actual, expected) {
-      if (Immutable.Iterable.isIterable(actual)) {
+      if (isImmutable(actual)) {
         return new Assertion(actual).not.equal(expected);
       }
       else return originalNotEqual(actual, expected);
