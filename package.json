@@ -2,6 +2,9 @@
   "name": "chai-immutable",
   "version": "1.6.0",
   "description": "Chai assertions for Facebook's Immutable library for JavaScript collections",
+  "publishConfig": {
+    "tag": "next"
+  },
   "main": "chai-immutable.js",
   "directories": {
     "test": "test"
