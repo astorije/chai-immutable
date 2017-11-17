@@ -694,7 +694,7 @@
       // `assert.equal` actually behaves differently than its BDD counterpart!
       // Namely, the BDD version is strict while the "assert" one isn't.
       if (Immutable.Iterable.isIterable(actual)) {
-        return new Assertion(actual, message).equal(expected, message);
+        return new Assertion(actual, message).equal(expected);
       }
       else return originalEqual(actual, expected, message);
     };
