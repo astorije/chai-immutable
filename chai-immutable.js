@@ -99,6 +99,7 @@
     function assertCollectionEqual(_super) {
       return function (collection) {
         var obj = this._obj;
+
         if (Immutable.Iterable.isIterable(obj)) {
           this.assert(
             Immutable.is(obj, collection),
