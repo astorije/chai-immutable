@@ -99,7 +99,6 @@
     function assertCollectionEqual(_super) {
       return function (collection) {
         var obj = this._obj;
-
         if (Immutable.Iterable.isIterable(obj)) {
           this.assert(
             Immutable.is(obj, collection),
@@ -689,14 +688,14 @@
      * @api public
      */
 
-    assert.equal = function (actual, expected) {
+    assert.equal = function (actual, expected, message) {
       // It seems like we shouldn't actually need this check, however,
       // `assert.equal` actually behaves differently than its BDD counterpart!
       // Namely, the BDD version is strict while the "assert" one isn't.
       if (Immutable.Iterable.isIterable(actual)) {
-        return new Assertion(actual).equal(expected);
+        return new Assertion(actual, message).equal(expected, message);
       }
-      else return originalEqual(actual, expected);
+      else return originalEqual(actual, expected, message);
     };
 
     /**
@@ -719,11 +718,11 @@
      * @api public
      */
 
-    assert.notEqual = function (actual, expected) {
+    assert.notEqual = function (actual, expected, message) {
       if (Immutable.Iterable.isIterable(actual)) {
-        return new Assertion(actual).not.equal(expected);
+        return new Assertion(actual, message).not.equal(expected);
       }
-      else return originalNotEqual(actual, expected);
+      else return originalNotEqual(actual, expected, message);
     };
 
     /**
@@ -743,8 +742,8 @@
      * @api public
      */
 
-    assert.sizeOf = function (collection, expected) {
-      new Assertion(collection).size(expected);
+    assert.sizeOf = function (collection, expected, message) {
+      new Assertion(collection, message).size(expected);
     };
   };
 }));

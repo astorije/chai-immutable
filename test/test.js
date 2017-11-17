@@ -769,6 +769,22 @@ describe('chai-immutable (' + typeEnv + ')', function () {
       it('should work if using different copies of Immutable', function () {
         assert.equal(clonedImmutableList, List.of(1, 2, 3));
       });
+
+      it('should display a custom message if given as argument when failing', function () {
+        try {
+          assert.equal(1, 2, "*Custom message*");
+        } catch(e) {
+          assert.equal(e.message, "*Custom message*: expected 1 to equal 2")
+        }
+      });
+
+      it('should display a custom message if given as argument when failing - Immutable', function () {
+        try {
+          assert.equal(List.of(1, 2), List.of(3, 4), "*Custom message*");
+        } catch(e) {
+          assert.equal(e.message, "*Custom message*: expected \'List [ 1, 2 ]\' to equal \'List [ 3, 4 ]\'")
+        }
+      });
     });
 
     describe('notEqual assertion', function () {
@@ -799,6 +815,22 @@ describe('chai-immutable (' + typeEnv + ')', function () {
 
       it('should work if using different copies of Immutable', function () {
         assert.notEqual(clonedImmutableList, List.of());
+      });
+
+      it('should display a custom message if given as argument when failing', function () {
+        try {
+          assert.notEqual(1, 1, "*Custom message*");
+        } catch(e) {
+          assert.equal(e.message, "*Custom message*: expected 1 to not equal 1")
+        }
+      });
+
+      it('should display a custom message if given as argument when failing - Immutable', function () {
+        try {
+          assert.notEqual(List.of(1, 2), List.of(3, 4), "*Custom message*");
+        } catch(e) {
+          assert.equal(e.message, "*Custom message*: expected \'List [ 1, 2 ]\' to equal \'List [ 3, 4 ]\'")
+        }
       });
     });
 
@@ -888,6 +920,14 @@ describe('chai-immutable (' + typeEnv + ')', function () {
 
       it('should work if using different copies of Immutable', function () {
         assert.sizeOf(clonedImmutableList, 3);
+      });
+
+      it('should display a custom message if given as argument when failing', function () {
+        try {
+          assert.sizeOf(list3, 2, '*Custom message*');
+        } catch(e) {
+          assert.equal(e.message, "*Custom message*: expected List [ 1, 2, 3 ] to have size 2 but got 3")
+        }
       });
     });
   });
