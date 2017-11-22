@@ -225,13 +225,13 @@
 
         if (Immutable.Iterable.isKeyed(obj)) {
           switch (utils.type(keys)) {
-            case 'object':
+            case 'Object':
               if (Immutable.Iterable.isIndexed(keys))
                 keys = keys.toJS();
               else if (Immutable.Iterable.isIterable(keys))
                 keys = keys.keySeq().toJS();
               else keys = Object.keys(keys);
-            case 'array':
+            case 'Array':
               if (arguments.length > 1) throw new Error(
                 'keys must be given single argument of ' +
                 'Array|Object|String|Collection, ' +
@@ -253,7 +253,7 @@
           if (any) ok = keys.some(has);
           else {
             ok = keys.every(has);
-            if (!contains && !utils.flag(this, 'negate')) {
+            if (!contains) {
               ok = ok && keys.length === obj.count();
             }
           }
@@ -331,8 +331,8 @@
      * Asserts that the target has a property `name`, optionally asserting that
      * the value of that property is equal to `value`. `value` can be an
      * Immutable object.
-     * If the `deep` flag is set, you can use dot- and bracket-notation for deep
-     * references into objects and arrays.
+     * If the `nested` flag is set, you can use dot- and bracket-notation for
+     * nested references into objects and arrays.
      *
      * ```js
      * // Simple referencing
@@ -341,23 +341,23 @@
      * expect(map).to.have.property('foo', 'bar');
      *
      * // Deep referencing
-     * var deepMap = new Map({
+     * var nestedMap = new Map({
      *     green: new Map({ tea: 'matcha' }),
      *     teas: new List(['chai', 'matcha', new Map({ tea: 'konacha' })])
      * });
      *
-     * expect(deepMap).to.have.deep.property('green.tea', 'matcha');
-     * expect(deepMap).to.have.deep.property(['green', 'tea'], 'matcha');
-     * expect(deepMap).to.have.deep.property(new List(['green', 'tea']), 'matcha');
-     * expect(deepMap).to.have.deep.property('teas[1]', 'matcha');
-     * expect(deepMap).to.have.deep.property(['teas', 1], 'matcha');
-     * expect(deepMap).to.have.deep.property(new List(['teas', 1]), 'matcha');
-     * expect(deepMap).to.have.deep.property('teas[2].tea', 'konacha');
-     * expect(deepMap).to.have.deep.property(['teas', 2, 'tea'], 'konacha');
-     * expect(deepMap).to.have.deep.property(new List(['teas', 2, 'tea']), 'konacha');
+     * expect(nestedMap).to.have.nested.property('green.tea', 'matcha');
+     * expect(nestedMap).to.have.nested.property(['green', 'tea'], 'matcha');
+     * expect(nestedMap).to.have.nested.property(new List(['green', 'tea']), 'matcha');
+     * expect(nestedMap).to.have.nested.property('teas[1]', 'matcha');
+     * expect(nestedMap).to.have.nested.property(['teas', 1], 'matcha');
+     * expect(nestedMap).to.have.nested.property(new List(['teas', 1]), 'matcha');
+     * expect(nestedMap).to.have.nested.property('teas[2].tea', 'konacha');
+     * expect(nestedMap).to.have.nested.property(['teas', 2, 'tea'], 'konacha');
+     * expect(nestedMap).to.have.nested.property(new List(['teas', 2, 'tea']), 'konacha');
      * ```
      *
-     * You can also use a `List` as the starting point of a `deep.property`
+     * You can also use a `List` as the starting point of a `nested.property`
      * assertion, or traverse nested `List`s.
      *
      * ```js
@@ -370,12 +370,12 @@
      *   ])
      * ]);
      *
-     * expect(list).to.have.deep.property('[0][1]', 'matcha');
-     * expect(list).to.have.deep.property([0, 1], 'matcha');
-     * expect(list).to.have.deep.property(new List([0, 1]), 'matcha');
-     * expect(list).to.have.deep.property('[1][2].tea', 'konacha');
-     * expect(list).to.have.deep.property([1, 2, 'tea'], 'konacha');
-     * expect(list).to.have.deep.property(new List([1, 2, 'tea']), 'konacha');
+     * expect(list).to.have.nested.property('[0][1]', 'matcha');
+     * expect(list).to.have.nested.property([0, 1], 'matcha');
+     * expect(list).to.have.nested.property(new List([0, 1]), 'matcha');
+     * expect(list).to.have.nested.property('[1][2].tea', 'konacha');
+     * expect(list).to.have.nested.property([1, 2, 'tea'], 'konacha');
+     * expect(list).to.have.nested.property(new List([1, 2, 'tea']), 'konacha');
      * ```
      *
      * Furthermore, `property` changes the subject of the assertion
@@ -385,18 +385,18 @@
      * ```js
      * expect(map).to.have.property('foo')
      *   .that.is.a('string');
-     * expect(deepMap).to.have.property('green')
+     * expect(nestedMap).to.have.property('green')
      *   .that.is.an.instanceof(Map)
      *   .that.equals(new Map({ tea: 'matcha' }));
-     * expect(deepMap).to.have.property('teas')
+     * expect(nestedMap).to.have.property('teas')
      *   .that.is.an.instanceof(List)
-     *   .with.deep.property([2])
+     *   .with.nested.property([2])
      *     .that.equals(new Map({ tea: 'konacha' }));
      * ```
      *
      * Note that dots and brackets in `name` must be backslash-escaped when
-     * the `deep` flag is set, while they must NOT be escaped when the `deep`
-     * flag is not set.
+     * the `nested` flag is set, while they must NOT be escaped when the
+     * `nested` flag is not set.
      *
      * ```js
      * // Simple referencing
@@ -404,8 +404,8 @@
      * expect(css).to.have.property('.link[target]', 42);
      *
      * // Deep referencing
-     * var deepCss = new Map({ '.link': new Map({ '[target]': 42 }) });
-     * expect(deepCss).to.have.deep.property('\\.link.\\[target\\]', 42);
+     * var nestedCss = new Map({ '.link': new Map({ '[target]': 42 }) });
+     * expect(nestedCss).to.have.nested.property('\\.link.\\[target\\]', 42);
      * ```
      *
      * @name property
@@ -419,15 +419,15 @@
         var obj = this._obj;
 
         if (Immutable.Iterable.isIterable(this._obj)) {
-          var isDeep = Boolean(utils.flag(this, 'deep'));
+          var isNested = Boolean(utils.flag(this, 'nested'));
           var negate = Boolean(utils.flag(this, 'negate'));
 
           var descriptor;
           var hasProperty;
           var value;
 
-          if (isDeep) {
-            descriptor = 'deep property ';
+          if (isNested) {
+            descriptor = 'nested property ';
             if (typeof path === 'string') {
               path = parsePath(path);
             }
