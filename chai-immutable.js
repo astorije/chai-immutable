@@ -105,8 +105,8 @@
             Immutable.is(obj, collection),
             'expected #{act} to equal #{exp}',
             'expected #{act} to not equal #{exp}',
-            collection.toString(),
-            obj.toString(),
+            collection.toJS(),
+            obj.toJS(),
             true
           );
         }
