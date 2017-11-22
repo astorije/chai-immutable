@@ -359,11 +359,6 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         fail(function () { expect({ x: 1 }).to.have.key('z'); });
       });
 
-      it('should fail using `not` given an inexisting key', function () {
-        fail(function () { expect(map).to.not.have.key('x'); });
-        fail(function () { expect(obj).to.not.have.key('x'); });
-      });
-
       it('should fail given multiple inexisting keys', function () {
         fail(function () { expect(map).to.have.keys('z1', 'z2'); });
         fail(function () { expect(obj).to.have.keys('z1', 'z2'); });
@@ -450,36 +445,36 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         expect(obj).to.have.property('y').that.equal(sub);
       });
 
-      describe('using the `deep` flag', function () {
+      describe('using the `nested` flag', function () {
         it('should not affect the original assertion', function () {
-          expect({ x: 1, y: { x: 2, y: 3 } }).to.have.deep.property('y.x', 2);
+          expect({ x: 1, y: { x: 2, y: 3 } }).to.have.nested.property('y.x', 2);
         });
 
         it('should fail given an inexisting property', function () {
           var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-          fail(function () { expect(obj).to.have.deep.property(['y', 'z']); });
+          fail(function () { expect(obj).to.have.nested.property(['y', 'z']); });
         });
 
         it('should pass using `not` given an inexisting property', function () {
           var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-          expect(obj).not.to.have.deep.property(['y', 'z']);
+          expect(obj).not.to.have.nested.property(['y', 'z']);
         });
 
         it('should pass given an existing property', function () {
           var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-          expect(obj).to.have.deep.property(['y', 'x']);
+          expect(obj).to.have.nested.property(['y', 'x']);
         });
 
         it('should pass given an index', function () {
           var obj = Immutable.fromJS({
             items: ['a', 'b', 'c'],
           });
-          expect(obj).to.have.deep.property(['items', 2], 'c');
+          expect(obj).to.have.nested.property(['items', 2], 'c');
         });
 
         it('should fail using `not` given an existing property', function () {
           var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-          fail(function () { expect(obj).not.to.have.deep.property(['y', 'x']); });
+          fail(function () { expect(obj).not.to.have.nested.property(['y', 'x']); });
         });
 
         it('should fail given a property with a bad value', function () {
@@ -491,31 +486,31 @@ describe('chai-immutable (' + typeEnv + ')', function () {
 
         it('should pass given a property with the good value', function () {
           var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-          expect(obj).to.have.deep.property(['y', 'x'], 2);
+          expect(obj).to.have.nested.property(['y', 'x'], 2);
         });
 
         it('should fail using `not` given an inexisting property', function () {
           var obj = Immutable.fromJS({ x: 1 });
           fail(function () {
-            expect(obj).not.to.have.deep.property(['y', 'x'], 'different');
+            expect(obj).not.to.have.nested.property(['y', 'x'], 'different');
           });
         });
 
         it('should fail using `not` given a property with good value', function () {
           var obj = Immutable.fromJS({ x: 1, y: { x: 2 } });
           fail(function () {
-            expect(obj).not.to.have.deep.property(['y', 'x'], 2);
+            expect(obj).not.to.have.nested.property(['y', 'x'], 2);
           });
         });
 
         it('should pass using `not` given a property with a bad value', function () {
           var obj = Immutable.fromJS({ x: 1, y: { x: 2 } });
-          expect(obj).not.to.have.deep.property(['y', 'x'], 'different');
+          expect(obj).not.to.have.nested.property(['y', 'x'], 'different');
         });
 
         it('should pass given an immutable value', function () {
           var obj = Immutable.fromJS({ foo: [{ bar: 42 }] });
-          expect(obj).to.have.deep.property('foo[0]', new Map({ bar: 42 }));
+          expect(obj).to.have.nested.property('foo[0]', new Map({ bar: 42 }));
         });
       });
 
@@ -528,13 +523,13 @@ describe('chai-immutable (' + typeEnv + ')', function () {
           ],
         });
 
-        it('should pass using `deep` given a single index', function () {
-          expect(obj.get('items')).to.have.deep.property('[1]')
+        it('should pass using `nested` given a single index', function () {
+          expect(obj.get('items')).to.have.nested.property('[1]')
             .that.equals(new Map({ name: 'John' }));
         });
 
-        it('should pass using `deep` given a single key', function () {
-          expect(obj).to.have.deep.property('items')
+        it('should pass using `nested` given a single key', function () {
+          expect(obj).to.have.nested.property('items')
             .that.equals(new List([
               new Map({ name: 'Jane' }),
               new Map({ name: 'John' }),
@@ -542,17 +537,17 @@ describe('chai-immutable (' + typeEnv + ')', function () {
             ]));
         });
 
-        it('should pass using `deep` starting with an index', function () {
-          expect(obj.get('items')).to.have.deep.property('[0].name', 'Jane');
+        it('should pass using `nested` starting with an index', function () {
+          expect(obj.get('items')).to.have.nested.property('[0].name', 'Jane');
         });
 
-        it('should pass using `deep` ending with an index', function () {
-          expect(obj).to.have.deep.property('items[1]')
+        it('should pass using `nested` ending with an index', function () {
+          expect(obj).to.have.nested.property('items[1]')
             .that.equals(new Map({ name: 'John' }));
         });
 
-        it('should pass using `deep` given a mix of keys and indices', function () {
-          expect(obj).to.have.deep.property('items[2].name', 'Jim');
+        it('should pass using `nested` given mix of keys and indices', function () {
+          expect(obj).to.have.nested.property('items[2].name', 'Jim');
         });
 
         it('should expect unescaped path strings', function () {
@@ -560,9 +555,9 @@ describe('chai-immutable (' + typeEnv + ')', function () {
           expect(css).to.have.property('.link[target]', 42);
         });
 
-        it('should expect escaped path strings using `deep`', function () {
-          var deepCss = new Map({ '.link': new Map({ '[target]': 42 }) });
-          expect(deepCss).to.have.deep.property('\\.link.\\[target\\]', 42);
+        it('should expect escaped path strings using `nested`', function () {
+          var nestedCss = new Map({ '.link': new Map({ '[target]': 42 }) });
+          expect(nestedCss).to.have.nested.property('\\.link.\\[target\\]', 42);
         });
       });
     });
@@ -862,14 +857,16 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         fail(function () { assert.property(obj, 'z'); });
       });
 
-      it('should succeed for equal deep property', function () {
+      it('should succeed for equal nested property', function () {
         var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-        assert.deepProperty(obj, ['y', 'x']);
+        assert.nestedProperty(obj, ['y', 'x']);
       });
 
       it('should fail for unequal deep property', function () {
         var obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-        fail(function () { assert.deepPropertyVal(obj, ['y', 'x'], 'different'); });
+        fail(function () {
+          assert.nestedPropertyVal(obj, ['y', 'x'], 'different');
+        });
       });
     });
 
