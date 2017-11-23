@@ -155,7 +155,7 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         //  }
         fail(function () {
           expect(actual).to.equal(expected);
-        }, 'AssertionError: expected { Object (foo) } to equal { Object (bar) }');
+        }, 'expected { Object (foo) } to equal { Object (bar) }');
       });
 
       it('should fail given a non-Immutable value', function () {
@@ -760,7 +760,7 @@ describe('chai-immutable (' + typeEnv + ')', function () {
         //  }
         fail(function () {
           assert.equal(actual, expected);
-        }, 'AssertionError: expected { Object (foo) } to equal { Object (bar) }');
+        }, 'expected { Object (foo) } to equal { Object (bar) }');
       });
 
       it('should fail given a non-Immutable value', function () {
