@@ -9,10 +9,10 @@ skip_tags: true
 
 environment:
   matrix:
-  - nodejs_version: 7
-  - nodejs_version: 6
-  - nodejs_version: 5
-  - nodejs_version: 4
+  - nodejs_version: 9 # Current stable
+  - nodejs_version: 8 # Active LTS until April 2019
+  - nodejs_version: 6 # Active LTS until April 2018
+  - nodejs_version: 4 # Maintenance LTS until 2018-04-01
 
 install:
   - ps: Install-Product node $env:nodejs_version

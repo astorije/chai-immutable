@@ -3,10 +3,10 @@
 language: node_js
 
 node_js:
-- 7
-- 6
-- 5
-- 4
+- 9 # Current stable
+- 8 # Active LTS until April 2019
+- 6 # Active LTS until April 2018
+- 4 # Maintenance LTS until 2018-04-01
 
 script:
 - npm run test-mocha
