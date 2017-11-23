@@ -32,6 +32,9 @@
     "url": "https://jeremie.astori.fr"
   },
   "license": "MIT",
+  "engines": {
+    "node": ">=4"
+  },
   "bugs": {
     "url": "https://github.com/astorije/chai-immutable/issues"
   },
