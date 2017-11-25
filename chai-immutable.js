@@ -332,26 +332,34 @@
   }
 
   /**
-   * ### .property(name, [value])
+   * ### .property(path[, val])
    *
-   * Asserts that the target has a property `name`, optionally asserting that
-   * the value of that property is equal to `value`. `value` can be an
-   * Immutable object.
-   * If the `nested` flag is set, you can use dot- and bracket-notation for
-   * nested references into objects and arrays.
+   * Asserts that the target has a property with the given `path`.
    *
    * ```js
    * // Simple referencing
    * const map = new Map({ foo: 'bar' });
    * expect(map).to.have.property('foo');
-   * expect(map).to.have.property('foo', 'bar');
+   * ```
    *
-   * // Deep referencing
+   * When `val` is provided, `.property` also asserts that the property's value
+   * is equal to the given `val`. `val` can be an Immutable object.
+   *
+   * ```js
+   * expect(map).to.have.property('foo', 'bar');
+   * ```
+   *
+   * Add `.nested` earlier in the chain to enable dot- and bracket-notation when
+   * referencing nested properties.
+   *
+   * ```js
+   * // Nested referencing
    * const nestedMap = new Map({
-   *     green: new Map({ tea: 'matcha' }),
-   *     teas: new List(['chai', 'matcha', new Map({ tea: 'konacha' })])
+   *   green: new Map({ tea: 'matcha' }),
+   *   teas: new List(['chai', 'matcha', new Map({ tea: 'konacha' })])
    * });
    *
+   * expect(nestedMap).to.have.nested.property('green.tea');
    * expect(nestedMap).to.have.nested.property('green.tea', 'matcha');
    * expect(nestedMap).to.have.nested.property(['green', 'tea'], 'matcha');
    * expect(nestedMap).to.have.nested.property(new List(['green', 'tea']), 'matcha');
@@ -384,9 +392,38 @@
    * expect(list).to.have.nested.property(new List([1, 2, 'tea']), 'konacha');
    * ```
    *
-   * Furthermore, `property` changes the subject of the assertion
-   * to be the value of that property from the original object. This
-   * permits for further chainable assertions on that property.
+   * Add `.not` earlier in the chain to negate `.property`.
+   *
+   * ```js
+   * expect(map).to.not.have.property('baz');
+   * ```
+   *
+   * However, it's dangerous to negate `.property` when providing `val`. The
+   * problem is that it creates uncertain expectations by asserting that the
+   * target either doesn't have a property with the given `path`, or that it
+   * does have a property with the given `path` but its value isn't equal to
+   * the given `val`. It's often best to identify the exact output that's
+   * expected, and then write an assertion that only accepts that exact output.
+   *
+   * When the target isn't expected to have a property with the given `name`,
+   * it's often best to assert exactly that.
+   *
+   * ```js
+   * expect(map).to.not.have.property('baz'); // Recommended
+   * expect(map).to.not.have.property('baz', 42); // Not recommended
+   * ```
+   *
+   * When the target is expected to have a property with the given `path`,
+   * it's often best to assert that the property has its expected value, rather
+   * than asserting that it doesn't have one of many unexpected values.
+   *
+   * ```js
+   * expect(map).to.have.property('foo', 'bar'); // Recommended
+   * expect(map).to.not.have.property('baz', 42); // Not recommended
+   * ```
+   *
+   * `.property` changes the target of any assertions that follow in the chain
+   * to be the value of the property from the original target object.
    *
    * ```js
    * expect(map).to.have.property('foo')
@@ -409,14 +446,15 @@
    * const css = new Map({ '.link[target]': 42 });
    * expect(css).to.have.property('.link[target]', 42);
    *
-   * // Deep referencing
+   * // Nested referencing
    * const nestedCss = new Map({ '.link': new Map({ '[target]': 42 }) });
    * expect(nestedCss).to.have.nested.property('\\.link.\\[target\\]', 42);
    * ```
    *
    * @name property
-   * @param {String|Array|Iterable} name
-   * @param {Mixed} value (optional)
+   * @param {String|Array|Iterable} path
+   * @param {Mixed} val (optional)
+   * @returns value of property for chaining
    * @namespace BDD
    * @api public
    */
@@ -425,40 +463,37 @@
       const obj = this._obj;
 
       if (Immutable.Iterable.isIterable(obj)) {
-        const isNested = Boolean(utils.flag(this, 'nested'));
-        const negate = Boolean(utils.flag(this, 'negate'));
+        const isNested = utils.flag(this, 'nested');
+        const negate = utils.flag(this, 'negate');
 
         let descriptor;
         let hasProperty;
         let value;
 
         if (isNested) {
-          descriptor = 'nested property ';
+          descriptor = 'nested ';
           if (typeof path === 'string') {
             path = parsePath(path);
           }
           value = obj.getIn(path);
           hasProperty = obj.hasIn(path);
         } else {
-          descriptor = 'property ';
           value = obj.get(path);
           hasProperty = obj.has(path);
         }
 
-        // In the negate case, we only throw if property is missing so we can
-        // check the value later.
-        if (negate && arguments.length > 1) {
-          if (!hasProperty) {
-            throw new chai.AssertionError(
-              `expected ${utils.inspect(obj)} to have a ${descriptor}` +
-                `${utils.inspect(path)}`
-            );
-          }
-        } else {
+        // When performing a negated assertion for both name and val, merely
+        // having a property with the given name isn't enough to cause the
+        // assertion to fail. It must both have a property with the given name,
+        // and the value of that property must equal the given val. Therefore,
+        // skip this assertion in favor of the next.
+        if (!negate || arguments.length === 1) {
           this.assert(
             hasProperty,
-            `expected #{this} to have a ${descriptor}${utils.inspect(path)}`,
-            `expected #{this} not to have ${descriptor}${utils.inspect(path)}`
+            `expected #{this} to have ${descriptor}property ` +
+              `${utils.inspect(path)}`,
+            `expected #{this} to not have ${descriptor}property ` +
+              `${utils.inspect(path)}`
           );
         }
 
@@ -471,10 +506,10 @@
           }
 
           this.assert(
-            isEqual,
-            `expected #{this} to have a ${descriptor}` +
+            hasProperty && isEqual,
+            `expected #{this} to have ${descriptor}property ` +
               `${utils.inspect(path)} of #{exp}, but got #{act}`,
-            `expected #{this} not to have a ${descriptor}` +
+            `expected #{this} to not have ${descriptor}property ` +
               `${utils.inspect(path)} of #{act}`,
             val,
             value
