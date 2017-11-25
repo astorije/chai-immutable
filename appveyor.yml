@@ -25,7 +25,7 @@ test_script:
   - npm --version
   - npm run test-mocha
   - npm run test-readme
-  - npm run check-style
+  - npm run lint
 
 # Don't actually build
 build: off

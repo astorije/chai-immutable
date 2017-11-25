@@ -126,7 +126,7 @@ in an immutable collection. When used as language chains, they toggle the
 
 ```js
 expect(new List([1, 2, 3])).to.include(2);
-expect(new Map({ foo: 'bar', hello: 'universe' })).to.include.keys('foo');
+expect(new Map({ foo: 'bar', hello: 'world' })).to.include.keys('foo');
 ```
 
 ### .keys(key1[, key2, ...[, keyN]])
