@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "eslint --ignore-path .gitignore . --report-unused-disable-directives",
     "test": "npm run test-mocha; npm run test-readme; npm run lint",
-    "test-readme": "mocha --compilers md:fulky/mocha-md-compiler README.md",
+    "test-readme": "mocha --compilers md:fulky/md-compiler README.md",
     "test-mocha": "nyc mocha",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
@@ -48,7 +48,7 @@
     "eslint-plugin-chai-expect": "1.1.1",
     "eslint-plugin-chai-friendly": "0.4.0",
     "eslint-plugin-mocha": "4.11.0",
-    "fulky": "^0.1.0",
+    "fulky": "0.2.0",
     "immutable": "3.8.2",
     "mocha": "4.0.1",
     "nyc": "11.3.0"
