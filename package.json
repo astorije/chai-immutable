@@ -8,10 +8,9 @@
   },
   "scripts": {
     "check-style": "jscs chai-immutable.js test/test.js",
-    "test": "npm run test-mocha; npm run test-phantomjs; npm run test-readme; npm run check-style",
+    "test": "npm run test-mocha; npm run test-readme; npm run check-style",
     "test-readme": "mocha --compilers md:fulky/mocha-md-compiler README.md",
     "test-mocha": "nyc mocha",
-    "test-phantomjs": "mocha-phantomjs test/index.html",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
@@ -48,7 +47,6 @@
     "immutable": "^3.7.5",
     "jscs": "^2.5.0",
     "mocha": "^2.4.5",
-    "mocha-phantomjs": "^4.1.0",
     "nyc": "^11.3.0"
   }
 }
