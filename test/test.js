@@ -10,16 +10,13 @@ function clone(obj) {
   return copy;
 }
 
-var typeEnv;
 if (!chai) {
   var chai = require('chai');
   var chaiImmutable = require('../chai-immutable');
   var Immutable = require('immutable');
 
   chai.use(chaiImmutable);
-  typeEnv = 'Node.js';
 }
-else typeEnv = 'PhantomJS';
 
 var clonedImmutable = clone(Immutable);
 
@@ -39,7 +36,7 @@ function fail(fn, msg) {
   else expect(fn).to.throw(chai.AssertionError);
 }
 
-describe('chai-immutable (' + typeEnv + ')', function () {
+describe('chai-immutable', function () {
   var list3 = List.of(1, 2, 3);
 
   var deepMap = new Map({
