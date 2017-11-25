@@ -6,9 +6,6 @@
       typeof module === 'object') {
     // Node.js
     module.exports = factory(require('immutable'));
-  } else if (typeof define === 'function' && define.amd) {
-    // AMD
-    throw new Error('chai-immutable is not compatible with an AMD loader yet.');
   } else {
     // Other environments (usually <script> tag)
     context.chai.use(factory(context.Immutable));
