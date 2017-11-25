@@ -7,8 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "check-style": "jscs chai-immutable.js test/test.js",
-    "test": "npm run test-mocha; npm run test-readme; npm run check-style",
+    "lint": "eslint --ignore-path .gitignore . --report-unused-disable-directives",
+    "test": "npm run test-mocha; npm run test-readme; npm run lint",
     "test-readme": "mocha --compilers md:fulky/mocha-md-compiler README.md",
     "test-mocha": "nyc mocha",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
@@ -43,9 +43,12 @@
   "devDependencies": {
     "chai": "^4.0.0",
     "coveralls": "^2.11.9",
+    "eslint": "^4.11.0",
+    "eslint-plugin-chai-expect": "^1.1.1",
+    "eslint-plugin-chai-friendly": "^0.4.0",
+    "eslint-plugin-mocha": "^4.11.0",
     "fulky": "^0.1.0",
     "immutable": "^3.7.5",
-    "jscs": "^2.5.0",
     "mocha": "^2.4.5",
     "nyc": "^11.3.0"
   }

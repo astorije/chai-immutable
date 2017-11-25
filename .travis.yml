@@ -11,7 +11,7 @@ node_js:
 script:
 - npm run test-mocha
 - npm run test-readme
-- npm run check-style
+- npm run lint
 
 after_script:
 - npm run coveralls
