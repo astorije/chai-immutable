@@ -10,7 +10,6 @@ node_js:
 
 script:
 - npm run test-mocha
-- npm run test-phantomjs
 - npm run test-readme
 - npm run check-style
 
