@@ -397,6 +397,11 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
         expect({ x: 1 }).to.have.property('x', 1);
       });
 
+      it('should not affect the original assertion using `not`', function () { // eslint-disable-line prefer-arrow-callback
+        expect({ x: 1 }).not.to.have.property('z');
+        expect({ x: 1 }).not.to.have.property('z', 42);
+      });
+
       it('should fail given an inexisting property', function () { // eslint-disable-line prefer-arrow-callback
         const obj = Immutable.fromJS({ x: 1 });
         fail(() => expect(obj).to.have.property('z'));
@@ -405,6 +410,11 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
       it('should pass using `not` given an inexisting property', function () { // eslint-disable-line prefer-arrow-callback
         const obj = Immutable.fromJS({ x: 1 });
         expect(obj).not.to.have.property('z');
+      });
+
+      it('should pass using `not` given an inexisting property and value', function () { // eslint-disable-line prefer-arrow-callback
+        const obj = Immutable.fromJS({ x: 1 });
+        expect(obj).not.to.have.property('z', 42);
       });
 
       it('should pass given an existing property', function () { // eslint-disable-line prefer-arrow-callback
@@ -443,6 +453,11 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
           expect({ x: 1, y: { x: 2, y: 3 } }).to.have.nested.property('y.x', 2);
         });
 
+        it('should not affect the original assertion using `not`', function () { // eslint-disable-line prefer-arrow-callback
+          expect({ x: 1, y: { x: 2 } }).not.to.have.nested.property('z.z');
+          expect({ x: 1, y: { x: 2 } }).not.to.have.nested.property('z.z', 42);
+        });
+
         it('should fail given an inexisting property', function () { // eslint-disable-line prefer-arrow-callback
           const obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
           fail(() => expect(obj).to.have.nested.property(['y', 'z']));
@@ -451,6 +466,11 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
         it('should pass using `not` given an inexisting property', function () { // eslint-disable-line prefer-arrow-callback
           const obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
           expect(obj).not.to.have.nested.property(['y', 'z']);
+        });
+
+        it('should pass using `not` given an inexisting property and value', function () { // eslint-disable-line prefer-arrow-callback
+          const obj = Immutable.fromJS({ x: 1 });
+          expect(obj).not.to.have.nested.property(['y', 'x'], 'different');
         });
 
         it('should pass given an existing property', function () { // eslint-disable-line prefer-arrow-callback
@@ -476,11 +496,6 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
         it('should pass given a property with the good value', function () { // eslint-disable-line prefer-arrow-callback
           const obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
           expect(obj).to.have.nested.property(['y', 'x'], 2);
-        });
-
-        it('should fail using `not` given an inexisting property', function () { // eslint-disable-line prefer-arrow-callback
-          const obj = Immutable.fromJS({ x: 1 });
-          fail(() => expect(obj).not.to.have.nested.property(['y', 'x'], 'different'));
         });
 
         it('should fail using `not` given a property with good value', function () { // eslint-disable-line prefer-arrow-callback
