@@ -8,6 +8,8 @@
 
 # Chai Immutable
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/astorije/chai-immutable.svg)](https://greenkeeper.io/)
+
 This plugin provides a set of [Chai](http://chaijs.com/) assertions for [Facebook's Immutable library for JavaScript collections](http://facebook.github.io/immutable-js/).
 
 <!-- fulky:globals
