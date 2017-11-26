@@ -189,6 +189,9 @@ is equal to the given `val`. `val` can be an Immutable object.
 expect(map).to.have.property('foo', 'bar');
 ```
 
+Note that `deep.property` behaves exactly like `property` in the context of
+immutable data structures.
+
 Add `.nested` earlier in the chain to enable dot- and bracket-notation when
 referencing nested properties.
 

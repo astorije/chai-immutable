@@ -349,6 +349,9 @@
    * expect(map).to.have.property('foo', 'bar');
    * ```
    *
+   * Note that `deep.property` behaves exactly like `property` in the context of
+   * immutable data structures.
+   *
    * Add `.nested` earlier in the chain to enable dot- and bracket-notation when
    * referencing nested properties.
    *
@@ -452,6 +455,7 @@
    * ```
    *
    * @name property
+   * @alias deep.equal
    * @param {String|Array|Iterable} path
    * @param {Mixed} val (optional)
    * @returns value of property for chaining
