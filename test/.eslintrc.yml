@@ -10,6 +10,10 @@ plugins:
 
 # Override from root `.eslintrc.yml`
 rules:
+  max-len:
+    - error
+    - tabWidth: 2
+      ignorePattern: (describe|it)\('.*', function \(\) \{
 
   ## eslint-plugin-chai-expect
   ## https://github.com/Turbo87/eslint-plugin-chai-expect
