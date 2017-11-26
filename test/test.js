@@ -405,60 +405,54 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
       // All following tests assert against regular `.property` and
       // `.deep.property`. In the Immutable world, these are supposed to carry
       // the same meaning (similar to `.equal` vs. `.deep.equal`).
+      const obj = Immutable.fromJS({ x: 1 });
+      const nestedObj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
 
       it('should fail given an inexisting property', function () { // eslint-disable-line prefer-arrow-callback
-        const obj = Immutable.fromJS({ x: 1 });
         fail(() => expect(obj).to.have.property('z'));
         fail(() => expect(obj).to.have.deep.property('z'));
       });
 
       it('should pass using `not` given an inexisting property', function () { // eslint-disable-line prefer-arrow-callback
-        const obj = Immutable.fromJS({ x: 1 });
         expect(obj).not.to.have.property('z');
         expect(obj).not.to.have.deep.property('z');
       });
 
       it('should pass using `not` given an inexisting property and value', function () { // eslint-disable-line prefer-arrow-callback
-        const obj = Immutable.fromJS({ x: 1 });
         expect(obj).not.to.have.property('z', 42);
         expect(obj).not.to.have.deep.property('z', 42);
       });
 
       it('should pass given an existing property', function () { // eslint-disable-line prefer-arrow-callback
-        const obj = Immutable.fromJS({ x: 1 });
         expect(obj).to.have.property('x');
         expect(obj).to.have.deep.property('x');
       });
 
       it('should fail using `not` given an existing property', function () { // eslint-disable-line prefer-arrow-callback
-        const obj = Immutable.fromJS({ x: 1 });
         fail(() => expect(obj).not.to.have.property('x'));
         fail(() => expect(obj).not.to.have.deep.property('x'));
       });
 
       it('should fail given a property with a bad value', function () { // eslint-disable-line prefer-arrow-callback
-        const obj = Immutable.fromJS({ x: 1 });
         fail(() => expect(obj).to.have.property('x', 'different'));
         fail(() => expect(obj).to.have.deep.property('x', 'different'));
       });
 
       it('should pass given a property with the good value', function () { // eslint-disable-line prefer-arrow-callback
-        const obj = Immutable.fromJS({ x: 1 });
         expect(obj).to.have.property('x', 1);
         expect(obj).to.have.deep.property('x', 1);
       });
 
       it('should pass given an immutable value', function () { // eslint-disable-line prefer-arrow-callback
-        const obj = Immutable.fromJS({ foo: { bar: 42 } });
-        expect(obj).to.have.property('foo', new Map({ bar: 42 }));
-        expect(obj).to.have.deep.property('foo', new Map({ bar: 42 }));
+        const obj2 = Immutable.fromJS({ foo: { bar: 42 } });
+        expect(obj2).to.have.property('foo', new Map({ bar: 42 }));
+        expect(obj2).to.have.deep.property('foo', new Map({ bar: 42 }));
       });
 
       it('should change the subject to the value of that property', function () { // eslint-disable-line prefer-arrow-callback
-        const obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-        const sub = obj.get('y');
-        expect(obj).to.have.property('y').that.equal(sub);
-        expect(obj).to.have.deep.property('y').that.equal(sub);
+        const sub = nestedObj.get('y');
+        expect(nestedObj).to.have.property('y').that.equal(sub);
+        expect(nestedObj).to.have.deep.property('y').that.equal(sub);
       });
 
       describe('using the `nested` flag', function () { // eslint-disable-line prefer-arrow-callback
@@ -477,78 +471,75 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
         });
 
         it('should fail given an inexisting property', function () { // eslint-disable-line prefer-arrow-callback
-          const obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-          fail(() => expect(obj).to.have.nested.property(['y', 'z']));
-          fail(() => expect(obj).to.have.nested.deep.property(['y', 'z']));
+          fail(() => expect(nestedObj).to.have.nested.property(['y', 'z']));
+          fail(() => expect(nestedObj)
+            .to.have.nested.deep.property(['y', 'z']));
         });
 
         it('should pass using `not` given an inexisting property', function () { // eslint-disable-line prefer-arrow-callback
-          const obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-          expect(obj).not.to.have.nested.property(['y', 'z']);
-          expect(obj).not.to.have.nested.deep.property(['y', 'z']);
+          expect(nestedObj).not.to.have.nested.property(['y', 'z']);
+          expect(nestedObj).not.to.have.nested.deep.property(['y', 'z']);
         });
 
         it('should pass using `not` given an inexisting property and value', function () { // eslint-disable-line prefer-arrow-callback
-          const obj = Immutable.fromJS({ x: 1 });
           expect(obj).not.to.have.nested.property(['y', 'x'], 'different');
           expect(obj).not.to.have.nested.deep.property(['y', 'x'], 'different');
         });
 
         it('should pass given an existing property', function () { // eslint-disable-line prefer-arrow-callback
-          const obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-          expect(obj).to.have.nested.property(['y', 'x']);
-          expect(obj).to.have.nested.deep.property(['y', 'x']);
+          expect(nestedObj).to.have.nested.property(['y', 'x']);
+          expect(nestedObj).to.have.nested.deep.property(['y', 'x']);
         });
 
         it('should pass given an index', function () { // eslint-disable-line prefer-arrow-callback
-          const obj = Immutable.fromJS({ items: ['a', 'b', 'c'] });
-          expect(obj).to.have.nested.property(['items', 2], 'c');
-          expect(obj).to.have.nested.deep.property(['items', 2], 'c');
+          const obj2 = Immutable.fromJS({ items: ['a', 'b', 'c'] });
+          expect(obj2).to.have.nested.property(['items', 2], 'c');
+          expect(obj2).to.have.nested.deep.property(['items', 2], 'c');
         });
 
         it('should fail using `not` given an existing property', function () { // eslint-disable-line prefer-arrow-callback
-          const obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-          fail(() => expect(obj).not.to.have.nested.property(['y', 'x']));
-          fail(() => expect(obj).not.to.have.nested.deep.property(['y', 'x']));
+          fail(() => expect(nestedObj).not.to.have.nested.property(['y', 'x']));
+          fail(() => expect(nestedObj)
+            .not.to.have.nested.deep.property(['y', 'x']));
         });
 
         it('should fail given a property with a bad value', function () { // eslint-disable-line prefer-arrow-callback
-          const obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-          fail(() => expect(obj)
+          fail(() => expect(nestedObj)
             .to.have.nested.property(['y', 'x'], 'different'));
-          fail(() => expect(obj)
+          fail(() => expect(nestedObj)
             .to.have.nested.deep.property(['y', 'x'], 'different'));
         });
 
         it('should pass given a property with the good value', function () { // eslint-disable-line prefer-arrow-callback
-          const obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-          expect(obj).to.have.nested.property(['y', 'x'], 2);
-          expect(obj).to.have.nested.deep.property(['y', 'x'], 2);
+          expect(nestedObj).to.have.nested.property(['y', 'x'], 2);
+          expect(nestedObj).to.have.nested.deep.property(['y', 'x'], 2);
         });
 
         it('should fail using `not` given a property with good value', function () { // eslint-disable-line prefer-arrow-callback
-          const obj = Immutable.fromJS({ x: 1, y: { x: 2 } });
-          fail(() => expect(obj).not.to.have.nested.property(['y', 'x'], 2));
-          fail(() => expect(obj)
+          fail(() => expect(nestedObj)
+            .not.to.have.nested.property(['y', 'x'], 2));
+          fail(() => expect(nestedObj)
             .not.to.have.nested.deep.property(['y', 'x'], 2));
         });
 
         it('should pass using `not` given a property with a bad value', function () { // eslint-disable-line prefer-arrow-callback
-          const obj = Immutable.fromJS({ x: 1, y: { x: 2 } });
-          expect(obj).not.to.have.nested.property(['y', 'x'], 'different');
-          expect(obj).not.to.have.nested.deep.property(['y', 'x'], 'different');
+          expect(nestedObj)
+            .not.to.have.nested.property(['y', 'x'], 'different');
+          expect(nestedObj)
+            .not.to.have.nested.deep.property(['y', 'x'], 'different');
         });
 
         it('should pass given an immutable value', function () { // eslint-disable-line prefer-arrow-callback
-          const obj = Immutable.fromJS({ foo: [{ bar: 42 }] });
-          expect(obj).to.have.nested.property('foo[0]', new Map({ bar: 42 }));
-          expect(obj)
+          const nestedObj2 = Immutable.fromJS({ foo: [{ bar: 42 }] });
+          expect(nestedObj2)
+            .to.have.nested.property('foo[0]', new Map({ bar: 42 }));
+          expect(nestedObj2)
             .to.have.nested.deep.property('foo[0]', new Map({ bar: 42 }));
         });
       });
 
       describe('given a string-based path', function () { // eslint-disable-line prefer-arrow-callback
-        const obj = Immutable.fromJS({
+        const nestedObj2 = Immutable.fromJS({
           items: [
             { name: 'Jane' },
             { name: 'John' },
@@ -557,20 +548,20 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
         });
 
         it('should pass using `nested` given a single index', function () { // eslint-disable-line prefer-arrow-callback
-          expect(obj.get('items')).to.have.nested.property('[1]')
+          expect(nestedObj2.get('items')).to.have.nested.property('[1]')
             .that.equals(new Map({ name: 'John' }));
-          expect(obj.get('items')).to.have.nested.deep.property('[1]')
+          expect(nestedObj2.get('items')).to.have.nested.deep.property('[1]')
             .that.equals(new Map({ name: 'John' }));
         });
 
         it('should pass using `nested` given a single key', function () { // eslint-disable-line prefer-arrow-callback
-          expect(obj).to.have.nested.property('items')
+          expect(nestedObj2).to.have.nested.property('items')
             .that.equals(new List([
               new Map({ name: 'Jane' }),
               new Map({ name: 'John' }),
               new Map({ name: 'Jim' }),
             ]));
-          expect(obj).to.have.nested.deep.property('items')
+          expect(nestedObj2).to.have.nested.deep.property('items')
             .that.equals(new List([
               new Map({ name: 'Jane' }),
               new Map({ name: 'John' }),
@@ -579,21 +570,23 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
         });
 
         it('should pass using `nested` starting with an index', function () { // eslint-disable-line prefer-arrow-callback
-          expect(obj.get('items')).to.have.nested.property('[0].name', 'Jane');
-          expect(obj.get('items'))
+          expect(nestedObj2.get('items'))
+            .to.have.nested.property('[0].name', 'Jane');
+          expect(nestedObj2.get('items'))
             .to.have.nested.deep.property('[0].name', 'Jane');
         });
 
         it('should pass using `nested` ending with an index', function () { // eslint-disable-line prefer-arrow-callback
-          expect(obj).to.have.nested.property('items[1]')
+          expect(nestedObj2).to.have.nested.property('items[1]')
             .that.equals(new Map({ name: 'John' }));
-          expect(obj).to.have.nested.deep.property('items[1]')
+          expect(nestedObj2).to.have.nested.deep.property('items[1]')
             .that.equals(new Map({ name: 'John' }));
         });
 
         it('should pass using `nested` given mix of keys and indices', function () { // eslint-disable-line prefer-arrow-callback
-          expect(obj).to.have.nested.property('items[2].name', 'Jim');
-          expect(obj).to.have.nested.deep.property('items[2].name', 'Jim');
+          expect(nestedObj2).to.have.nested.property('items[2].name', 'Jim');
+          expect(nestedObj2)
+            .to.have.nested.deep.property('items[2].name', 'Jim');
         });
 
         it('should expect unescaped path strings', function () { // eslint-disable-line prefer-arrow-callback
