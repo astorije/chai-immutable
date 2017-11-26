@@ -597,7 +597,8 @@
         this.assert(
           size >= n,
           'expected #{this} to have a size of at least #{exp} but got #{act}',
-          'expected #{this} to not have a size of at least #{exp} but got #{act}',
+          'expected #{this} to not have a size of at least #{exp} but got ' +
+            '#{act}',
           n,
           size
         );
@@ -618,7 +619,8 @@
         this.assert(
           size <= n,
           'expected #{this} to have a size of at most #{exp} but got #{act}',
-          'expected #{this} to not have a size of at most #{exp} but got #{act}',
+          'expected #{this} to not have a size of at most #{exp} but got ' +
+            '#{act}',
           n,
           size
         );

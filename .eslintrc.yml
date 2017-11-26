@@ -150,7 +150,6 @@ rules:
     - error
     - tabWidth: 2
       ignoreUrls: true
-      ignoreStrings: true
       ignorePattern: \* expect\(.*\)\.to\.have\.(keys|nested\.property)
   max-nested-callbacks:
     - error
