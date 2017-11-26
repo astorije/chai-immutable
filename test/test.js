@@ -490,7 +490,8 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
 
         it('should fail given a property with a bad value', function () { // eslint-disable-line prefer-arrow-callback
           const obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-          fail(() => expect(obj).to.have.property(['y', 'x'], 'different'));
+          fail(() => expect(obj)
+            .to.have.nested.property(['y', 'x'], 'different'));
         });
 
         it('should pass given a property with the good value', function () { // eslint-disable-line prefer-arrow-callback
