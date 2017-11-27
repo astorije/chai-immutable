@@ -306,6 +306,19 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
         expect(map).to.have.deep.keys(new Map({ x: 6, y: 7 }));
       });
 
+      it('should error when given multiple non-scalar arguments', function () { // eslint-disable-line prefer-arrow-callback
+        const msg = 'when testing keys against an immutable collection, ' +
+          'you must give a single Array|Object|String|Collection argument or ' +
+          'multiple String arguments';
+
+        fail(() => expect(map).to.have.all.keys(['x'], 'y'), msg);
+        fail(() => expect(map).to.have.all.keys(new List(['x']), 'y'), msg);
+        fail(() => expect(map).to.have.all.keys(new Set(['x']), 'y'), msg);
+        fail(() => expect(map).to.have.all.keys(new Stack(['x']), 'y'), msg);
+        fail(() => expect(map).to.have.all.keys({ x: 1 }, 'y'), msg);
+        fail(() => expect(map).to.have.all.keys(new Map({ x: 1 }), 'y'), msg);
+      });
+
       it('should pass using `any` given an existing key', function () { // eslint-disable-line prefer-arrow-callback
         expect(map).to.have.any.keys('x', 'z');
         expect(map).to.have.any.deep.keys('x', 'z');

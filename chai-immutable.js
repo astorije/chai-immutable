@@ -291,7 +291,7 @@
           case 'Array':
             if (arguments.length > 1) {
               throw new chai.AssertionError(
-                'when testing keys against an object or an array you must ' +
+                'when testing keys against an immutable collection, you must ' +
                 'give a single Array|Object|String|Collection argument or ' +
                 'multiple String arguments',
                 null,
