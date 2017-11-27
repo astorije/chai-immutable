@@ -298,6 +298,7 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
       it('should accept an Object to check against', function () { // eslint-disable-line prefer-arrow-callback
         expect(map).to.have.keys({ x: 6, y: 7 });
         expect(map).to.have.deep.keys({ x: 6, y: 7 });
+        expect(new List(['x', 'y'])).to.have.all.keys({ 0: 4, 1: 5 });
       });
 
       it('should accept a Map to check against', function () { // eslint-disable-line prefer-arrow-callback
@@ -364,6 +365,11 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
           () => expect(lengthyMap).to.have.deep.keys('not-foo'),
           /(foo ){8}/
         );
+      });
+
+      it('should pass against Lists', function () { // eslint-disable-line prefer-arrow-callback
+        expect(new List(['x', 'y'])).to.have.all.keys(0, 1);
+        expect(new List(['x', 'y'])).to.have.all.keys([0, 1]);
       });
 
       it('should fail given an inexisting key', function () { // eslint-disable-line prefer-arrow-callback
