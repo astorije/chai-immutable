@@ -129,42 +129,100 @@ expect(new List([1, 2, 3])).to.include(2);
 expect(new Map({ foo: 'bar', hello: 'world' })).to.include.keys('foo');
 ```
 
-### .keys(key1[, key2, ...[, keyN]])
+### .keys(key1[, key2[, ...]])
 
 - **@param** *{ String... | Array | Object | Collection }* key*N*
 
-Asserts that the keyed collection contains any or all of the passed-in
-keys. Use in combination with `any`, `all`, `contains`, or `have` will
-affect what will pass.
+Asserts that the target collection has the given keys.
 
-When used in conjunction with `any`, at least one key that is passed in
-must exist in the target object. This is regardless whether or not
-the `have` or `contain` qualifiers are used. Note, either `any` or `all`
-should be used in the assertion. If neither are used, the assertion is
-defaulted to `all`.
+When the target is an object or array, keys can be provided as one or more
+string arguments, a single array argument, a single object argument, or an
+immutable collection. In the last 2 cases, only the keys in the given
+object/collection matter; the values are ignored.
 
-When both `all` and `contain` are used, the target object must have at
-least all of the passed-in keys but may have more keys not listed.
+```js
+expect(new Map({ foo: 1, bar: 2 })).to.have.all.keys('foo', 'bar');
+expect(new Map({ foo: 1, bar: 2 })).to.have.all.keys(new List(['bar', 'foo']));
+expect(new Map({ foo: 1, bar: 2 })).to.have.all.keys(new Set(['bar', 'foo']));
+expect(new Map({ foo: 1, bar: 2 })).to.have.all.keys(new Stack(['bar', 'foo']));
+expect(new List(['x', 'y'])).to.have.all.keys(0, 1);
 
-When both `all` and `have` are used, the target object must both contain
-all of the passed-in keys AND the number of keys in the target object must
-match the number of keys passed in (in other words, a target object must
-have all and only all of the passed-in keys).
+expect(new Map({ foo: 1, bar: 2 })).to.have.all.keys(['foo', 'bar']);
+expect(new List(['x', 'y'])).to.have.all.keys([0, 1]);
 
-`key` is an alias to `keys`.
+// Values in the passed object are ignored:
+expect(new Map({ foo: 1, bar: 2 })).to.have.all.keys({ bar: 6, foo: 7 });
+expect(new Map({ foo: 1, bar: 2 })).to.have.all.keys(new Map({ bar: 6, foo: 7 }));
+expect(new List(['x', 'y'])).to.have.all.keys({ 0: 4, 1: 5 });
+```
+
+Note that `deep.property` behaves exactly like `property` in the context of
+immutable data structures.
+
+By default, the target must have all of the given keys and no more. Add
+`.any` earlier in the chain to only require that the target have at least
+one of the given keys. Also, add `.not` earlier in the chain to negate
+`.keys`. It's often best to add `.any` when negating `.keys`, and to use
+`.all` when asserting `.keys` without negation.
+
+When negating `.keys`, `.any` is preferred because `.not.any.keys` asserts
+exactly what's expected of the output, whereas `.not.all.keys` creates
+uncertain expectations.
+
+```js
+// Recommended; asserts that target doesn't have any of the given keys
+expect(new Map({a: 1, b: 2})).to.not.have.any.keys('c', 'd');
+
+// Not recommended; asserts that target doesn't have all of the given
+// keys but may or may not have some of them
+expect(new Map({a: 1, b: 2})).to.not.have.all.keys('c', 'd');
+```
+
+When asserting `.keys` without negation, `.all` is preferred because
+`.all.keys` asserts exactly what's expected of the output, whereas
+`.any.keys` creates uncertain expectations.
+
+```js
+// Recommended; asserts that target has all the given keys
+expect(new Map({a: 1, b: 2})).to.have.all.keys('a', 'b');
+
+// Not recommended; asserts that target has at least one of the given
+// keys but may or may not have more of them
+expect(new Map({a: 1, b: 2})).to.have.any.keys('a', 'b');
+```
+
+Note that `.all` is used by default when neither `.all` nor `.any` appear
+earlier in the chain. However, it's often best to add `.all` anyway because
+it improves readability.
+
+```js
+// Both assertions are identical
+expect(new Map({a: 1, b: 2})).to.have.all.keys('a', 'b'); // Recommended
+expect(new Map({a: 1, b: 2})).to.have.keys('a', 'b'); // Not recommended
+```
+
+Add `.include` earlier in the chain to require that the target's keys be a
+superset of the expected keys, rather than identical sets.
+
+```js
+// Target object's keys are a superset of ['a', 'b'] but not identical
+expect(new Map({a: 1, b: 2, c: 3})).to.include.all.keys('a', 'b');
+expect(new Map({a: 1, b: 2, c: 3})).to.not.have.all.keys('a', 'b');
+```
+
+However, if `.any` and `.include` are combined, only the `.any` takes
+effect. The `.include` is ignored in this case.
+
+```js
+// Both assertions are identical
+expect(new Map({a: 1})).to.have.any.keys('a', 'b');
+expect(new Map({a: 1})).to.include.any.keys('a', 'b');
+```
+
+The alias `.key` can be used interchangeably with `.keys`.
 
 ```js
 expect(new Map({ foo: 1 })).to.have.key('foo');
-expect(new Map({ foo: 1, bar: 2 })).to.have.keys('foo', 'bar');
-expect(new Map({ foo: 1, bar: 2 })).to.have.keys(new List(['bar', 'foo']));
-expect(new Map({ foo: 1, bar: 2 })).to.have.keys(new Set(['bar', 'foo']));
-expect(new Map({ foo: 1, bar: 2 })).to.have.keys(new Stack(['bar', 'foo']));
-expect(new Map({ foo: 1, bar: 2 })).to.have.keys(['bar', 'foo']);
-expect(new Map({ foo: 1, bar: 2 })).to.have.keys({ 'bar': 6, 'foo': 7 });
-expect(new Map({ foo: 1, bar: 2 })).to.have.keys(new Map({ 'bar': 6, 'foo': 7 }));
-expect(new Map({ foo: 1, bar: 2 })).to.have.any.keys('foo', 'not-foo');
-expect(new Map({ foo: 1, bar: 2 })).to.have.all.keys('foo', 'bar');
-expect(new Map({ foo: 1, bar: 2 })).to.contain.key('foo');
 ```
 
 ### .property(path[, val])
