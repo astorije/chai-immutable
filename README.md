@@ -232,130 +232,73 @@ expect(new Map({ foo: 1 })).to.have.key('foo');
 
 Asserts that the target has a property with the given `path`.
 
-<!-- fulky:define map -->
 ```js
-// Simple referencing
-const map = new Map({ foo: 'bar' });
-expect(map).to.have.property('foo');
+expect(new Map({a: 1})).to.have.property('a');
 ```
 
 When `val` is provided, `.property` also asserts that the property's value
-is equal to the given `val`. `val` can be an Immutable object.
+is equal to the given `val`. `val` can be an immutable collection.
 
-<!-- fulky:use map -->
 ```js
-expect(map).to.have.property('foo', 'bar');
+expect(new Map({a: 1})).to.have.property('a', 1);
 ```
 
 Note that `deep.property` behaves exactly like `property` in the context of
 immutable data structures.
 
 Add `.nested` earlier in the chain to enable dot- and bracket-notation when
-referencing nested properties.
+referencing nested properties. An immutable `List` can also be used as the
+starting point of a `nested.property`.
 
-<!-- fulky:define nestedMap -->
 ```js
-// Nested referencing
-const nestedMap = new Map({
-  green: new Map({ tea: 'matcha' }),
-  teas: new List(['chai', 'matcha', new Map({ tea: 'konacha' })])
-});
-
-expect(nestedMap).to.have.nested.property('green.tea');
-expect(nestedMap).to.have.nested.property('green.tea', 'matcha');
-expect(nestedMap).to.have.nested.property(['green', 'tea'], 'matcha');
-expect(nestedMap).to.have.nested.property(new List(['green', 'tea']), 'matcha');
-expect(nestedMap).to.have.nested.property('teas[1]', 'matcha');
-expect(nestedMap).to.have.nested.property(['teas', 1], 'matcha');
-expect(nestedMap).to.have.nested.property(new List(['teas', 1]), 'matcha');
-expect(nestedMap).to.have.nested.property('teas[2].tea', 'konacha');
-expect(nestedMap).to.have.nested.property(['teas', 2, 'tea'], 'konacha');
-expect(nestedMap).to.have.nested.property(new List(['teas', 2, 'tea']), 'konacha');
+expect(Immutable.fromJS({a: {b: ['x', 'y']}})).to.have.nested.property('a.b[1]');
+expect(Immutable.fromJS({a: {b: ['x', 'y']}})).to.have.nested.property('a.b[1]', 'y');
+expect(Immutable.fromJS({a: {b: ['x', 'y']}})).to.have.nested.property(['a', 'b', 1], 'y');
+expect(Immutable.fromJS({a: {b: ['x', 'y']}})).to.have.nested.property(new List(['a', 'b', 1]), 'y');
 ```
 
-You can also use a `List` as the starting point of a `nested.property`
-assertion, or traverse nested `List`s.
+If `.` or `[]` are part of an actual property name, they can be escaped by
+adding two backslashes before them.
 
 ```js
-const list = new List([
-  new List(['chai', 'matcha', 'konacha']),
-  new List([
-    new Map({ tea: 'chai' }),
-    new Map({ tea: 'matcha' }),
-    new Map({ tea: 'konacha' })
-  ])
-]);
-
-expect(list).to.have.nested.property('[0][1]', 'matcha');
-expect(list).to.have.nested.property([0, 1], 'matcha');
-expect(list).to.have.nested.property(new List([0, 1]), 'matcha');
-expect(list).to.have.nested.property('[1][2].tea', 'konacha');
-expect(list).to.have.nested.property([1, 2, 'tea'], 'konacha');
-expect(list).to.have.nested.property(new List([1, 2, 'tea']), 'konacha');
+expect(Immutable.fromJS({'.a': {'[b]': 'x'}})).to.have.nested.property('\\.a.\\[b\\]');
 ```
 
 Add `.not` earlier in the chain to negate `.property`.
 
-<!-- fulky:use map -->
 ```js
-expect(map).to.not.have.property('baz');
+expect(new Map({a: 1})).to.not.have.property('b');
 ```
 
 However, it's dangerous to negate `.property` when providing `val`. The
 problem is that it creates uncertain expectations by asserting that the
-target either doesn't have a property with the given `path`, or that it
-does have a property with the given `path` but its value isn't equal to
+target either doesn't have a property at the given `path`, or that it
+does have a property at the given key `path` but its value isn't equal to
 the given `val`. It's often best to identify the exact output that's
 expected, and then write an assertion that only accepts that exact output.
 
-When the target isn't expected to have a property with the given `name`,
-it's often best to assert exactly that.
+When the target isn't expected to have a property at the given
+`path`, it's often best to assert exactly that.
 
-<!-- fulky:use map -->
 ```js
-expect(map).to.not.have.property('baz'); // Recommended
-expect(map).to.not.have.property('baz', 42); // Not recommended
+expect(new Map({b: 2})).to.not.have.property('a'); // Recommended
+expect(new Map({b: 2})).to.not.have.property('a', 1); // Not recommended
 ```
 
-When the target is expected to have a property with the given `path`,
+When the target is expected to have a property at the given key `path`,
 it's often best to assert that the property has its expected value, rather
 than asserting that it doesn't have one of many unexpected values.
 
-<!-- fulky:use map -->
 ```js
-expect(map).to.have.property('foo', 'bar'); // Recommended
-expect(map).to.not.have.property('baz', 42); // Not recommended
+expect(new Map({a: 3})).to.have.property('a', 3); // Recommended
+expect(new Map({a: 3})).to.not.have.property('a', 1); // Not recommended
 ```
 
 `.property` changes the target of any assertions that follow in the chain
 to be the value of the property from the original target object.
 
-<!-- fulky:use map -->
-<!-- fulky:use nestedMap -->
 ```js
-expect(map).to.have.property('foo')
-  .that.is.a('string');
-expect(nestedMap).to.have.property('green')
-  .that.is.an.instanceof(Map)
-  .that.equals(new Map({ tea: 'matcha' }));
-expect(nestedMap).to.have.property('teas')
-  .that.is.an.instanceof(List)
-  .with.nested.property([2])
-    .that.equals(new Map({ tea: 'konacha' }));
-```
-
-Note that dots and brackets in `name` must be backslash-escaped when
-the `nested` flag is set, while they must NOT be escaped when the
-`nested` flag is not set.
-
-```js
-// Simple referencing
-const css = new Map({ '.link[target]': 42 });
-expect(css).to.have.property('.link[target]', 42);
-
-// Nested referencing
-const nestedCss = new Map({ '.link': new Map({ '[target]': 42 }) });
-expect(nestedCss).to.have.nested.property('\\.link.\\[target\\]', 42);
+expect(new Map({a: 1})).to.have.property('a').that.is.a('number');
 ```
 
 ### .size(value)
