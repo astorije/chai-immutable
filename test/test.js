@@ -319,6 +319,17 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
         fail(() => expect(map).to.have.all.keys(new Map({ x: 1 }), 'y'), msg);
       });
 
+      it('should error when given no arguments', function () { // eslint-disable-line prefer-arrow-callback
+        const msg = 'keys required';
+
+        fail(() => expect(map).to.have.all.keys([]), msg);
+        fail(() => expect(map).to.have.all.keys(new List()), msg);
+        fail(() => expect(map).to.have.all.keys(new Set()), msg);
+        fail(() => expect(map).to.have.all.keys(new Stack()), msg);
+        fail(() => expect(map).to.have.all.keys({}), msg);
+        fail(() => expect(map).to.have.all.keys(new Map()), msg);
+      });
+
       it('should pass using `any` given an existing key', function () { // eslint-disable-line prefer-arrow-callback
         expect(map).to.have.any.keys('x', 'z');
         expect(map).to.have.any.deep.keys('x', 'z');
