@@ -902,20 +902,56 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
     });
 
     describe('property assertions', function () { // eslint-disable-line prefer-arrow-callback
+      const obj = Immutable.fromJS({ x: 1 });
+      const nestedObj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
+
+      it('should pass for existing property', function () { // eslint-disable-line prefer-arrow-callback
+        assert.property(obj, 'x');
+      });
+
       it('should fail for missing property', function () { // eslint-disable-line prefer-arrow-callback
-        const obj = Immutable.fromJS({ x: 1 });
         fail(() => assert.property(obj, 'z'));
       });
 
+      it('should pass for missing property using `not`', function () { // eslint-disable-line prefer-arrow-callback
+        assert.notProperty(obj, 'z');
+      });
+
+      it('should fail for existing property using `not`', function () { // eslint-disable-line prefer-arrow-callback
+        fail(() => assert.notProperty(obj, 'x'));
+      });
+
+      it('should pass for existing property and value', function () { // eslint-disable-line prefer-arrow-callback
+        assert.propertyVal(obj, 'x', 1);
+        assert.deepPropertyVal(obj, 'x', 1);
+      });
+
+      it('should fail for wrong property or value', function () { // eslint-disable-line prefer-arrow-callback
+        fail(() => assert.propertyVal(obj, 'z', 1));
+        fail(() => assert.deepPropertyVal(obj, 'z', 1));
+        fail(() => assert.propertyVal(obj, 'x', 42));
+        fail(() => assert.deepPropertyVal(obj, 'x', 42));
+      });
+
+      it('should pass for wrong property or value using `not`', function () { // eslint-disable-line prefer-arrow-callback
+        assert.notPropertyVal(obj, 'z', 1);
+        assert.notDeepPropertyVal(obj, 'z', 1);
+        assert.notPropertyVal(obj, 'x', 42);
+        assert.notDeepPropertyVal(obj, 'x', 42);
+      });
+
+      it('should fail for existing property and value using `not`', function () { // eslint-disable-line prefer-arrow-callback
+        fail(() => assert.notPropertyVal(obj, 'x', 1));
+        fail(() => assert.notDeepPropertyVal(obj, 'x', 1));
+      });
+
       it('should succeed for equal nested property', function () { // eslint-disable-line prefer-arrow-callback
-        const obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-        assert.nestedProperty(obj, ['y', 'x']);
+        assert.nestedProperty(nestedObj, ['y', 'x']);
       });
 
       it('should fail for unequal nested property', function () { // eslint-disable-line prefer-arrow-callback
-        const obj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
-        fail(() => assert.nestedPropertyVal(obj, ['y', 'x'], 'different'));
-        fail(() => assert.deepNestedPropertyVal(obj, ['y', 'x'], 'different'));
+        fail(() => assert.nestedPropertyVal(nestedObj, ['y', 'x'], 42));
+        fail(() => assert.deepNestedPropertyVal(nestedObj, ['y', 'x'], 42));
       });
     });
 
