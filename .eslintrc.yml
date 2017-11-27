@@ -150,7 +150,7 @@ rules:
     - error
     - tabWidth: 2
       ignoreUrls: true
-      ignorePattern: \* expect\(.*\)\.to\.have\.(keys|nested\.property)
+      ignorePattern: \* expect\(.*\)\.to\.have\.[a-z.]*(keys|nested\.property)
   max-nested-callbacks:
     - error
     - max: 6
@@ -228,7 +228,6 @@ rules:
     - as-needed
   arrow-spacing: error
   generator-star-spacing: error
-  no-confusing-arrow: error
   no-duplicate-imports: error
   no-restricted-imports: error
   no-useless-computed-key: error
