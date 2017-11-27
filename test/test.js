@@ -257,138 +257,190 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
 
       it('should pass given an existing key', function () { // eslint-disable-line prefer-arrow-callback
         expect(new Map({ x: 1 })).to.have.key('x');
-        expect({ x: 1 }).to.have.key('x');
+        expect(new Map({ x: 1 })).to.have.deep.key('x');
       });
 
       it('should pass using `not` given an inexisting key', function () { // eslint-disable-line prefer-arrow-callback
         expect(map).to.not.have.key('z');
-        expect(obj).to.not.have.key('z');
+        expect(map).to.not.have.deep.key('z');
       });
 
       it('should pass given multiple existing keys', function () { // eslint-disable-line prefer-arrow-callback
         expect(map).to.have.keys('x', 'y');
-        expect(obj).to.have.keys('x', 'y');
+        expect(map).to.have.deep.keys('x', 'y');
       });
 
       it('should pass using `not` given multiple inexisting keys', function () { // eslint-disable-line prefer-arrow-callback
         expect(map).to.not.have.keys('z1', 'z2');
-        expect(obj).to.not.have.keys('z1', 'z2');
+        expect(map).to.not.have.deep.keys('z1', 'z2');
       });
 
       it('should accept an Array of keys to check against', function () { // eslint-disable-line prefer-arrow-callback
         expect(map).to.have.keys(['x', 'y']);
-        expect(obj).to.have.keys(['x', 'y']);
+        expect(map).to.have.deep.keys(['x', 'y']);
       });
 
       it('should accept a List of keys to check against', function () { // eslint-disable-line prefer-arrow-callback
         expect(map).to.have.keys(new List(['x', 'y']));
+        expect(map).to.have.deep.keys(new List(['x', 'y']));
       });
 
       it('should accept a Set of keys to check against', function () { // eslint-disable-line prefer-arrow-callback
         expect(map).to.have.keys(new Set(['x', 'y']));
+        expect(map).to.have.deep.keys(new Set(['x', 'y']));
       });
 
       it('should accept a Stack of keys to check against', function () { // eslint-disable-line prefer-arrow-callback
         expect(map).to.have.keys(new Stack(['x', 'y']));
+        expect(map).to.have.deep.keys(new Stack(['x', 'y']));
       });
 
       it('should accept an Object to check against', function () { // eslint-disable-line prefer-arrow-callback
         expect(map).to.have.keys({ x: 6, y: 7 });
-        expect(obj).to.have.keys({ x: 6, y: 7 });
+        expect(map).to.have.deep.keys({ x: 6, y: 7 });
+        expect(new List(['x', 'y'])).to.have.all.keys({ 0: 4, 1: 5 });
       });
 
       it('should accept a Map to check against', function () { // eslint-disable-line prefer-arrow-callback
         expect(map).to.have.keys(new Map({ x: 6, y: 7 }));
+        expect(map).to.have.deep.keys(new Map({ x: 6, y: 7 }));
+      });
+
+      it('should error when given multiple non-scalar arguments', function () { // eslint-disable-line prefer-arrow-callback
+        const msg = 'when testing keys against an immutable collection, ' +
+          'you must give a single Array|Object|String|Collection argument or ' +
+          'multiple String arguments';
+
+        fail(() => expect(map).to.have.all.keys(['x'], 'y'), msg);
+        fail(() => expect(map).to.have.all.keys(new List(['x']), 'y'), msg);
+        fail(() => expect(map).to.have.all.keys(new Set(['x']), 'y'), msg);
+        fail(() => expect(map).to.have.all.keys(new Stack(['x']), 'y'), msg);
+        fail(() => expect(map).to.have.all.keys({ x: 1 }, 'y'), msg);
+        fail(() => expect(map).to.have.all.keys(new Map({ x: 1 }), 'y'), msg);
+      });
+
+      it('should error when given no arguments', function () { // eslint-disable-line prefer-arrow-callback
+        const msg = 'keys required';
+
+        fail(() => expect(map).to.have.all.keys([]), msg);
+        fail(() => expect(map).to.have.all.keys(new List()), msg);
+        fail(() => expect(map).to.have.all.keys(new Set()), msg);
+        fail(() => expect(map).to.have.all.keys(new Stack()), msg);
+        fail(() => expect(map).to.have.all.keys({}), msg);
+        fail(() => expect(map).to.have.all.keys(new Map()), msg);
       });
 
       it('should pass using `any` given an existing key', function () { // eslint-disable-line prefer-arrow-callback
         expect(map).to.have.any.keys('x', 'z');
-        expect(obj).to.have.any.keys('x', 'z');
+        expect(map).to.have.any.deep.keys('x', 'z');
       });
 
       it('should pass using `not` and `any` given inexisting keys', function () { // eslint-disable-line prefer-arrow-callback
         expect(map).to.not.have.any.keys('z1', 'z2');
-        expect(obj).to.not.have.any.keys('z1', 'z2');
+        expect(map).to.not.have.any.deep.keys('z1', 'z2');
       });
 
       it('should pass using `all` given existing keys', function () { // eslint-disable-line prefer-arrow-callback
         expect(map).to.have.all.keys('x', 'y');
-        expect(obj).to.have.all.keys('x', 'y');
+        expect(map).to.have.all.deep.keys('x', 'y');
       });
 
       it('should pass using `not` and `all` given inexisting keys', function () { // eslint-disable-line prefer-arrow-callback
         expect(map).to.not.have.all.keys('z1', 'y');
-        expect(obj).to.not.have.all.keys('z1', 'y');
+        expect(map).to.not.have.all.deep.keys('z1', 'y');
       });
 
       it('should pass using `contain` given an existing key', function () { // eslint-disable-line prefer-arrow-callback
         expect(map).to.contain.key('x');
-        expect(obj).to.contain.key('x');
+        expect(map).to.contain.deep.key('x');
       });
 
       it('should not affect the original assertions', function () { // eslint-disable-line prefer-arrow-callback
         expect({ x: 1, y: 2 }).to.have.any.keys('x', 'z');
+        expect({ x: 1, y: 2 }).to.have.any.deep.keys('x', 'z');
         expect({ x: 1, y: 2 }).to.have.any.keys('x');
+        expect({ x: 1, y: 2 }).to.have.any.deep.keys('x');
         expect({ x: 1, y: 2 }).to.contain.any.keys('y', 'z');
+        expect({ x: 1, y: 2 }).to.contain.any.deep.keys('y', 'z');
         expect({ x: 1, y: 2 }).to.contain.any.keys(['x']);
+        expect({ x: 1, y: 2 }).to.contain.any.deep.keys(['x']);
         expect({ x: 1, y: 2 }).to.contain.any.keys({ x: 6 });
+        expect({ x: 1, y: 2 }).to.contain.any.deep.keys({ x: 6 });
         expect({ x: 1, y: 2 }).to.have.all.keys(['x', 'y']);
+        expect({ x: 1, y: 2 }).to.have.all.deep.keys(['x', 'y']);
         expect({ x: 1, y: 2 }).to.have.all.keys({ x: 6, y: 7 });
+        expect({ x: 1, y: 2 }).to.have.all.deep.keys({ x: 6, y: 7 });
         expect({ x: 1, y: 2, z: 3 }).to.contain.all.keys(['x', 'y']);
+        expect({ x: 1, y: 2, z: 3 }).to.contain.all.deep.keys(['x', 'y']);
         expect({ x: 1, y: 2, z: 3 }).to.contain.all.keys({ x: 6 });
+        expect({ x: 1, y: 2, z: 3 }).to.contain.all.deep.keys({ x: 6 });
       });
 
       // See https://github.com/astorije/chai-immutable/issues/7
       it('should display a helpful failure output on big objects', function () { // eslint-disable-line prefer-arrow-callback
         const lengthyMap = new Map({ foo: 'foo foo foo foo foo foo foo foo ' });
+
         fail(
           () => expect(lengthyMap).to.have.keys('not-foo'),
           /(foo ){8}/
         );
+
+        fail(
+          () => expect(lengthyMap).to.have.deep.keys('not-foo'),
+          /(foo ){8}/
+        );
+      });
+
+      it('should pass against Lists', function () { // eslint-disable-line prefer-arrow-callback
+        expect(new List(['x', 'y'])).to.have.all.keys(0, 1);
+        expect(new List(['x', 'y'])).to.have.all.keys([0, 1]);
       });
 
       it('should fail given an inexisting key', function () { // eslint-disable-line prefer-arrow-callback
         fail(() => expect(new Map({ x: 1 })).to.have.key('z'));
+        fail(() => expect(new Map({ x: 1 })).to.have.deep.key('z'));
         fail(() => expect({ x: 1 }).to.have.key('z'));
+        fail(() => expect({ x: 1 }).to.have.deep.key('z'));
       });
 
       it('should fail given multiple inexisting keys', function () { // eslint-disable-line prefer-arrow-callback
         fail(() => expect(map).to.have.keys('z1', 'z2'));
-        fail(() => expect(obj).to.have.keys('z1', 'z2'));
+        fail(() => expect(map).to.have.deep.keys('z1', 'z2'));
       });
 
       it('should fail using `not` given multiple existing keys', function () { // eslint-disable-line prefer-arrow-callback
         fail(() => expect(map).to.not.have.keys('x', 'y'));
-        fail(() => expect(obj).to.not.have.keys('x', 'y'));
+        fail(() => expect(map).to.not.have.deep.keys('x', 'y'));
       });
 
       it('should fail using `any` given inexisting keys', function () { // eslint-disable-line prefer-arrow-callback
         fail(() => expect(map).to.have.any.keys('z1', 'z2'));
-        fail(() => expect(obj).to.have.any.keys('z1', 'z2'));
+        fail(() => expect(map).to.have.any.deep.keys('z1', 'z2'));
       });
 
       it('should fail using `not` and `any` given an existing key', function () { // eslint-disable-line prefer-arrow-callback
         fail(() => expect(map).to.not.have.any.keys('x', 'z'));
-        fail(() => expect(obj).to.not.have.any.keys('x', 'z'));
+        fail(() => expect(map).to.not.have.any.deep.keys('x', 'z'));
       });
 
       it('should fail using `all` given an inexisting key', function () { // eslint-disable-line prefer-arrow-callback
         fail(() => expect(map).to.have.all.keys('z1', 'y'));
-        fail(() => expect(obj).to.have.all.keys('z1', 'y'));
+        fail(() => expect(map).to.have.all.deep.keys('z1', 'y'));
       });
 
       it('should fail using `not` and `all` given existing keys', function () { // eslint-disable-line prefer-arrow-callback
         fail(() => expect(map).to.not.have.all.keys('x', 'y'));
-        fail(() => expect(obj).to.not.have.all.keys('x', 'y'));
+        fail(() => expect(map).to.not.have.all.deep.keys('x', 'y'));
       });
 
       it('should fail using `contain` given an inexisting key', function () { // eslint-disable-line prefer-arrow-callback
         fail(() => expect(map).to.contain.key('z'));
-        fail(() => expect(obj).to.contain.key('z'));
+        fail(() => expect(map).to.contain.deep.key('z'));
       });
 
       it('should work if using different copies of Immutable', function () { // eslint-disable-line prefer-arrow-callback
         expect(new clonedImmutable.Map({ x: 1 })).to.have.key('x');
+        expect(new clonedImmutable.Map({ x: 1 })).to.have.deep.key('x');
       });
     });
 
