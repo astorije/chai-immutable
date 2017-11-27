@@ -275,7 +275,7 @@
     return function (keys) {
       const obj = this._obj;
 
-      if (Immutable.Iterable.isKeyed(obj)) {
+      if (Immutable.Iterable.isIterable(obj)) {
         const ssfi = utils.flag(this, 'ssfi');
 
         switch (utils.type(keys)) {
