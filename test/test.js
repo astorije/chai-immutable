@@ -193,19 +193,25 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
     describe('include method', function () { // eslint-disable-line prefer-arrow-callback
       it('should pass given an existing value', function () { // eslint-disable-line prefer-arrow-callback
         expect(new List([1, 2, 3])).to.include(2);
+        expect(new List([1, 2, 3])).to.deep.include(2);
       });
 
       it('should pass using `not` given an inexisting value', function () { // eslint-disable-line prefer-arrow-callback
         expect(new List([1, 2, 3])).to.not.include(42);
+        expect(new List([1, 2, 3])).to.not.deep.include(42);
       });
 
       it('should chain and pass given an existing key', function () { // eslint-disable-line prefer-arrow-callback
         expect(new Map({ foo: 'bar', hello: 'world' })).to.include.keys('foo');
+        expect(new Map({ foo: 'bar', hello: 'world' }))
+          .to.deep.include.keys('foo');
       });
 
       it('should chain and pass using `not` given an inexisting key', function () { // eslint-disable-line prefer-arrow-callback
         expect(new Map({ foo: 'bar', hello: 'world' }))
           .to.not.include.keys('not-foo');
+        expect(new Map({ foo: 'bar', hello: 'world' }))
+          .to.not.deep.include.keys('not-foo');
       });
 
       it('aliases of include should also work', function () { // eslint-disable-line prefer-arrow-callback
@@ -219,8 +225,11 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
 
       it('should not affect the original assertions', function () { // eslint-disable-line prefer-arrow-callback
         expect([1, 2, 3]).to.include(2);
+        expect([1, 2, 3]).to.deep.include(2);
         expect('foobar').to.contain('foo');
+        expect('foobar').to.deep.contain('foo');
         expect({ foo: 'bar', hello: 'world' }).to.include.keys('foo');
+        expect({ foo: 'bar', hello: 'world' }).to.deep.include.keys('foo');
       });
 
       // See https://github.com/astorije/chai-immutable/issues/7
@@ -230,24 +239,34 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
           () => expect(lengthyMap).to.include('not-foo'),
           /(foo ){8}/
         );
+        fail(
+          () => expect(lengthyMap).to.deep.include('not-foo'),
+          /(foo ){8}/
+        );
       });
 
       it('should fail given an inexisting value', function () { // eslint-disable-line prefer-arrow-callback
         fail(() => expect(new List([1, 2, 3])).to.include(42));
+        fail(() => expect(new List([1, 2, 3])).to.deep.include(42));
       });
 
       it('should fail using `not` given an existing value', function () { // eslint-disable-line prefer-arrow-callback
         fail(() => expect(new List([1, 2, 3])).not.to.include(2));
+        fail(() => expect(new List([1, 2, 3])).not.to.deep.include(2));
       });
 
       it('should chain and fail given an inexisting key', function () { // eslint-disable-line prefer-arrow-callback
         fail(() => expect(new Map({ foo: 'bar', hello: 'world' }))
           .to.include.keys('not-foo'));
+        fail(() => expect(new Map({ foo: 'bar', hello: 'world' }))
+          .to.deep.include.keys('not-foo'));
       });
 
       it('should chain and fail using `not` given an existing key', function () { // eslint-disable-line prefer-arrow-callback
         fail(() => expect(new Map({ foo: 'bar', hello: 'world' }))
           .to.not.include.keys('foo'));
+        fail(() => expect(new Map({ foo: 'bar', hello: 'world' }))
+          .to.not.deep.include.keys('foo'));
       });
     });
 

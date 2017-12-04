@@ -124,8 +124,12 @@ based language chains or as methods to assert the inclusion of a value
 in an immutable collection. When used as language chains, they toggle the
 `contains` flag for the `keys` assertion.
 
+Note that `deep.include` behaves exactly like `include` in the context of
+immutable data structures.
+
 ```js
 expect(new List([1, 2, 3])).to.include(2);
+expect(new List([1, 2, 3])).to.deep.include(2);
 expect(new Map({ foo: 'bar', hello: 'world' })).to.include.keys('foo');
 ```
 
