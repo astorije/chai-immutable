@@ -24,7 +24,7 @@ rules:
   block-scoped-var: error
   complexity:
     - error
-    - 15
+    - 16
   consistent-return: error
   curly: error
   default-case: error
