@@ -40,8 +40,18 @@ You can then use this plugin as any other Chai plugins:
 
 <!-- fulky:skip-test -->
 ```js
-var chai = require('chai');
-var chaiImmutable = require('chai-immutable');
+const chai = require('chai');
+const chaiImmutable = require('chai-immutable');
+
+chai.use(chaiImmutable);
+```
+
+### ES6 syntax (needs Babel transpiling)
+
+<!-- fulky:skip-test -->
+```js
+import chai from 'chai';
+import chaiImmutable from 'chai-immutable';
 
 chai.use(chaiImmutable);
 ```
@@ -64,20 +74,21 @@ If you are using this plugin with
 
 <!-- fulky:skip-test -->
 ```js
-var chai = require('chai');
-var chaiAsPromised = require('chai-as-promised');
-var chaiImmutable = require('chai-immutable');
-var dirtyChai = require('dirty-chai');
-var expect = chai.expect;
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+const chaiImmutable = require('chai-immutable');
+const dirtyChai = require('dirty-chai');
+const expect = chai.expect;
 
 chai.use(chaiImmutable);
-chai.use(dirtyChai);
 chai.use(chaiAsPromised);
+chai.use(dirtyChai);
 
-var List = require('immutable').List;
+const List = require('immutable').List;
 
 /* ... */
-return expect(List.of(1, 2, 3)).to.eventually.have.size(3);
+
+expect(Promise.resolve(List.of(1, 2, 3))).to.eventually.have.size(3);
 expect(true).to.be.true();
 ```
 
@@ -100,8 +111,8 @@ Asserts that the values of the target are equivalent to the values of
 `collection`. Aliases of Chai's original `equal` method are also supported.
 
 ```js
-var a = List.of(1, 2, 3);
-var b = List.of(1, 2, 3);
+const a = List.of(1, 2, 3);
+const b = List.of(1, 2, 3);
 expect(a).to.equal(b);
 ```
 
@@ -344,8 +355,8 @@ Asserts that the values of `actual` are equivalent to the values of
 exactly like `.equal()` in the context of Immutable data structures.
 
 ```js
-var a = List.of(1, 2, 3);
-var b = List.of(1, 2, 3);
+const a = List.of(1, 2, 3);
+const b = List.of(1, 2, 3);
 assert.equal(a, b);
 ```
 
@@ -365,8 +376,8 @@ Asserts that the values of `actual` are not equivalent to the values of
 exactly like `.notEqual()` in the context of Immutable data structures.
 
 ```js
-var a = List.of(1, 2, 3);
-var b = List.of(4, 5, 6);
+const a = List.of(1, 2, 3);
+const b = List.of(4, 5, 6);
 assert.notEqual(a, b);
 ```
 
