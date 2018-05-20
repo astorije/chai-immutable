@@ -21,8 +21,19 @@ notifications:
     on_success: never
     on_failure: always
 
+# Identifies `a.b.c-xxx.n` tags as pre-releases, and `a.b.c` as stable releases
+before_deploy: |
+  function npm_dist_tag() {
+    if [[ "$TRAVIS_TAG" = *"-"* ]]; then
+      echo "next"
+    else
+      echo "latest"
+    fi
+  }
+
 deploy:
   provider: npm
+  tag: $(npm_dist_tag)
   email: jeremie@astori.fr
   api_key:
     secure: Gjd/+7HvWJhVopSDHGirlMjk872jDK+/pW/s1cE5pHFz5Zfbn4wpAuoncQ8oLNwnndPkAMwBzNvwpOfQiCrccIuERY6f73Jtmd+dzGCgf7WRFB1Jz0ih06Xu/CSNN/nApaMMoj++/s/m6lu+NLNOgQ7aYZEEwJyfi3T7ik0AcJ4=
@@ -30,3 +41,9 @@ deploy:
     node: 8
     tags: true
     repo: astorije/chai-immutable
+
+# If the current release is a stable release, remove potential pre-release tag
+after_deploy: |
+  if [ "$(npm_dist_tag)" == "latest" ]; then
+    npm dist-tag rm thelounge next || true
+  fi
