@@ -16,7 +16,6 @@ rules:
   no-extra-parens: error
   no-prototype-builtins: error
   no-template-curly-in-string: error
-  # valid-jsdoc: error
 
   ## Best Practices
 
@@ -233,7 +232,7 @@ rules:
   object-shorthand: error
   prefer-arrow-callback: error
   prefer-const: error
-  # prefer-destructuring: error # Incompatible with Node.js v4
+  prefer-destructuring: error
   prefer-numeric-literals: error
   prefer-spread: error
   prefer-template: error
