@@ -11,15 +11,16 @@
 This plugin provides a set of [Chai](http://chaijs.com/) assertions for [Facebook's Immutable library for JavaScript collections](http://facebook.github.io/immutable-js/).
 
 <!-- fulky:globals
-var chai = require('chai');
-var assert = chai.assert;
-var expect = chai.expect;
+const chai = require('chai');
+const { assert, expect } = chai;
 
-var Immutable = require('immutable');
-var List = Immutable.List;
-var Map = Immutable.Map;
-var Set = Immutable.Set;
-var Stack = Immutable.Stack;
+const Immutable = require('immutable');
+const {
+  List,
+  Map,
+  Set,
+  Stack,
+} = Immutable;
 
 chai.use(require('./chai-immutable'));
 -->
@@ -28,18 +29,17 @@ chai.use(require('./chai-immutable'));
 
 ### Node.js
 
-Install via [npm](http://npmjs.org) or [`yarn`](https://yarnpkg.com/en/):
+Install via [npm](http://npmjs.org) or [yarn](https://yarnpkg.com/):
 
 ```bash
 npm install --save-dev chai-immutable
-# or:
 yarn add --dev chai-immutable
 ```
 
-⚠️ To use `chai-immutable` with Chai v4, you need to use
+⚠️ **To use `chai-immutable` with Chai v4, you need to use
 `npm install --save-dev chai-immutable@next` (or
 `yarn add --dev chai-immutable@next`) instead, until I am done with the v2
-release of this plugin. I apologize for the inconvenience in the meantime.
+release of this plugin. I apologize for the inconvenience in the meantime.**
 
 You can then use this plugin as any other Chai plugins:
 
@@ -83,13 +83,13 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const chaiImmutable = require('chai-immutable');
 const dirtyChai = require('dirty-chai');
-const expect = chai.expect;
+const { expect } = chai;
 
 chai.use(chaiImmutable);
 chai.use(chaiAsPromised);
 chai.use(dirtyChai);
 
-const List = require('immutable').List;
+const { List } = require('immutable');
 
 /* ... */
 
