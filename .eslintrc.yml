@@ -202,7 +202,6 @@ rules:
     - always
   semi-spacing: error
   semi-style: error
-  sort-keys: error
   sort-vars: error
   space-before-blocks: error
   space-before-function-paren:
