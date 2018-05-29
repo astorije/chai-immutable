@@ -11,7 +11,7 @@
     context.chai.use(factory(context.Immutable));
   }
 })(this, Immutable => (chai, utils) => {
-  const Assertion = chai.Assertion;
+  const { Assertion } = chai;
 
   function assertIsIterable(obj) {
     new Assertion(obj).assert(
@@ -43,7 +43,7 @@
     const obj = this._obj;
 
     if (Immutable.Iterable.isIterable(obj)) {
-      const size = obj.size;
+      const { size } = obj;
       new Assertion(size).a('number');
 
       this.assert(
@@ -594,7 +594,7 @@
   function assertCollectionSize(n) {
     assertIsIterable(this._obj);
 
-    const size = this._obj.size;
+    const { size } = this._obj;
     new Assertion(size).a('number');
 
     this.assert(
@@ -624,7 +624,7 @@
       if (utils.flag(this, 'immutable.collection.size')) {
         assertIsIterable(this._obj);
 
-        const size = this._obj.size;
+        const { size } = this._obj;
         new Assertion(size).a('number');
 
         this.assert(
@@ -646,7 +646,7 @@
       if (utils.flag(this, 'immutable.collection.size')) {
         assertIsIterable(this._obj);
 
-        const size = this._obj.size;
+        const { size } = this._obj;
         new Assertion(size).a('number');
 
         this.assert(
@@ -668,7 +668,7 @@
       if (utils.flag(this, 'immutable.collection.size')) {
         assertIsIterable(this._obj);
 
-        const size = this._obj.size;
+        const { size } = this._obj;
         new Assertion(size).a('number');
 
         this.assert(
@@ -689,7 +689,7 @@
       if (utils.flag(this, 'immutable.collection.size')) {
         assertIsIterable(this._obj);
 
-        const size = this._obj.size;
+        const { size } = this._obj;
         new Assertion(size).a('number');
 
         this.assert(
@@ -723,7 +723,7 @@
     if (utils.flag(this, 'immutable.collection.size')) {
       assertIsIterable(this._obj);
 
-      const size = this._obj.size;
+      const { size } = this._obj;
       new Assertion(size).a('number');
 
       this.assert(
@@ -742,7 +742,7 @@
    * ## TDD API Reference
    */
 
-  const assert = chai.assert;
+  const { assert } = chai;
   const originalEqual = assert.equal;
   const originalNotEqual = assert.notEqual;
 

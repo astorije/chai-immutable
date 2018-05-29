@@ -29,12 +29,13 @@ if (!chai) {
 
 const clonedImmutable = clone(Immutable);
 
-const assert = chai.assert;
-const expect = chai.expect;
-const List = Immutable.List;
-const Map = Immutable.Map;
-const Set = Immutable.Set;
-const Stack = Immutable.Stack;
+const { assert, expect } = chai;
+const {
+  List,
+  Map,
+  Set,
+  Stack,
+} = Immutable;
 
 /*!
  * Test helper to check that a given function (wrapping the assertion) will
