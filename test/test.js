@@ -550,6 +550,7 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
         it('should pass using `not` given an inexisting property', function () { // eslint-disable-line prefer-arrow-callback
           expect(nestedObj).not.to.have.nested.property(['y', 'z']);
           expect(nestedObj).not.to.have.nested.deep.property(['y', 'z']);
+          expect(nestedObj).not.to.have.property('a', new Map({ x: 2 }));
         });
 
         it('should pass using `not` given an inexisting property and value', function () { // eslint-disable-line prefer-arrow-callback
@@ -972,6 +973,46 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
       });
     });
 
+    describe('include assertion', function () { // eslint-disable-line prefer-arrow-callback
+      const map1 = new Map({ a: 1 });
+      const map2 = new Map({ b: 2 });
+      const list = new List([map1, map2]);
+      const map = new Map({ foo: map1, bar: map2 });
+
+      it('should ensure deep equality', function () { // eslint-disable-line prefer-arrow-callback
+        assert.include(list, map1);
+        assert.include(list, new Map({ a: 1 }));
+
+        assert.include(map, map1);
+        assert.include(map, new Map({ a: 1 }));
+      });
+
+      it('should not treat partial collections as sub-collections', function () { // eslint-disable-line prefer-arrow-callback
+        fail(() => assert.include(map, new Map({ foo: map1 })));
+        fail(() => assert.include(map, new Map({ foo: map1, bar: map2 })));
+      });
+    });
+
+    describe('notInclude assertion', function () { // eslint-disable-line prefer-arrow-callback
+      const map1 = new Map({ a: 1 });
+      const map2 = new Map({ b: 2 });
+      const list = new List([map1, map2]);
+      const map = new Map({ foo: map1, bar: map2 });
+
+      it('should ensure deep equality', function () { // eslint-disable-line prefer-arrow-callback
+        assert.notInclude(map, new Map({ foo: map1 }));
+        assert.notInclude(map, new Map({ foo: map1, bar: map2 }));
+      });
+
+      it('should not treat partial collections as sub-collections', function () { // eslint-disable-line prefer-arrow-callback
+        fail(() => assert.notInclude(list, map1));
+        fail(() => assert.notInclude(list, new Map({ a: 1 })));
+
+        fail(() => assert.notInclude(map, map1));
+        fail(() => assert.notInclude(map, new Map({ a: 1 })));
+      });
+    });
+
     describe('property assertions', function () { // eslint-disable-line prefer-arrow-callback
       const obj = Immutable.fromJS({ x: 1 });
       const nestedObj = Immutable.fromJS({ x: 1, y: { x: 2, y: 3 } });
@@ -1009,6 +1050,8 @@ describe('chai-immutable', function () { // eslint-disable-line prefer-arrow-cal
         assert.notDeepPropertyVal(obj, 'z', 1);
         assert.notPropertyVal(obj, 'x', 42);
         assert.notDeepPropertyVal(obj, 'x', 42);
+        assert.notPropertyVal(obj, 'foo', new Map({ bar: 'baz' }));
+        assert.notDeepPropertyVal(obj, 'foo', new Map({ bar: 'baz' }));
       });
 
       it('should fail for existing property and value using `not`', function () { // eslint-disable-line prefer-arrow-callback
