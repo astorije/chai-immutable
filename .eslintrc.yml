@@ -6,14 +6,15 @@ env:
   commonjs: true
   es6: true
 
-extends: 'eslint:recommended'
+extends:
+  - eslint:recommended
+  - prettier
 
 rules:
 
   ## Possible Errors
 
   for-direction: error
-  no-extra-parens: error
   no-prototype-builtins: error
   no-template-curly-in-string: error
 
@@ -27,9 +28,6 @@ rules:
   consistent-return: error
   curly: error
   default-case: error
-  dot-location:
-    - error
-    - property
   dot-notation: error
   eqeqeq: error
   guard-for-in: error
@@ -43,7 +41,6 @@ rules:
   no-extend-native: error
   no-extra-bind: error
   no-extra-label: error
-  no-floating-decimal: error
   no-global-assign: error
   no-implicit-coercion: error
   no-implicit-globals: error
@@ -52,7 +49,6 @@ rules:
   no-labels: error
   no-lone-blocks: error
   no-loop-func: error
-  no-multi-spaces: error
   no-multi-str: error
   no-new: error
   no-new-func: error
@@ -73,7 +69,6 @@ rules:
   no-with: error
   prefer-promise-reject-errors: error
   radix: error
-  wrap-iife: error
   yoda: error
 
   ## Strict Mode
@@ -103,126 +98,51 @@ rules:
 
   ## Stylistic Issues
 
-  array-bracket-newline: error
-  array-bracket-spacing: error
-  block-spacing: error
-  brace-style: error
   camelcase: error
   capitalized-comments:
     - error
     - always
     - ignoreConsecutiveComments: true
-  comma-dangle:
-    - error
-    - always-multiline
-  comma-spacing: error
-  comma-style: error
-  computed-property-spacing: error
   consistent-this: error
-  eol-last: error
-  func-call-spacing: error
   func-name-matching: error
   func-style:
     - error
     - declaration
     - allowArrowFunctions: true
-  function-paren-newline:
-    - error
-    - consistent
   id-match: error
-  indent:
-    - error
-    - 2
-    - SwitchCase: 1
-  key-spacing: error
-  keyword-spacing: error
   linebreak-style:
     - error
     - unix
-  lines-around-comment: error
   lines-between-class-members: error
   max-depth: error
-  max-len:
-    - error
-    - tabWidth: 2
-      ignoreUrls: true
-      ignorePattern: \* expect\(.*\)\.to\.have\.[a-z.]*(keys|nested\.property)
   max-nested-callbacks:
     - error
     - max: 6
   max-statements-per-line: error
-  multiline-ternary:
-    - error
-    - never
   new-cap: error
-  new-parens: error
-  newline-per-chained-call: error
   no-array-constructor: error
   no-bitwise: error
   no-continue: error
   no-lonely-if: error
-  no-mixed-operators: error
   no-multi-assign: error
-  no-multiple-empty-lines: error
   no-negated-condition: error
   no-nested-ternary: error
   no-new-object: error
-  no-tabs: error
-  no-trailing-spaces: error
   no-underscore-dangle:
     - error
     - allowAfterThis: true
   no-unneeded-ternary: error
-  no-whitespace-before-property: error
-  object-curly-newline: error
-  object-curly-spacing:
-    - error
-    - always
-  object-property-newline:
-    - error
-    - allowMultiplePropertiesPerLine: true
   one-var:
     - error
     - never
   operator-assignment: error
-  operator-linebreak: error
-  padded-blocks:
-    - error
-    - never
   padding-line-between-statements: error
-  quote-props:
-    - error
-    - as-needed
-  quotes:
-    - error
-    - single
-  semi:
-    - error
-    - always
-  semi-spacing: error
-  semi-style: error
   sort-vars: error
-  space-before-blocks: error
-  space-before-function-paren:
-    - error
-    - named: never
-  space-in-parens: error
-  space-infix-ops: error
-  space-unary-ops: error
-  # spaced-comment: error
-  switch-colon-spacing: error
-  template-tag-spacing: error
-  unicode-bom: error
-  wrap-regex: error
+  spaced-comment: error
 
   ## ECMAScript 6
 
   arrow-body-style: error
-  arrow-parens:
-    - error
-    - as-needed
-  arrow-spacing: error
-  generator-star-spacing: error
   no-duplicate-imports: error
   no-restricted-imports: error
   no-useless-computed-key: error
@@ -236,8 +156,5 @@ rules:
   prefer-numeric-literals: error
   prefer-spread: error
   prefer-template: error
-  rest-spread-spacing: error
   sort-imports: error
   symbol-description: error
-  template-curly-spacing: error
-  yield-star-spacing: error
