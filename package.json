@@ -3,9 +3,9 @@
   "version": "2.0.0-rc.1",
   "description": "Chai assertions for Facebook's Immutable library for JavaScript collections",
   "main": "chai-immutable.js",
-  "directories": {
-    "test": "test"
-  },
+  "files": [
+    "chai-immutable.js"
+  ],
   "scripts": {
     "format": "run-s -c \"lint:eslint --fix\" \"lint:prettier --write\"",
     "lint:eslint": "eslint --ignore-path .gitignore . --report-unused-disable-directives",
