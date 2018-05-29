@@ -10,10 +10,9 @@ plugins:
 
 # Override from root `.eslintrc.yml`
 rules:
-  max-len:
-    - error
-    - tabWidth: 2
-      ignorePattern: (describe|it)\('.*', function \(\) \{
+  # Until estlint-plugin-mocha has a Mocha-aware prefer-arrow-callback (see
+  # below), disabling this rule
+  prefer-arrow-callback: off
 
   ## eslint-plugin-chai-expect
   ## https://github.com/Turbo87/eslint-plugin-chai-expect
