@@ -8,11 +8,6 @@ node_js:
 - 8 # EOL: December 2019
 - 6 # EOL: April 2019
 
-script:
-- npm run test-mocha
-- npm run test-readme
-- npm run lint
-
 after_script:
 - npm run coveralls
 
