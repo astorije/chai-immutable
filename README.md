@@ -44,6 +44,7 @@ release of this plugin. I apologize for the inconvenience in the meantime.**
 You can then use this plugin as any other Chai plugins:
 
 <!-- fulky:skip-test -->
+
 ```js
 const chai = require('chai');
 const chaiImmutable = require('chai-immutable');
@@ -54,6 +55,7 @@ chai.use(chaiImmutable);
 ### ES6 syntax (needs Babel transpiling)
 
 <!-- fulky:skip-test -->
+
 ```js
 import chai from 'chai';
 import chaiImmutable from 'chai-immutable';
@@ -78,6 +80,7 @@ If you are using this plugin with
 `chai-immutable` must be loaded **before** any of them. For example:
 
 <!-- fulky:skip-test -->
+
 ```js
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -110,7 +113,7 @@ expect(List.of(1, 2, 3)).to.not.be.empty;
 
 ### .equal(collection)
 
-- **@param** *{ Collection }* collection
+- **@param** _{ Collection }_ collection
 
 Asserts that the values of the target are equivalent to the values of
 `collection`. Aliases of Chai's original `equal` method are also supported.
@@ -133,7 +136,7 @@ tested against immutable data structures, therefore they are aliases to
 
 ### .include(value)
 
-- **@param** *{ Mixed }* val
+- **@param** _{ Mixed }_ val
 
 The `include` and `contain` assertions can be used as either property
 based language chains or as methods to assert the inclusion of a value
@@ -151,7 +154,7 @@ expect(new Map({ foo: 'bar', hello: 'world' })).to.include.keys('foo');
 
 ### .keys(key1[, key2[, ...]])
 
-- **@param** *{ String... | Array | Object | Collection }* key*N*
+- **@param** _{ String... | Array | Object | Collection }_ key*N*
 
 Asserts that the target collection has the given keys.
 
@@ -172,7 +175,9 @@ expect(new List(['x', 'y'])).to.have.all.keys([0, 1]);
 
 // Values in the passed object are ignored:
 expect(new Map({ foo: 1, bar: 2 })).to.have.all.keys({ bar: 6, foo: 7 });
-expect(new Map({ foo: 1, bar: 2 })).to.have.all.keys(new Map({ bar: 6, foo: 7 }));
+expect(new Map({ foo: 1, bar: 2 })).to.have.all.keys(
+  new Map({ bar: 6, foo: 7 })
+);
 expect(new List(['x', 'y'])).to.have.all.keys({ 0: 4, 1: 5 });
 ```
 
@@ -191,11 +196,11 @@ uncertain expectations.
 
 ```js
 // Recommended; asserts that target doesn't have any of the given keys
-expect(new Map({a: 1, b: 2})).to.not.have.any.keys('c', 'd');
+expect(new Map({ a: 1, b: 2 })).to.not.have.any.keys('c', 'd');
 
 // Not recommended; asserts that target doesn't have all of the given
 // keys but may or may not have some of them
-expect(new Map({a: 1, b: 2})).to.not.have.all.keys('c', 'd');
+expect(new Map({ a: 1, b: 2 })).to.not.have.all.keys('c', 'd');
 ```
 
 When asserting `.keys` without negation, `.all` is preferred because
@@ -204,11 +209,11 @@ When asserting `.keys` without negation, `.all` is preferred because
 
 ```js
 // Recommended; asserts that target has all the given keys
-expect(new Map({a: 1, b: 2})).to.have.all.keys('a', 'b');
+expect(new Map({ a: 1, b: 2 })).to.have.all.keys('a', 'b');
 
 // Not recommended; asserts that target has at least one of the given
 // keys but may or may not have more of them
-expect(new Map({a: 1, b: 2})).to.have.any.keys('a', 'b');
+expect(new Map({ a: 1, b: 2 })).to.have.any.keys('a', 'b');
 ```
 
 Note that `.all` is used by default when neither `.all` nor `.any` appear
@@ -217,8 +222,8 @@ it improves readability.
 
 ```js
 // Both assertions are identical
-expect(new Map({a: 1, b: 2})).to.have.all.keys('a', 'b'); // Recommended
-expect(new Map({a: 1, b: 2})).to.have.keys('a', 'b'); // Not recommended
+expect(new Map({ a: 1, b: 2 })).to.have.all.keys('a', 'b'); // Recommended
+expect(new Map({ a: 1, b: 2 })).to.have.keys('a', 'b'); // Not recommended
 ```
 
 Add `.include` earlier in the chain to require that the target's keys be a
@@ -226,8 +231,8 @@ superset of the expected keys, rather than identical sets.
 
 ```js
 // Target object's keys are a superset of ['a', 'b'] but not identical
-expect(new Map({a: 1, b: 2, c: 3})).to.include.all.keys('a', 'b');
-expect(new Map({a: 1, b: 2, c: 3})).to.not.have.all.keys('a', 'b');
+expect(new Map({ a: 1, b: 2, c: 3 })).to.include.all.keys('a', 'b');
+expect(new Map({ a: 1, b: 2, c: 3 })).to.not.have.all.keys('a', 'b');
 ```
 
 However, if `.any` and `.include` are combined, only the `.any` takes
@@ -235,8 +240,8 @@ effect. The `.include` is ignored in this case.
 
 ```js
 // Both assertions are identical
-expect(new Map({a: 1})).to.have.any.keys('a', 'b');
-expect(new Map({a: 1})).to.include.any.keys('a', 'b');
+expect(new Map({ a: 1 })).to.have.any.keys('a', 'b');
+expect(new Map({ a: 1 })).to.include.any.keys('a', 'b');
 ```
 
 The alias `.key` can be used interchangeably with `.keys`.
@@ -247,20 +252,20 @@ expect(new Map({ foo: 1 })).to.have.key('foo');
 
 ### .property(path[, val])
 
-- **@param** *{ String | Array | Iterable }* path
-- **@param** *{ Mixed }* val (optional)
+- **@param** _{ String | Array | Iterable }_ path
+- **@param** _{ Mixed }_ val (optional)
 
 Asserts that the target has a property with the given `path`.
 
 ```js
-expect(new Map({a: 1})).to.have.property('a');
+expect(new Map({ a: 1 })).to.have.property('a');
 ```
 
 When `val` is provided, `.property` also asserts that the property's value
 is equal to the given `val`. `val` can be an immutable collection.
 
 ```js
-expect(new Map({a: 1})).to.have.property('a', 1);
+expect(new Map({ a: 1 })).to.have.property('a', 1);
 ```
 
 Note that `deep.property` behaves exactly like `property` in the context of
@@ -271,23 +276,36 @@ referencing nested properties. An immutable `List` can also be used as the
 starting point of a `nested.property`.
 
 ```js
-expect(Immutable.fromJS({a: {b: ['x', 'y']}})).to.have.nested.property('a.b[1]');
-expect(Immutable.fromJS({a: {b: ['x', 'y']}})).to.have.nested.property('a.b[1]', 'y');
-expect(Immutable.fromJS({a: {b: ['x', 'y']}})).to.have.nested.property(['a', 'b', 1], 'y');
-expect(Immutable.fromJS({a: {b: ['x', 'y']}})).to.have.nested.property(new List(['a', 'b', 1]), 'y');
+expect(Immutable.fromJS({ a: { b: ['x', 'y'] } })).to.have.nested.property(
+  'a.b[1]'
+);
+expect(Immutable.fromJS({ a: { b: ['x', 'y'] } })).to.have.nested.property(
+  'a.b[1]',
+  'y'
+);
+expect(Immutable.fromJS({ a: { b: ['x', 'y'] } })).to.have.nested.property(
+  ['a', 'b', 1],
+  'y'
+);
+expect(Immutable.fromJS({ a: { b: ['x', 'y'] } })).to.have.nested.property(
+  new List(['a', 'b', 1]),
+  'y'
+);
 ```
 
 If `.` or `[]` are part of an actual property name, they can be escaped by
 adding two backslashes before them.
 
 ```js
-expect(Immutable.fromJS({'.a': {'[b]': 'x'}})).to.have.nested.property('\\.a.\\[b\\]');
+expect(Immutable.fromJS({ '.a': { '[b]': 'x' } })).to.have.nested.property(
+  '\\.a.\\[b\\]'
+);
 ```
 
 Add `.not` earlier in the chain to negate `.property`.
 
 ```js
-expect(new Map({a: 1})).to.not.have.property('b');
+expect(new Map({ a: 1 })).to.not.have.property('b');
 ```
 
 However, it's dangerous to negate `.property` when providing `val`. The
@@ -301,8 +319,8 @@ When the target isn't expected to have a property at the given
 `path`, it's often best to assert exactly that.
 
 ```js
-expect(new Map({b: 2})).to.not.have.property('a'); // Recommended
-expect(new Map({b: 2})).to.not.have.property('a', 1); // Not recommended
+expect(new Map({ b: 2 })).to.not.have.property('a'); // Recommended
+expect(new Map({ b: 2 })).to.not.have.property('a', 1); // Not recommended
 ```
 
 When the target is expected to have a property at the given key `path`,
@@ -310,20 +328,22 @@ it's often best to assert that the property has its expected value, rather
 than asserting that it doesn't have one of many unexpected values.
 
 ```js
-expect(new Map({a: 3})).to.have.property('a', 3); // Recommended
-expect(new Map({a: 3})).to.not.have.property('a', 1); // Not recommended
+expect(new Map({ a: 3 })).to.have.property('a', 3); // Recommended
+expect(new Map({ a: 3 })).to.not.have.property('a', 1); // Not recommended
 ```
 
 `.property` changes the target of any assertions that follow in the chain
 to be the value of the property from the original target object.
 
 ```js
-expect(new Map({a: 1})).to.have.property('a').that.is.a('number');
+expect(new Map({ a: 1 }))
+  .to.have.property('a')
+  .that.is.a('number');
 ```
 
 ### .size(value)
 
-- **@param** *{ Number }* size
+- **@param** _{ Number }_ size
 
 Asserts that the immutable collection has the expected size.
 
@@ -339,7 +359,7 @@ expect(List.of(1, 2, 3)).to.have.size.least(3);
 expect(List.of(1, 2, 3)).to.have.size.most(3);
 expect(List.of(1, 2, 3)).to.have.size.above(2);
 expect(List.of(1, 2, 3)).to.have.size.below(4);
-expect(List.of(1, 2, 3)).to.have.size.within(2,4);
+expect(List.of(1, 2, 3)).to.have.size.within(2, 4);
 ```
 
 Similarly to `length`/`lengthOf`, `sizeOf` is an alias of `size`:
@@ -352,8 +372,8 @@ expect(List.of(1, 2, 3)).to.have.sizeOf(3);
 
 ### .equal(actual, expected)
 
-- **@param** *{ Collection }* actual
-- **@param** *{ Collection }* expected
+- **@param** _{ Collection }_ actual
+- **@param** _{ Collection }_ expected
 
 Asserts that the values of `actual` are equivalent to the values of
 `expected`. Note that `.strictEqual()` and `.deepEqual()` assert
@@ -373,8 +393,8 @@ more information.
 
 ### .notEqual(actual, expected)
 
-- **@param** *{ Collection }* actual
-- **@param** *{ Collection }* expected
+- **@param** _{ Collection }_ actual
+- **@param** _{ Collection }_ expected
 
 Asserts that the values of `actual` are not equivalent to the values of
 `expected`. Note that `.notStrictEqual()` and `.notDeepEqual()` assert
@@ -388,8 +408,8 @@ assert.notEqual(a, b);
 
 ### .sizeOf(collection, length)
 
-- **@param** *{ Collection }* collection
-- **@param** *{ Number }* size
+- **@param** _{ Collection }_ collection
+- **@param** _{ Number }_ size
 
 Asserts that the immutable collection has the expected size.
 

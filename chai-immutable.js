@@ -1,9 +1,11 @@
 'use strict';
 
 ((context, factory) => {
-  if (typeof require === 'function' &&
-      typeof exports === 'object' &&
-      typeof module === 'object') {
+  if (
+    typeof require === 'function' &&
+    typeof exports === 'object' &&
+    typeof module === 'object'
+  ) {
     // Node.js
     module.exports = factory(require('immutable'));
   } else {
@@ -39,22 +41,26 @@
    * @api public
    */
 
-  Assertion.overwriteProperty('empty', _super => function () {
-    const obj = this._obj;
+  Assertion.overwriteProperty(
+    'empty',
+    _super =>
+      function() {
+        const obj = this._obj;
 
-    if (Immutable.Iterable.isIterable(obj)) {
-      const { size } = obj;
-      new Assertion(size).a('number');
+        if (Immutable.Iterable.isIterable(obj)) {
+          const { size } = obj;
+          new Assertion(size).a('number');
 
-      this.assert(
-        size === 0,
-        'expected #{this} to be empty but got size #{act}',
-        'expected #{this} to not be empty'
-      );
-    } else {
-      _super.apply(this, arguments);
-    }
-  });
+          this.assert(
+            size === 0,
+            'expected #{this} to be empty but got size #{act}',
+            'expected #{this} to not be empty'
+          );
+        } else {
+          _super.apply(this, arguments);
+        }
+      }
+  );
 
   /**
    * ### .equal(collection)
@@ -90,7 +96,7 @@
    */
 
   function assertCollectionEqual(_super) {
-    return function (collection) {
+    return function(collection) {
       const obj = this._obj;
 
       if (Immutable.Iterable.isIterable(obj)) {
@@ -141,7 +147,7 @@
    */
 
   function assertCollectionInclude(_super) {
-    return function (val) {
+    return function(val) {
       const obj = this._obj;
 
       if (Immutable.Iterable.isIterable(obj)) {
@@ -159,7 +165,7 @@
   }
 
   function chainCollectionInclude(_super) {
-    return function () {
+    return function() {
       _super.apply(this, arguments);
     };
   }
@@ -276,7 +282,7 @@
    */
 
   function assertKeyedCollectionKeys(_super) {
-    return function (keys) {
+    return function(keys) {
       const obj = this._obj;
 
       if (Immutable.Iterable.isIterable(obj)) {
@@ -291,13 +297,13 @@
             } else {
               keys = Object.keys(keys);
             }
-            // `keys` is now an array so this statement safely falls through
+          // `keys` is now an array so this statement safely falls through
           case 'Array':
             if (arguments.length > 1) {
               throw new chai.AssertionError(
                 'when testing keys against an immutable collection, you must ' +
-                'give a single Array|Object|String|Collection argument or ' +
-                'multiple String arguments',
+                  'give a single Array|Object|String|Collection argument or ' +
+                  'multiple String arguments',
                 null,
                 ssfi
               );
@@ -309,7 +315,7 @@
         }
 
         // Only stringify non-Symbols because Symbols would become "Symbol()"
-        keys = keys.map(val => typeof val === 'symbol' ? val : String(val));
+        keys = keys.map(val => (typeof val === 'symbol' ? val : String(val)));
 
         if (!keys.length) {
           throw new chai.AssertionError('keys required', null, ssfi);
@@ -361,7 +367,7 @@
   Assertion.overwriteMethod('keys', assertKeyedCollectionKeys);
   Assertion.overwriteMethod('key', assertKeyedCollectionKeys);
 
-  /*!
+  /**
    * ## parsePath(path)
    *
    * Helper function used to parse string paths into arrays of keys and
@@ -384,7 +390,8 @@
    * @returns {Array} parsed
    * @api private
    */
-  function parsePath(path) { // Given the following path: 'a.b[1]'
+  function parsePath(path) {
+    // Given the following path: 'a.b[1]'
     // Separates keys followed by indices with a dot: 'a.b.[1]'
     const str = path.replace(/([^\\])\[/g, '$1.[');
     // Extracts all indices and keys into an array: ['a', 'b', '[1]']
@@ -492,7 +499,7 @@
    */
 
   function assertProperty(_super) {
-    return function (path, val) {
+    return function(path, val) {
       const obj = this._obj;
 
       if (Immutable.Iterable.isIterable(obj)) {
@@ -620,7 +627,7 @@
   // Numerical comparator overwrites
 
   function assertCollectionSizeLeast(_super) {
-    return function (n) {
+    return function(n) {
       if (utils.flag(this, 'immutable.collection.size')) {
         assertIsIterable(this._obj);
 
@@ -642,7 +649,7 @@
   }
 
   function assertCollectionSizeMost(_super) {
-    return function (n) {
+    return function(n) {
       if (utils.flag(this, 'immutable.collection.size')) {
         assertIsIterable(this._obj);
 
@@ -664,7 +671,7 @@
   }
 
   function assertCollectionSizeAbove(_super) {
-    return function (n) {
+    return function(n) {
       if (utils.flag(this, 'immutable.collection.size')) {
         assertIsIterable(this._obj);
 
@@ -685,7 +692,7 @@
   }
 
   function assertCollectionSizeBelow(_super) {
-    return function (n) {
+    return function(n) {
       if (utils.flag(this, 'immutable.collection.size')) {
         assertIsIterable(this._obj);
 
@@ -719,24 +726,28 @@
   Assertion.overwriteMethod('lt', assertCollectionSizeBelow);
   Assertion.overwriteMethod('lessThan', assertCollectionSizeBelow);
 
-  Assertion.overwriteMethod('within', _super => function (min, max) {
-    if (utils.flag(this, 'immutable.collection.size')) {
-      assertIsIterable(this._obj);
+  Assertion.overwriteMethod(
+    'within',
+    _super =>
+      function(min, max) {
+        if (utils.flag(this, 'immutable.collection.size')) {
+          assertIsIterable(this._obj);
 
-      const { size } = this._obj;
-      new Assertion(size).a('number');
+          const { size } = this._obj;
+          new Assertion(size).a('number');
 
-      this.assert(
-        min <= size && size <= max,
-        'expected #{this} to have a size within #{exp} but got #{act}',
-        'expected #{this} to not have a size within #{exp} but got #{act}',
-        `${min}..${max}`,
-        size
-      );
-    } else {
-      _super.apply(this, arguments);
-    }
-  });
+          this.assert(
+            min <= size && size <= max,
+            'expected #{this} to have a size within #{exp} but got #{act}',
+            'expected #{this} to not have a size within #{exp} but got #{act}',
+            `${min}..${max}`,
+            size
+          );
+        } else {
+          _super.apply(this, arguments);
+        }
+      }
+  );
 
   /**
    * ## TDD API Reference

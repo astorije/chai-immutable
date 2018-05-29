@@ -7,11 +7,15 @@
     "test": "test"
   },
   "scripts": {
-    "lint": "eslint --ignore-path .gitignore . --report-unused-disable-directives",
-    "test": "run-s --continue-on-error test:* lint",
+    "format": "run-s -c \"lint:eslint --fix\" \"lint:prettier --write\"",
+    "lint:eslint": "eslint --ignore-path .gitignore . --report-unused-disable-directives",
+    "lint:prettier": "prettier --list-different \"**/*.{js,md}\"",
+    "test": "run-s -c test:* lint:* eslint-check:*",
     "test:readme": "mocha --compilers md:fulky/md-compiler README.md",
     "test:mocha": "nyc mocha",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "eslint-check:main": "eslint --print-config .eslintrc.yml | eslint-config-prettier-check",
+    "eslint-check:test": "eslint --print-config test/.eslintrc.yml | eslint-config-prettier-check"
   },
   "repository": {
     "type": "git",
@@ -45,6 +49,7 @@
     "chai": "4.1.2",
     "coveralls": "3.0.1",
     "eslint": "4.19.1",
+    "eslint-config-prettier": "2.9.0",
     "eslint-plugin-chai-expect": "1.1.1",
     "eslint-plugin-chai-friendly": "0.4.1",
     "eslint-plugin-mocha": "5.0.0",
@@ -52,6 +57,7 @@
     "immutable": "3.8.2",
     "mocha": "5.2.0",
     "npm-run-all": "4.1.3",
-    "nyc": "11.8.0"
+    "nyc": "11.8.0",
+    "prettier": "1.13.0"
   }
 }
