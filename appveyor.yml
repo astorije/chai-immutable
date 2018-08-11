@@ -1,18 +1,17 @@
----
 # http://www.appveyor.com/docs/appveyor-yml
 
 # Build version format
-version: "{build}"
+version: '{build}'
 
 # Do not build on tags (GitHub only)
 skip_tags: true
 
 environment:
   matrix:
-  - nodejs_version: 10 # EOL: April 2021
-  - nodejs_version: 9 # EOL: June 2018
-  - nodejs_version: 8 # EOL: December 2019
-  - nodejs_version: 6 # EOL: April 2019
+    - nodejs_version: 10 # EOL: April 2021
+    - nodejs_version: 9 # EOL: June 2018
+    - nodejs_version: 8 # EOL: December 2019
+    - nodejs_version: 6 # EOL: April 2019
 
 install:
   - ps: Install-Product node $env:nodejs_version
