@@ -7,7 +7,7 @@ node_js:
   - 6 # EOL: April 2019
 
 after_script:
-  - npm run coveralls
+  - yarn coveralls
 
 notifications:
   email:
@@ -16,7 +16,7 @@ notifications:
 
 # Identifies `a.b.c-xxx.n` tags as pre-releases, and `a.b.c` as stable releases
 before_deploy: |
-  function npm_dist_tag() {
+  function dist_tag() {
     if [[ "$TRAVIS_TAG" = *"-"* ]]; then
       echo "next"
     else
@@ -26,7 +26,7 @@ before_deploy: |
 
 deploy:
   provider: npm
-  tag: $(npm_dist_tag)
+  tag: $(dist_tag)
   email:
     secure: bXNlycnAR6z+PawxKBB6fSKuoAQb61bH3gYhOD8yIP5Lx0zj6HHDj8Ze4jsE8X133RVVWUPONqw0D09b/w0ahWfRlY80/TzOlT6HgYHTLKuKZsgGrLDbSBBGeXzU4I+/Zuo3fJ7xGIUIRe4qrUELnUYNE7VuB1Un78xTmkuZ0cY=
   api_key:
@@ -38,6 +38,6 @@ deploy:
 
 # If the current release is a stable release, remove potential pre-release tag
 after_deploy: |
-  if [ "$(npm_dist_tag)" == "latest" ]; then
-    npm dist-tag rm thelounge next || true
+  if [ "$(dist_tag)" == "latest" ]; then
+    yarn tag remove thelounge next || true
   fi
