@@ -8,8 +8,8 @@ plugins:
 
 # Override from root `.eslintrc.yml`
 rules:
-  # Until estlint-plugin-mocha has a Mocha-aware prefer-arrow-callback (see
-  # below), disabling this rule
+  # Disabling this rule in favor of mocha/prefer-arrow-callback
+  # https://github.com/lo1tuma/eslint-plugin-mocha/blob/master/docs/rules/prefer-arrow-callback.md
   prefer-arrow-callback: off
 
   ## eslint-plugin-chai-expect
@@ -35,10 +35,11 @@ rules:
   mocha/no-global-tests: error
   mocha/no-hooks: error
   mocha/no-identical-title: error
-  mocha/no-mocha-arrows: error # https://github.com/lo1tuma/eslint-plugin-mocha/issues/141
+  mocha/no-mocha-arrows: error
   mocha/no-nested-tests: error
   mocha/no-pending-tests: error
   mocha/no-return-and-callback: error
   mocha/no-sibling-hooks: error
   mocha/no-skipped-tests: error
+  mocha/prefer-arrow-callback: error
   mocha/valid-suite-description: error
