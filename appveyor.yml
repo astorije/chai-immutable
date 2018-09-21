@@ -15,14 +15,18 @@ environment:
 
 install:
   - ps: Install-Product node $env:nodejs_version
-  - npm install
-  - npm install mocha-appveyor-reporter
+  - yarn install --frozen-lockfile
+  - yarn add --dev mocha-appveyor-reporter
   - echo --reporter mocha-appveyor-reporter >> test/mocha.opts
 
 test_script:
   - node --version
-  - npm --version
-  - npm run test
+  - yarn --version
+  - yarn test
+
+# cache npm modules
+cache:
+  - "%LOCALAPPDATA%\\Yarn"
 
 # Don't actually build
 build: off
