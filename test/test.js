@@ -1028,10 +1028,10 @@ describe('chai-immutable', function() {
         assert.include(map, map1);
         assert.include(map, new Map({ a: 1 }));
       });
-      
+
       it('should find plain values', function() {
         assert.include(map1, 1);
-      })
+      });
 
       it('should treat partial collections as sub-collections', function() {
         assert.include(map, new Map({ foo: map1 }));
@@ -1056,8 +1056,8 @@ describe('chai-immutable', function() {
       });
 
       it('should treat partial overlap as failure', function() {
-        assert.notInclude(map, new Map({foo: new Map({a: 1, b: 2})}));
-      })
+        assert.notInclude(map, new Map({ foo: new Map({ a: 1, b: 2 }) }));
+      });
     });
 
     describe('property assertions', function() {
