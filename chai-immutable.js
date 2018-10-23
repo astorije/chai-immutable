@@ -151,8 +151,10 @@
       const obj = this._obj;
 
       if (Immutable.Iterable.isIterable(obj)) {
+        const isIncluded = 
+          obj.includes(val) || (Immutable.Iterable.isIterable(val) && obj.isSuperset(val));
         this.assert(
-          obj.includes(val),
+          isIncluded,
           'expected #{act} to include #{exp}',
           'expected #{act} to not include #{exp}',
           val,
