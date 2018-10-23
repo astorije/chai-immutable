@@ -1028,10 +1028,14 @@ describe('chai-immutable', function() {
         assert.include(map, map1);
         assert.include(map, new Map({ a: 1 }));
       });
+      
+      it('should find plain values', function() {
+        assert.include(map1, 1);
+      })
 
-      it('should not treat partial collections as sub-collections', function() {
-        fail(() => assert.include(map, new Map({ foo: map1 })));
-        fail(() => assert.include(map, new Map({ foo: map1, bar: map2 })));
+      it('should treat partial collections as sub-collections', function() {
+        assert.include(map, new Map({ foo: map1 }));
+        assert.include(map, new Map({ foo: map1, bar: map2 }));
       });
     });
 
@@ -1042,17 +1046,18 @@ describe('chai-immutable', function() {
       const map = new Map({ foo: map1, bar: map2 });
 
       it('should ensure deep equality', function() {
-        assert.notInclude(map, new Map({ foo: map1 }));
-        assert.notInclude(map, new Map({ foo: map1, bar: map2 }));
+        fail(() => assert.notInclude(map, new Map({ foo: map1 })));
+        fail(() => assert.notInclude(map, new Map({ foo: map1, bar: map2 })));
       });
 
-      it('should not treat partial collections as sub-collections', function() {
+      it('should fail for existing collections', function() {
         fail(() => assert.notInclude(list, map1));
         fail(() => assert.notInclude(list, new Map({ a: 1 })));
-
-        fail(() => assert.notInclude(map, map1));
-        fail(() => assert.notInclude(map, new Map({ a: 1 })));
       });
+
+      it('should treat partial overlap as failure', function() {
+        assert.notInclude(map, new Map({foo: new Map({a: 1, b: 2})}));
+      })
     });
 
     describe('property assertions', function() {
