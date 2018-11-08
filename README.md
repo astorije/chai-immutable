@@ -139,9 +139,9 @@ tested against immutable data structures, therefore they are aliases to
 - **@param** _{ Mixed }_ val
 
 The `include` and `contain` assertions can be used as either property
-based language chains or as methods to assert the inclusion of a value
-in an immutable collection. When used as language chains, they toggle the
-`contains` flag for the `keys` assertion.
+based language chains or as methods to assert the inclusion of a value or 
+subset in an immutable collection. When used as language chains, they toggle 
+the `contains` flag for the `keys` assertion.
 
 Note that `deep.include` behaves exactly like `include` in the context of
 immutable data structures.
