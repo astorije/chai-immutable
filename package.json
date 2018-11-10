@@ -9,7 +9,7 @@
   "scripts": {
     "format": "run-s -c \"lint:eslint --fix\" \"lint:prettier --write\"",
     "lint:eslint": "eslint --ignore-path .gitignore . --report-unused-disable-directives",
-    "lint:prettier": "prettier --list-different \"**/*.{js,json,md,yml}\"",
+    "lint:prettier": "prettier --list-different \"**/*.{html,js,json,md,yml}\"",
     "test": "run-s -c test:* lint:* eslint-check:*",
     "test:readme": "mocha --compilers md:fulky/md-compiler README.md",
     "test:mocha": "nyc mocha",
