@@ -7,11 +7,16 @@ node_js:
   - 8 # EOL: December 2019
   - 6 # EOL: April 2019
 
+os:
+  - linux
+  - osx
+  - windows
+
 install:
   - yarn install --frozen-lockfile
 
 after_script:
-  - yarn coveralls
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_NODE_VERSION" == "8" ]]; then yarn coveralls; fi
 
 notifications:
   email:
@@ -37,6 +42,7 @@ deploy:
     secure: lmkAwQspZnROe6Ev0QdV/9l1cN10BWMyc7BfkecNVr1Ab1G6Kws4LoczbJS/VJmLmvKaSMppLvmA+32pIu1XGa3ezjQQoobi1VPTH7RUGOY57y3japctsgI9JFXzFIESJo6lspe8blSHH7J6pyEJ0Vbl6gnDju9ploQWCawdh1g=
   on:
     node: 8
+    os: linux
     tags: true
     repo: astorije/chai-immutable
 
