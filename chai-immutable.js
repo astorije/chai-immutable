@@ -124,7 +124,7 @@
    * ### .include(value)
    *
    * The `include` and `contain` assertions can be used as either property
-   * based language chains or as methods to assert the inclusion of a value
+   * based language chains or as methods to assert the inclusion of a value or subset
    * in an immutable collection. When used as language chains, they toggle the
    * `contains` flag for the `keys` assertion.
    *
@@ -134,6 +134,8 @@
    * ```js
    * expect(new List([1, 2, 3])).to.include(2);
    * expect(new List([1, 2, 3])).to.deep.include(2);
+   * expect(new Map({ foo: 'bar', hello: 'world' })).to.include('bar');
+   * expect(new Map({ a: 1, b: 2, c: 3 })).to.include(new Map({ a: 1, b: 2 }));
    * expect(new Map({ foo: 'bar', hello: 'world' })).to.include.keys('foo');
    * ```
    *
@@ -151,8 +153,11 @@
       const obj = this._obj;
 
       if (Immutable.Iterable.isIterable(obj)) {
+        const isIncluded =
+          obj.includes(val) ||
+          (Immutable.Iterable.isIterable(val) && obj.isSuperset(val));
         this.assert(
-          obj.includes(val),
+          isIncluded,
           'expected #{act} to include #{exp}',
           'expected #{act} to not include #{exp}',
           val,
