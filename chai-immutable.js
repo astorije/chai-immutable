@@ -134,6 +134,8 @@
    * ```js
    * expect(new List([1, 2, 3])).to.include(2);
    * expect(new List([1, 2, 3])).to.deep.include(2);
+   * expect(new Map({ foo: 'bar', hello: 'world' })).to.include('bar');
+   * expect(new Map({ a: 1, b: 2, c: 3 })).to.include(new Map({ a: 1, b: 2 }));
    * expect(new Map({ foo: 'bar', hello: 'world' })).to.include.keys('foo');
    * ```
    *
