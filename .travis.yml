@@ -15,7 +15,7 @@ install:
   - yarn install --frozen-lockfile
 
 after_script:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_NODE_VERSION" == "8" ]]; then yarn coveralls; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_NODE_VERSION" == "11" ]]; then yarn coveralls; fi
 
 notifications:
   email:
