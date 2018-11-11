@@ -124,7 +124,7 @@
    * ### .include(value)
    *
    * The `include` and `contain` assertions can be used as either property
-   * based language chains or as methods to assert the inclusion of a value or subset 
+   * based language chains or as methods to assert the inclusion of a value or subset
    * in an immutable collection. When used as language chains, they toggle the
    * `contains` flag for the `keys` assertion.
    *
