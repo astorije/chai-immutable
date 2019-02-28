@@ -36,11 +36,6 @@ npm install --save-dev chai-immutable
 yarn add --dev chai-immutable
 ```
 
-⚠️ **To use `chai-immutable` with Chai v4, you need to use
-`npm install --save-dev chai-immutable@next` (or
-`yarn add --dev chai-immutable@next`) instead, until I am done with the v2
-release of this plugin. I apologize for the inconvenience in the meantime.**
-
 You can then use this plugin as any other Chai plugins:
 
 <!-- fulky:skip-test -->
