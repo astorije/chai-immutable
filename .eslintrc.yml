@@ -107,9 +107,6 @@ rules:
     - declaration
     - allowArrowFunctions: true
   id-match: error
-  linebreak-style:
-    - error
-    - unix
   lines-between-class-members: error
   max-depth: error
   max-nested-callbacks:
