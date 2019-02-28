@@ -11,7 +11,7 @@
     "lint:eslint": "eslint --ignore-path .gitignore . --report-unused-disable-directives",
     "lint:prettier": "prettier --list-different \"**/*.{html,js,json,md,yml}\"",
     "test": "run-s -c test:* lint:* eslint-check:*",
-    "test:readme": "mocha --compilers md:fulky/md-compiler README.md",
+    "test:readme": "mocha --require fulky/md-compiler README.md",
     "test:mocha": "nyc mocha",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "eslint-check:main": "eslint --print-config .eslintrc.yml | eslint-config-prettier-check",
