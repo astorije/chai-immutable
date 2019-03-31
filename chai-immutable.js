@@ -13,6 +13,14 @@
     context.chai.use(factory(context.Immutable));
   }
 })(this, Immutable => (chai, utils) => {
+  function isImmutable(value) {
+    if (typeof Immutable.isImmutable === 'undefined') {
+      return Immutable.Iterable.isIterable(value);
+    } else {
+      return Immutable.isImmutable(value);
+    }
+  }
+
   const { Assertion } = chai;
 
   function assertIsIterable(obj) {
@@ -95,11 +103,11 @@
    * @api public
    */
 
-  function assertCollectionEqual(_super) {
+  function assertImmutableEqual(_super) {
     return function(collection) {
       const obj = this._obj;
 
-      if (Immutable.Iterable.isIterable(obj)) {
+      if (isImmutable(obj)) {
         this.assert(
           Immutable.is(obj, collection),
           'expected #{act} to equal #{exp}',
@@ -114,11 +122,11 @@
     };
   }
 
-  Assertion.overwriteMethod('equal', assertCollectionEqual);
-  Assertion.overwriteMethod('equals', assertCollectionEqual);
-  Assertion.overwriteMethod('eq', assertCollectionEqual);
-  Assertion.overwriteMethod('eql', assertCollectionEqual);
-  Assertion.overwriteMethod('eqls', assertCollectionEqual);
+  Assertion.overwriteMethod('equal', assertImmutableEqual);
+  Assertion.overwriteMethod('equals', assertImmutableEqual);
+  Assertion.overwriteMethod('eq', assertImmutableEqual);
+  Assertion.overwriteMethod('eql', assertImmutableEqual);
+  Assertion.overwriteMethod('eqls', assertImmutableEqual);
 
   /**
    * ### .include(value)
