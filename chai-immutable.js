@@ -839,6 +839,31 @@
   };
 
   /**
+   * ### .referenceEqual(actual, expected)
+   *
+   * Asserts that the reference of `actual` is equivalent to the reference of
+   * `expected`. This method preserves the original behavior of chai's equal.
+   *
+   * Reasons for this are described in #210.
+   *
+   * ```js
+   * const a = List.of(1, 2, 3);
+   * const b = a
+   * const c = List.of(1, 2, 3);
+   * assert.equal(a, b); // true
+   * assert.equal(a, c); // false
+   * ```
+   *
+   * @name referenceEqual
+   * @param {Collection} actual
+   * @param {Collection} expected
+   * @namespace Assert
+   * @api public
+   */
+
+  assert.referenceEqual = originalEqual;
+
+  /**
    * ### .notEqual(actual, expected)
    *
    * Asserts that the values of `actual` are not equivalent to the values of
