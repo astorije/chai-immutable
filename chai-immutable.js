@@ -892,6 +892,31 @@
   };
 
   /**
+   * ### .referenceNotEqual(actual, expected)
+   *
+   * Asserts that the reference of `actual` is not equivalent to the reference of
+   * `expected`. This method preserves the original behavior of chai's notEqual.
+   *
+   * Reasons for this are described in #210.
+   *
+   * ```js
+   * const a = List.of(1, 2, 3);
+   * const b = a
+   * const c = List.of(1, 2, 3);
+   * assert.referenceNotEqual(a, b); // false
+   * assert.referenceNotEqual(a, c); // true
+   * ```
+   *
+   * @name referenceEqual
+   * @param {Collection} actual
+   * @param {Collection} expected
+   * @namespace Assert
+   * @api public
+   */
+
+  assert.referenceNotEqual = originalNotEqual;
+
+  /**
    * ### .sizeOf(collection, length)
    *
    * Asserts that the immutable collection has the expected size.
