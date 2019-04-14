@@ -946,6 +946,22 @@ describe('chai-immutable', function() {
       });
     });
 
+    describe('referenceEqual assertion', function() {
+      it('should pass for equal references', function() {
+        const list1 = List.of(1, 2, 3);
+        const list2 = list1;
+
+        assert.referenceEqual(list1, list2);
+      });
+
+      it('should not pass for different immutable collections with equal values', function() {
+        const list1 = List.of(1, 2, 3);
+        const list2 = List.of(1, 2, 3);
+
+        fail(() => assert.referenceEqual(list1, list2));
+      });
+    });
+
     describe('notEqual assertion', function() {
       it('should pass given different values', function() {
         assert.notEqual(list3, new List());
