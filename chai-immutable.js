@@ -121,6 +121,45 @@
   Assertion.overwriteMethod('eqls', assertCollectionEqual);
 
   /**
+   * ### .referenceEqual(value)
+   *
+   * Asserts that the reference of the target is equivalent to the reference of
+   * `collection`. This method preserves the original behavior of chai's equal.
+   *
+   * Reasons for this are described in #210.
+   *
+   * ```js
+   * const a = List.of(1, 2, 3);
+   * const b = a
+   * const c = List.of(1, 2, 3);
+   * expect(a).to.referenceEqual(b); // true
+   * expect(a).to.referenceEqual(c); // false
+   * ```
+   *
+   * @name referenceEqual
+   * @param {Collection} value
+   * @namespace BDD
+   * @api public
+   */
+
+  function assertCollectionReferenceEqual() {
+    return function(collection) {
+      const obj = this._obj;
+
+      this.assert(
+        obj === collection,
+        'expected #{act} reference to equal #{exp}',
+        'expected #{act} reference to not equal #{exp}',
+        collection.toJS(),
+        obj.toJS(),
+        true
+      );
+    };
+  }
+
+  Assertion.addMethod('referenceEqual', assertCollectionReferenceEqual);
+
+  /**
    * ### .include(value)
    *
    * The `include` and `contain` assertions can be used as either property

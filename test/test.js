@@ -186,6 +186,22 @@ describe('chai-immutable', function() {
       });
     });
 
+    describe('referenceEqual method', function() {
+      it('should pass for equal references', function() {
+        const list1 = List.of(1, 2, 3);
+        const list2 = list1;
+
+        expect(list1).to.referenceEqual(list2);
+      });
+
+      it('should not pass for different immutable collections with equal values', function() {
+        const list1 = List.of(1, 2, 3);
+        const list2 = List.of(1, 2, 3);
+
+        expect(list1).to.not.referenceEqual(list2);
+      });
+    });
+
     describe('include method', function() {
       it('should pass given an existing value', function() {
         expect(new List([1, 2, 3])).to.include(2);
