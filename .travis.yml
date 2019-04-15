@@ -24,9 +24,11 @@ notifications:
 
 before_script:
   - 'if [ "$IMMUTABLE_VERSION" ]; then yarn add immutable@$IMMUTABLE_VERSION; fi'
+
 matrix:
   include:
   - env: IMMUTABLE_VERSION=4.0.0-rc.12
+
 # Identifies `a.b.c-xxx.n` tags as pre-releases, and `a.b.c` as stable releases
 before_deploy: |
   function dist_tag() {
