@@ -23,9 +23,9 @@ notifications:
     on_failure: always
 
 before_script:
-  - 'if [ "$IMMUTABLE_VERSION" ]; then npm install immutable@$IMMUTABLE_VERSION; fi'
+  - 'if [ "$IMMUTABLE_VERSION" ]; then yarn add immutable@$IMMUTABLE_VERSION; fi'
 env:
-  - IMMUTABLE_VERSION=3
+  - IMMUTABLE_VERSION=
   - IMMUTABLE_VERSION=4.0.0-rc.12
 # Identifies `a.b.c-xxx.n` tags as pre-releases, and `a.b.c` as stable releases
 before_deploy: |
