@@ -25,6 +25,23 @@ const {
 chai.use(require('./chai-immutable'));
 -->
 
+## Assertions
+
+- BDD API Reference (Expect / Should)
+  - [`.empty`](#empty)
+  - [`.equal(collection)`](#equalcollection)
+  - [`.referenceEqual(value)`](#referenceequalvalue)
+  - [`.include(value)`](#includevalue)
+  - [`.keys(key1[, key2[, ...]])`](#keyskey1-key2-)
+  - [`.property(path[, val])`](#propertypath-val)
+  - [`.size(value)`](#sizevalue)
+- TDD API Reference (Assert)
+  - [`.equal(actual, expected)`](#equalactual-expected)
+  - [`.referenceEqual(actual, expected)`](#referenceequalactual-expected)
+  - [`.notEqual(actual, expected)`](#notequalactual-expected)
+  - [`.notReferenceEqual(actual, expected)`](#notreferenceequalactual-expected)
+  - [`.sizeOf(collection, length)`](#sizeofcollection-length)
+
 ## Installation
 
 ### Node.js
@@ -95,7 +112,7 @@ expect(Promise.resolve(List.of(1, 2, 3))).to.eventually.have.size(3);
 expect(true).to.be.true();
 ```
 
-## BDD API Reference
+## BDD API Reference (Expect / Should)
 
 ### .empty
 
@@ -365,7 +382,7 @@ Similarly to `length`/`lengthOf`, `sizeOf` is an alias of `size`:
 expect(List.of(1, 2, 3)).to.have.sizeOf(3);
 ```
 
-## TDD API Reference
+## TDD API Reference (Assert)
 
 ### .equal(actual, expected)
 
