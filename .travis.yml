@@ -11,8 +11,15 @@ os:
   - linux
   - osx
 
+matrix:
+  include:
+    - env: IMMUTABLE_VERSION=^4.0.0-rc
+
 install:
   - yarn install --frozen-lockfile
+
+before_script:
+  - if [ "$IMMUTABLE_VERSION" ]; then yarn add --dev immutable@$IMMUTABLE_VERSION; fi
 
 after_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_NODE_VERSION" == "11" ]]; then yarn coveralls; fi
