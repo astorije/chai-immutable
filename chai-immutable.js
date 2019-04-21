@@ -124,16 +124,16 @@
    * ### .referenceEqual(value)
    *
    * Asserts that the reference of the target is equivalent to the reference of
-   * `collection`. This method preserves the original behavior of chai's equal.
+   * `collection`. This method preserves the original behavior of Chai's `equal`.
    *
-   * Reasons for this are described in #210.
+   * See https://github.com/astorije/chai-immutable/issues/210 for more details.
    *
    * ```js
    * const a = List.of(1, 2, 3);
-   * const b = a
+   * const b = a;
    * const c = List.of(1, 2, 3);
-   * expect(a).to.referenceEqual(b); // true
-   * expect(a).to.referenceEqual(c); // false
+   * expect(a).to.referenceEqual(b);
+   * expect(a).to.not.referenceEqual(c);
    * ```
    *
    * @name referenceEqual
@@ -842,16 +842,16 @@
    * ### .referenceEqual(actual, expected)
    *
    * Asserts that the reference of `actual` is equivalent to the reference of
-   * `expected`. This method preserves the original behavior of chai's equal.
+   * `expected`. This method preserves the original behavior of Chai's `equal`.
    *
-   * Reasons for this are described in #210.
+   * See https://github.com/astorije/chai-immutable/issues/210 for more details.
    *
    * ```js
    * const a = List.of(1, 2, 3);
-   * const b = a
+   * const b = a;
    * const c = List.of(1, 2, 3);
-   * assert.equal(a, b); // true
-   * assert.equal(a, c); // false
+   * assert.referenceEqual(a, b);
+   * assert.throws(() => assert.referenceEqual(a, c));
    * ```
    *
    * @name referenceEqual
@@ -892,29 +892,29 @@
   };
 
   /**
-   * ### .referenceNotEqual(actual, expected)
+   * ### .notReferenceEqual(actual, expected)
    *
    * Asserts that the reference of `actual` is not equivalent to the reference of
-   * `expected`. This method preserves the original behavior of chai's notEqual.
+   * `expected`. This method preserves the original behavior of Chai's `notEqual`.
    *
-   * Reasons for this are described in #210.
+   * See https://github.com/astorije/chai-immutable/issues/210 for more details.
    *
    * ```js
    * const a = List.of(1, 2, 3);
-   * const b = a
+   * const b = a;
    * const c = List.of(1, 2, 3);
-   * assert.referenceNotEqual(a, b); // false
-   * assert.referenceNotEqual(a, c); // true
+   * assert.throws(() => assert.notReferenceEqual(a, b));
+   * assert.notReferenceEqual(a, c);
    * ```
    *
-   * @name referenceEqual
+   * @name notReferenceEqual
    * @param {Collection} actual
    * @param {Collection} expected
    * @namespace Assert
    * @api public
    */
 
-  assert.referenceNotEqual = originalNotEqual;
+  assert.notReferenceEqual = originalNotEqual;
 
   /**
    * ### .sizeOf(collection, length)
