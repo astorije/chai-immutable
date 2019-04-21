@@ -186,6 +186,22 @@ describe('chai-immutable', function() {
       });
     });
 
+    describe('referenceEqual method', function() {
+      it('should pass for equal references', function() {
+        const list1 = List.of(1, 2, 3);
+        const list2 = list1;
+
+        expect(list1).to.referenceEqual(list2);
+      });
+
+      it('should not pass for different immutable collections with equal values', function() {
+        const list1 = List.of(1, 2, 3);
+        const list2 = List.of(1, 2, 3);
+
+        expect(list1).to.not.referenceEqual(list2);
+      });
+    });
+
     describe('include method', function() {
       it('should pass given an existing value', function() {
         expect(new List([1, 2, 3])).to.include(2);
@@ -930,6 +946,22 @@ describe('chai-immutable', function() {
       });
     });
 
+    describe('referenceEqual assertion', function() {
+      it('should pass for equal references', function() {
+        const list1 = List.of(1, 2, 3);
+        const list2 = list1;
+
+        assert.referenceEqual(list1, list2);
+      });
+
+      it('should not pass for different immutable collections with equal values', function() {
+        const list1 = List.of(1, 2, 3);
+        const list2 = List.of(1, 2, 3);
+
+        fail(() => assert.referenceEqual(list1, list2));
+      });
+    });
+
     describe('notEqual assertion', function() {
       it('should pass given different values', function() {
         assert.notEqual(list3, new List());
@@ -958,6 +990,22 @@ describe('chai-immutable', function() {
 
       it('should work if using different copies of Immutable', function() {
         assert.notEqual(clonedImmutableList, List.of());
+      });
+    });
+
+    describe('notReferenceEqual assertion', function() {
+      it('should pass for different immutable collections with equal values', function() {
+        const list1 = List.of(1, 2, 3);
+        const list2 = List.of(1, 2, 3);
+
+        assert.notReferenceEqual(list1, list2);
+      });
+
+      it('should not pass for different immutable collections with equal values', function() {
+        const list1 = List.of(1, 2, 3);
+        const list2 = list1;
+
+        fail(() => assert.notReferenceEqual(list1, list2));
       });
     });
 

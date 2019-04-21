@@ -85,8 +85,8 @@
    * Immutable data structures should only contain other immutable data
    * structures (unlike `Array`s and `Object`s) to be considered immutable and
    * properly work against `.equal()`. See
-   * [this issue](https://github.com/astorije/chai-immutable/issues/24) for
-   * more information.
+   * [issue #24](https://github.com/astorije/chai-immutable/issues/24) for more
+   * information.
    *
    * Also, note that `deep.equal` and `eql` are synonyms of `equal` when
    * tested against immutable data structures, therefore they are aliases to
@@ -127,6 +127,46 @@
   Assertion.overwriteMethod('eq', assertImmutableEqual);
   Assertion.overwriteMethod('eql', assertImmutableEqual);
   Assertion.overwriteMethod('eqls', assertImmutableEqual);
+
+  /**
+   * ### .referenceEqual(value)
+   *
+   * Asserts that the reference of the target is equivalent to the reference of
+   * `collection`. This method preserves the original behavior of Chai's `equal`.
+   *
+   * See [issue #210](https://github.com/astorije/chai-immutable/issues/210) for
+   * more details.
+   *
+   * ```js
+   * const a = List.of(1, 2, 3);
+   * const b = a;
+   * const c = List.of(1, 2, 3);
+   * expect(a).to.referenceEqual(b);
+   * expect(a).to.not.referenceEqual(c);
+   * ```
+   *
+   * @name referenceEqual
+   * @param {Collection} value
+   * @namespace BDD
+   * @api public
+   */
+
+  function assertCollectionReferenceEqual() {
+    return function(collection) {
+      const obj = this._obj;
+
+      this.assert(
+        obj === collection,
+        'expected #{act} reference to equal #{exp}',
+        'expected #{act} reference to not equal #{exp}',
+        collection.toJS(),
+        obj.toJS(),
+        true
+      );
+    };
+  }
+
+  Assertion.addMethod('referenceEqual', assertCollectionReferenceEqual);
 
   /**
    * ### .include(value)
@@ -786,8 +826,8 @@
    * Immutable data structures should only contain other immutable data
    * structures (unlike `Array`s and `Object`s) to be considered immutable and
    * properly work against `.equal()`, `.strictEqual()` or `.deepEqual()`. See
-   * [this issue](https://github.com/astorije/chai-immutable/issues/24) for
-   * more information.
+   * [issue #24](https://github.com/astorije/chai-immutable/issues/24) for more
+   * information.
    *
    * @name equal
    * @param {Collection} actual
@@ -806,6 +846,32 @@
       return originalEqual(actual, expected);
     }
   };
+
+  /**
+   * ### .referenceEqual(actual, expected)
+   *
+   * Asserts that the reference of `actual` is equivalent to the reference of
+   * `expected`. This method preserves the original behavior of Chai's `equal`.
+   *
+   * See [issue #210](https://github.com/astorije/chai-immutable/issues/210) for
+   * more details.
+   *
+   * ```js
+   * const a = List.of(1, 2, 3);
+   * const b = a;
+   * const c = List.of(1, 2, 3);
+   * assert.referenceEqual(a, b);
+   * assert.throws(() => assert.referenceEqual(a, c));
+   * ```
+   *
+   * @name referenceEqual
+   * @param {Collection} actual
+   * @param {Collection} expected
+   * @namespace Assert
+   * @api public
+   */
+
+  assert.referenceEqual = originalEqual;
 
   /**
    * ### .notEqual(actual, expected)
@@ -834,6 +900,32 @@
       return originalNotEqual(actual, expected);
     }
   };
+
+  /**
+   * ### .notReferenceEqual(actual, expected)
+   *
+   * Asserts that the reference of `actual` is not equivalent to the reference of
+   * `expected`. This method preserves the original behavior of Chai's `notEqual`.
+   *
+   * See [issue #210](https://github.com/astorije/chai-immutable/issues/210) for
+   * more details.
+   *
+   * ```js
+   * const a = List.of(1, 2, 3);
+   * const b = a;
+   * const c = List.of(1, 2, 3);
+   * assert.throws(() => assert.notReferenceEqual(a, b));
+   * assert.notReferenceEqual(a, c);
+   * ```
+   *
+   * @name notReferenceEqual
+   * @param {Collection} actual
+   * @param {Collection} expected
+   * @namespace Assert
+   * @api public
+   */
+
+  assert.notReferenceEqual = originalNotEqual;
 
   /**
    * ### .sizeOf(collection, length)
