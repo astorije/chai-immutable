@@ -122,12 +122,30 @@ expect(a).to.equal(b);
 Immutable data structures should only contain other immutable data
 structures (unlike `Array`s and `Object`s) to be considered immutable and
 properly work against `.equal()`. See
-[this issue](https://github.com/astorije/chai-immutable/issues/24) for
-more information.
+[issue #24](https://github.com/astorije/chai-immutable/issues/24) for more
+information.
 
 Also, note that `deep.equal` and `eql` are synonyms of `equal` when
 tested against immutable data structures, therefore they are aliases to
 `equal`.
+
+### .referenceEqual(value)
+
+- **@param** _{Collection}_ value
+
+Asserts that the reference of the target is equivalent to the reference of
+`collection`. This method preserves the original behavior of Chai's `equal`.
+
+See [issue #210](https://github.com/astorije/chai-immutable/issues/210) for
+more details.
+
+```js
+const a = List.of(1, 2, 3);
+const b = a;
+const c = List.of(1, 2, 3);
+expect(a).to.referenceEqual(b);
+expect(a).to.not.referenceEqual(c);
+```
 
 ### .include(value)
 
@@ -385,8 +403,27 @@ assert.equal(a, b);
 Immutable data structures should only contain other immutable data
 structures (unlike `Array`s and `Object`s) to be considered immutable and
 properly work against `.equal()`, `.strictEqual()` or `.deepEqual()`. See
-[this issue](https://github.com/astorije/chai-immutable/issues/24) for
-more information.
+[issue #24](https://github.com/astorije/chai-immutable/issues/24) for more
+information.
+
+### .referenceEqual(actual, expected)
+
+- **@param** _{Collection}_ actual
+- **@param** _{Collection}_ expected
+
+Asserts that the reference of `actual` is equivalent to the reference of
+`expected`. This method preserves the original behavior of Chai's `equal`.
+
+See [issue #210](https://github.com/astorije/chai-immutable/issues/210) for
+more details.
+
+```js
+const a = List.of(1, 2, 3);
+const b = a;
+const c = List.of(1, 2, 3);
+assert.referenceEqual(a, b);
+assert.throws(() => assert.referenceEqual(a, c));
+```
 
 ### .notEqual(actual, expected)
 
@@ -401,6 +438,25 @@ exactly like `.notEqual()` in the context of Immutable data structures.
 const a = List.of(1, 2, 3);
 const b = List.of(4, 5, 6);
 assert.notEqual(a, b);
+```
+
+### .notReferenceEqual(actual, expected)
+
+- **@param** _{Collection}_ actual
+- **@param** _{Collection}_ expected
+
+Asserts that the reference of `actual` is not equivalent to the reference of
+`expected`. This method preserves the original behavior of Chai's `notEqual`.
+
+See [issue #210](https://github.com/astorije/chai-immutable/issues/210) for
+more details.
+
+```js
+const a = List.of(1, 2, 3);
+const b = a;
+const c = List.of(1, 2, 3);
+assert.throws(() => assert.notReferenceEqual(a, b));
+assert.notReferenceEqual(a, c);
 ```
 
 ### .sizeOf(collection, length)

@@ -77,8 +77,8 @@
    * Immutable data structures should only contain other immutable data
    * structures (unlike `Array`s and `Object`s) to be considered immutable and
    * properly work against `.equal()`. See
-   * [this issue](https://github.com/astorije/chai-immutable/issues/24) for
-   * more information.
+   * [issue #24](https://github.com/astorije/chai-immutable/issues/24) for more
+   * information.
    *
    * Also, note that `deep.equal` and `eql` are synonyms of `equal` when
    * tested against immutable data structures, therefore they are aliases to
@@ -126,7 +126,8 @@
    * Asserts that the reference of the target is equivalent to the reference of
    * `collection`. This method preserves the original behavior of Chai's `equal`.
    *
-   * See https://github.com/astorije/chai-immutable/issues/210 for more details.
+   * See [issue #210](https://github.com/astorije/chai-immutable/issues/210) for
+   * more details.
    *
    * ```js
    * const a = List.of(1, 2, 3);
@@ -817,8 +818,8 @@
    * Immutable data structures should only contain other immutable data
    * structures (unlike `Array`s and `Object`s) to be considered immutable and
    * properly work against `.equal()`, `.strictEqual()` or `.deepEqual()`. See
-   * [this issue](https://github.com/astorije/chai-immutable/issues/24) for
-   * more information.
+   * [issue #24](https://github.com/astorije/chai-immutable/issues/24) for more
+   * information.
    *
    * @name equal
    * @param {Collection} actual
@@ -844,7 +845,8 @@
    * Asserts that the reference of `actual` is equivalent to the reference of
    * `expected`. This method preserves the original behavior of Chai's `equal`.
    *
-   * See https://github.com/astorije/chai-immutable/issues/210 for more details.
+   * See [issue #210](https://github.com/astorije/chai-immutable/issues/210) for
+   * more details.
    *
    * ```js
    * const a = List.of(1, 2, 3);
@@ -897,7 +899,8 @@
    * Asserts that the reference of `actual` is not equivalent to the reference of
    * `expected`. This method preserves the original behavior of Chai's `notEqual`.
    *
-   * See https://github.com/astorije/chai-immutable/issues/210 for more details.
+   * See [issue #210](https://github.com/astorije/chai-immutable/issues/210) for
+   * more details.
    *
    * ```js
    * const a = List.of(1, 2, 3);
