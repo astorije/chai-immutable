@@ -8,9 +8,9 @@ skip_tags: true
 
 environment:
   matrix:
-    - nodejs_version: 10 # EOL: April 2021
-    - nodejs_version: 8 # EOL: December 2019
-    - nodejs_version: 6 # EOL: April 2019
+    - nodejs_version: 12 # EOL: 2022-04-01
+    - nodejs_version: 10 # EOL: 2021-04-01
+    - nodejs_version: 8 # EOL: 2019-12-31
 
 install:
   - ps: Install-Product node $env:nodejs_version

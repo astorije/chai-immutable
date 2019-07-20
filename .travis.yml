@@ -2,10 +2,9 @@ language: node_js
 
 # https://github.com/nodejs/Release
 node_js:
-  - 11 # EOL: June 2019
-  - 10 # EOL: April 2021
-  - 8 # EOL: December 2019
-  - 6 # EOL: April 2019
+  - 12 # EOL: 2022-04-01
+  - 10 # EOL: 2021-04-01
+  - 8 # EOL: 2019-12-31
 
 os:
   - linux
@@ -22,7 +21,7 @@ before_script:
   - if [ "$IMMUTABLE_VERSION" ]; then yarn add --dev immutable@$IMMUTABLE_VERSION; fi
 
 after_script:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_NODE_VERSION" == "11" ]]; then yarn coveralls; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_NODE_VERSION" == "12" ]]; then yarn coveralls; fi
 
 notifications:
   email:
@@ -47,7 +46,7 @@ deploy:
   api_key:
     secure: lmkAwQspZnROe6Ev0QdV/9l1cN10BWMyc7BfkecNVr1Ab1G6Kws4LoczbJS/VJmLmvKaSMppLvmA+32pIu1XGa3ezjQQoobi1VPTH7RUGOY57y3japctsgI9JFXzFIESJo6lspe8blSHH7J6pyEJ0Vbl6gnDju9ploQWCawdh1g=
   on:
-    node: 8
+    node: 10
     os: linux
     tags: true
     repo: astorije/chai-immutable
