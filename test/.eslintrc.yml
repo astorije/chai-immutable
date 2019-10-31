@@ -6,6 +6,9 @@ plugins:
   - chai-friendly
   - mocha
 
+extends:
+  - plugin:chai-friendly/recommended
+
 # Override from root `.eslintrc.yml`
 rules:
   # Disabling this rule in favor of mocha/prefer-arrow-callback
@@ -17,14 +20,6 @@ rules:
   chai-expect/no-inner-compare: error
   chai-expect/missing-assertion: error
   chai-expect/terminating-properties: error
-
-  ## eslint-plugin-chai-friendly
-  ## https://github.com/ihordiachenko/eslint-plugin-chai-friendly
-
-  # Chai uses expressions as assertions, and in particular this test suite uses
-  # `.to.be.empty`
-  no-unused-expressions: off
-  chai-friendly/no-unused-expressions: error
 
   ## eslint-plugin-mocha
   ## https://github.com/lo1tuma/eslint-plugin-mocha
