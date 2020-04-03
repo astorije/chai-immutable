@@ -14,8 +14,8 @@
     "test:readme": "mocha --require fulky/md-compiler README.md",
     "test:mocha": "nyc mocha",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "eslint-check:main": "eslint --print-config .eslintrc.yml | eslint-config-prettier-check",
-    "eslint-check:test": "eslint --print-config test/.eslintrc.yml | eslint-config-prettier-check"
+    "eslint-check:main": "eslint --print-config chai-immutable.js | eslint-config-prettier-check",
+    "eslint-check:test": "eslint --print-config test/test.js | eslint-config-prettier-check"
   },
   "repository": {
     "type": "git",
