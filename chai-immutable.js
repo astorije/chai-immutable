@@ -12,7 +12,7 @@
     // Other environments (usually <script> tag)
     context.chai.use(factory(context.Immutable));
   }
-})(this, Immutable => (chai, utils) => {
+})(this, (Immutable) => (chai, utils) => {
   function isImmutable(value) {
     if (typeof Immutable.isImmutable === 'undefined') {
       return Immutable.Iterable.isIterable(value);
@@ -51,8 +51,8 @@
 
   Assertion.overwriteProperty(
     'empty',
-    _super =>
-      function() {
+    (_super) =>
+      function () {
         const obj = this._obj;
 
         if (Immutable.Iterable.isIterable(obj)) {
@@ -104,7 +104,7 @@
    */
 
   function assertImmutableEqual(_super) {
-    return function(collection) {
+    return function (collection) {
       const obj = this._obj;
 
       if (isImmutable(obj)) {
@@ -152,7 +152,7 @@
    */
 
   function assertCollectionReferenceEqual() {
-    return function(collection) {
+    return function (collection) {
       const obj = this._obj;
 
       this.assert(
@@ -197,7 +197,7 @@
    */
 
   function assertCollectionInclude(_super) {
-    return function(val) {
+    return function (val) {
       const obj = this._obj;
 
       if (Immutable.Iterable.isIterable(obj)) {
@@ -218,12 +218,12 @@
   }
 
   function chainCollectionInclude(_super) {
-    return function() {
+    return function () {
       _super.apply(this, arguments);
     };
   }
 
-  ['include', 'contain', 'contains', 'includes'].forEach(keyword => {
+  ['include', 'contain', 'contains', 'includes'].forEach((keyword) => {
     Assertion.overwriteChainableMethod(
       keyword,
       assertCollectionInclude,
@@ -335,7 +335,7 @@
    */
 
   function assertKeyedCollectionKeys(_super) {
-    return function(keys) {
+    return function (keys) {
       const obj = this._obj;
 
       if (Immutable.Iterable.isIterable(obj)) {
@@ -368,7 +368,7 @@
         }
 
         // Only stringify non-Symbols because Symbols would become "Symbol()"
-        keys = keys.map(val => (typeof val === 'symbol' ? val : String(val)));
+        keys = keys.map((val) => (typeof val === 'symbol' ? val : String(val)));
 
         if (!keys.length) {
           throw new chai.AssertionError('keys required', null, ssfi);
@@ -385,9 +385,9 @@
         }
 
         if (any) {
-          ok = keys.some(key => obj.has(key));
+          ok = keys.some((key) => obj.has(key));
         } else {
-          ok = keys.every(key => obj.has(key));
+          ok = keys.every((key) => obj.has(key));
 
           if (!contains) {
             ok = ok && keys.length === obj.count();
@@ -452,7 +452,7 @@
 
     // Removes brackets and escaping backslashes, and extracts digits from
     // each value in the array: ['a', 'b', 1]
-    return parts.map(value => {
+    return parts.map((value) => {
       // Extracts indices wrapped in brackets
       const re = /^\[(\d+)\]$/;
       // Builds ['[<index>]', '<index>'] if value is a digit, null otherwise
@@ -552,7 +552,7 @@
    */
 
   function assertProperty(_super) {
-    return function(path, val) {
+    return function (path, val) {
       const obj = this._obj;
 
       if (Immutable.Iterable.isIterable(obj)) {
@@ -680,7 +680,7 @@
   // Numerical comparator overwrites
 
   function assertCollectionSizeLeast(_super) {
-    return function(n) {
+    return function (n) {
       if (utils.flag(this, 'immutable.collection.size')) {
         assertIsIterable(this._obj);
 
@@ -702,7 +702,7 @@
   }
 
   function assertCollectionSizeMost(_super) {
-    return function(n) {
+    return function (n) {
       if (utils.flag(this, 'immutable.collection.size')) {
         assertIsIterable(this._obj);
 
@@ -724,7 +724,7 @@
   }
 
   function assertCollectionSizeAbove(_super) {
-    return function(n) {
+    return function (n) {
       if (utils.flag(this, 'immutable.collection.size')) {
         assertIsIterable(this._obj);
 
@@ -745,7 +745,7 @@
   }
 
   function assertCollectionSizeBelow(_super) {
-    return function(n) {
+    return function (n) {
       if (utils.flag(this, 'immutable.collection.size')) {
         assertIsIterable(this._obj);
 
@@ -781,8 +781,8 @@
 
   Assertion.overwriteMethod(
     'within',
-    _super =>
-      function(min, max) {
+    (_super) =>
+      function (min, max) {
         if (utils.flag(this, 'immutable.collection.size')) {
           assertIsIterable(this._obj);
 
