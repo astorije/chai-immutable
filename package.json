@@ -35,7 +35,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=6"
+    "node": ">=10"
   },
   "bugs": {
     "url": "https://github.com/astorije/chai-immutable/issues"
