@@ -15,6 +15,10 @@ rules:
   # https://github.com/lo1tuma/eslint-plugin-mocha/blob/master/docs/rules/prefer-arrow-callback.md
   prefer-arrow-callback: off
 
+  ## eslint-plugin-chai-expect
+  ## https://github.com/Turbo87/eslint-plugin-chai-expect
+  chai-expect/no-inner-literal: off
+
   ## eslint-plugin-mocha
   ## https://github.com/lo1tuma/eslint-plugin-mocha
 
