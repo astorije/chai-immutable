@@ -2,11 +2,11 @@ env:
   mocha: true
 
 plugins:
-  - chai-expect
   - chai-friendly
   - mocha
 
 extends:
+  - plugin:chai-expect/recommended
   - plugin:chai-friendly/recommended
 
 # Override from root `.eslintrc.yml`
@@ -14,12 +14,6 @@ rules:
   # Disabling this rule in favor of mocha/prefer-arrow-callback
   # https://github.com/lo1tuma/eslint-plugin-mocha/blob/master/docs/rules/prefer-arrow-callback.md
   prefer-arrow-callback: off
-
-  ## eslint-plugin-chai-expect
-  ## https://github.com/Turbo87/eslint-plugin-chai-expect
-  chai-expect/no-inner-compare: error
-  chai-expect/missing-assertion: error
-  chai-expect/terminating-properties: error
 
   ## eslint-plugin-mocha
   ## https://github.com/lo1tuma/eslint-plugin-mocha
