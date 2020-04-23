@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "chai": "4.2.0",
-    "coveralls": "3.0.13",
+    "coveralls": "3.0.14",
     "eslint": "6.6.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-chai-expect": "2.1.0",
