@@ -51,7 +51,7 @@
     "eslint": "6.6.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-chai-expect": "2.1.0",
-    "eslint-plugin-chai-friendly": "0.5.0",
+    "eslint-plugin-chai-friendly": "0.6.0",
     "eslint-plugin-mocha": "6.3.0",
     "fulky": "0.2.0",
     "immutable": "3.8.2",
