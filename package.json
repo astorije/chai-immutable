@@ -50,7 +50,7 @@
     "coveralls": "3.1.0",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.15.0",
-    "eslint-plugin-chai-expect": "2.1.0",
+    "eslint-plugin-chai-expect": "2.2.0",
     "eslint-plugin-chai-friendly": "0.6.0",
     "eslint-plugin-mocha": "6.3.0",
     "fulky": "0.2.0",
