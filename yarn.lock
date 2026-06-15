@@ -611,9 +611,10 @@ eslint-plugin-chai-expect@2.2.0:
   resolved "https://registry.yarnpkg.com/eslint-plugin-chai-expect/-/eslint-plugin-chai-expect-2.2.0.tgz#ff41fb00067fe6ff26e72b04ab1011ecaf3cb249"
   integrity sha512-ExTJKhgeYMfY8wDj3UiZmgpMKJOUHGNHmWMlxT49JUDB1vTnw0sSNfXJSxnX+LcebyBD/gudXzjzD136WqPJrQ==
 
-eslint-plugin-chai-friendly@0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-chai-friendly/-/eslint-plugin-chai-friendly-0.6.0.tgz#54052fab79302ed0cea76ab997351ea4809bfb77"
+eslint-plugin-chai-friendly@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-chai-friendly/-/eslint-plugin-chai-friendly-1.2.1.tgz#141392762aa8626ac3d25780a502e625ce74922b"
+  integrity sha512-mV3EOJLDr8+L+LS8uCkP711fnNHz+4PsmPyz18xwkvjJwfLRlnx0Eu6CFnb5B+dW5ahoav2jVer2KFYsmIuv3A==
 
 eslint-plugin-mocha@6.3.0:
   version "6.3.0"
